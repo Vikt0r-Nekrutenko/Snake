@@ -30,13 +30,11 @@ void MenuView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 Signal MenuView::keyEvents(const int key)
 {
     switch (key) {
-    case 'w': m_menu.prev(); if(m_selector == 0) m_selector = 3; else --m_selector; break;
-    case 's': m_menu.next(); if(m_selector == 3) m_selector = 0; else ++m_selector; break;
+    case 'w': m_menu.prev(); if(m_selector == 0) m_selector = m_menu.frames()-1; else --m_selector; break;
+    case 's': m_menu.next(); if(m_selector == m_menu.frames()-1) m_selector = 0; else ++m_selector; break;
     case ' ':
-        switch (m_selector) {
-        case 0: return Signal::start;
-        case 3: return Signal::end;
-        }
+        if (m_selector == 0) return Signal::start;
+        else if (m_selector == m_menu.frames() - 1) return Signal::end;
     }
     return Signal::none;
 }

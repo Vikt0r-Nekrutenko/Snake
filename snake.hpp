@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "vec2d.hpp"
+#include "renderer.hpp"
 
 class Snake
 {
@@ -14,9 +15,11 @@ public:
     inline const stf::Vec2d& head() const { return m_body.front(); }
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }
 
+    void show(stf::Renderer &renderer);
+    void update();
 private:
     std::vector<stf::Vec2d> m_body;
-    stf::Vec2d m_vel = {0,0};
+    stf::Vec2d m_vel = {0,+1};
 
     void moveBody();
 };

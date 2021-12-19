@@ -6,6 +6,17 @@ Snake::Snake(const stf::Vec2d startPos)
         m_body.push_back({startPos.x + i, startPos.y});
 }
 
+void Snake::show(stf::Renderer& renderer)
+{
+    for(auto &s : m_body) renderer.drawPixel(s, '#');
+}
+
+void Snake::update()
+{
+    moveBody();
+    m_body.at(0) += m_vel;
+}
+
 void Snake::moveBody()
 {
     for(auto it = m_body.end()-1; it > m_body.begin(); --it)

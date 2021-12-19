@@ -7,3 +7,8 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
     for(auto &s : m_model->snake().body()) renderer.drawPixel(s - camera, '#');
     renderer.drawPixel(m_model->eat(), '~');
 }
+
+Signal GameView::keyEvents(const int key)
+{
+    return m_model->keyEvents(key);
+}

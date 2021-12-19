@@ -14,6 +14,7 @@ public:
     Model(const stf::Vec2d& mapSize);
 
     Signal onUpdate(const float dt);
+    Signal keyEvents(const int key);
     inline const Snake& snake() const { return m_snake; }
     inline const stf::Vec2d& eat() const { return m_eat;}
 private:

@@ -28,3 +28,14 @@ Signal Model::onUpdate(const float dt)
     m_time += dt;
     return Signal::none;
 }
+
+Signal Model::keyEvents(const int key)
+{
+    switch (key) {
+    case 'w': m_snake.W(); break;
+    case 'a': m_snake.A(); break;
+    case 's': m_snake.S(); break;
+    case 'd': m_snake.D(); break;
+    }
+    return Signal::none;
+}

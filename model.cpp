@@ -38,6 +38,7 @@ Signal Model::keyEvents(const int key)
     case 'a': m_snake.A(); break;
     case 's': m_snake.S(); break;
     case 'd': m_snake.D(); break;
+    case ' ': return Signal::pause;
     }
     return Signal::none;
 }

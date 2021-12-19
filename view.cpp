@@ -32,3 +32,13 @@ Signal MenuView::keyEvents(const int key)
     }
     return Signal::none;
 }
+
+void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
+{
+    renderer.drawText({1,1}, "Game over! Press any key");
+}
+
+Signal EndView::keyEvents(const int key)
+{
+    return Signal::pause;
+}

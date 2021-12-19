@@ -13,6 +13,8 @@ Signal Model::onUpdate(const float dt)
     if(m_time > 0.3f)
     {
         m_snake.update();
+        if(m_aiIsEnable)
+            aiControl();
 
         if(m_snake.head().diff(m_eat) < 1.f) {
             m_snake.feed();
@@ -38,4 +40,12 @@ Signal Model::keyEvents(const int key)
     case 'd': m_snake.D(); break;
     }
     return Signal::none;
+}
+
+void Model::aiControl()
+{
+    if(m_snake.head().x > m_eat.x) m_snake.A();
+    if(m_snake.head().x < m_eat.x) m_snake.D();
+    if(m_snake.head().y > m_eat.y) m_snake.W();
+    if(m_snake.head().y < m_eat.y) m_snake.S();
 }

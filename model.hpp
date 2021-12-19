@@ -17,6 +17,7 @@ public:
     Signal keyEvents(const int key);
     inline const Snake& snake() const { return m_snake; }
     inline const stf::Vec2d& eat() const { return m_eat;}
+    inline const stf::Vec2d& mapSize() const { return m_mapSize;}
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};

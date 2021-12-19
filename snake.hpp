@@ -16,6 +16,7 @@ public:
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }
 
     void show(stf::Renderer &renderer);
+    bool isAteHerself() const;
     void update();
 
     inline void W() { setVel({0,-1}); }

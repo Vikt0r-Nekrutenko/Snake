@@ -11,6 +11,13 @@ void Snake::show(stf::Renderer& renderer)
     for(auto &s : m_body) renderer.drawPixel(s, '#');
 }
 
+bool Snake::isAteHerself() const
+{
+    for(auto &s : m_body)
+        if(head().diff(s) < 1.f) return true;
+    return false;
+}
+
 void Snake::update()
 {
     moveBody();

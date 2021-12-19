@@ -28,9 +28,10 @@ private:
     stf::Vec2d m_mapSize = {0,0};
     stf::Vec2d m_eat = {7, 8};
     float m_time = 0.f;
+    float m_lvlDuration = 0.5f;
     bool m_aiIsEnable = false;
     uint16_t m_score = 0u;
-    uint16_t m_lvl   = 0u;
+    uint16_t m_lvl   = 1u;
 };
 
 #endif // MODEL_HPP

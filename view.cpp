@@ -7,6 +7,7 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
     for(auto &s : m_model->snake().body())
         renderer.drawPixel(s - camera, '#');
     renderer.drawPixel(m_model->eat(), '~');
+    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 
     for(int y = 1; y < m_model->mapSize().y; ++y)
         for(int x = 0; x < m_model->mapSize().x; ++x)

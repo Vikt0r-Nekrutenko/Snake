@@ -10,7 +10,7 @@ Model::Model(const stf::Vec2d &mapSize)
 
 Signal Model::onUpdate(const float dt)
 {
-    if(m_time > 0.3f)
+    if(m_time > m_lvlDuration)
     {
         m_snake.update();
         if(m_aiIsEnable)
@@ -21,7 +21,10 @@ Signal Model::onUpdate(const float dt)
             m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
                                stf::Random(time(0)).getNum(2, m_mapSize.y-1));
             ++m_score;
-            if(m_score % 5) ++m_lvl;
+            if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
+                m_lvlDuration -= 0.025f;
+                ++m_lvl;
+            }
         }
 
         if(m_snake.isAteHerself()) return Signal::end;

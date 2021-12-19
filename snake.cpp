@@ -6,6 +6,21 @@ Snake::Snake(const stf::Vec2d startPos)
         m_body.push_back({startPos.x + i, startPos.y});
 }
 
+void Snake::wrapping(const int top, const int left, const int bottom, const int right)
+{
+    if(head().x < left) {
+        m_body.at(0).x = right - 1;
+    } else if(head().x >= right) {
+        m_body.at(0).x = left;
+    }
+
+    if(head().y < top) {
+        m_body.at(0).y = bottom - 1;
+    } else if(head().y >= bottom) {
+        m_body.at(0).y = top;
+    }
+}
+
 void Snake::show(stf::Renderer& renderer)
 {
     for(auto &s : m_body) renderer.drawPixel(s, '#');

@@ -4,4 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        snake.cpp
+
+unix:!macx|win32: LIBS += -L$$PWD/../stf/release/ -lstf
+
+INCLUDEPATH += $$PWD/../stf
+DEPENDPATH += $$PWD/../stf
+
+HEADERS += \
+    snake.hpp

@@ -55,3 +55,12 @@ void Model::aiControl()
     if(m_snake.head().y > m_eat.y) m_snake.W();
     if(m_snake.head().y < m_eat.y) m_snake.S();
 }
+
+void Model::reset()
+{
+    m_snake = Snake();
+    m_score = 0u; m_lvl = 1u;
+    m_lvlDuration = 0.5f;
+    m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
+                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+}

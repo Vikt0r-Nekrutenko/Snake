@@ -20,8 +20,10 @@ public:
     bool onUpdate(const float dt) override
     {
         if(current == &view)
-            if(model.onUpdate(dt) == Signal::end)
+            if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
+                model.reset();
+            }
         current->show(renderer);
 
         return gameIsContinue;

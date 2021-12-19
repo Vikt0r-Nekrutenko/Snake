@@ -17,6 +17,7 @@ public:
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
     void aiControl();
+    void reset();
 
     inline uint16_t score() const { return m_score; }
     inline uint16_t lvl() const { return m_lvl; }

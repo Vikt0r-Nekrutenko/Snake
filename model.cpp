@@ -20,6 +20,8 @@ Signal Model::onUpdate(const float dt)
                                stf::Random(time(0)).getNum(2, m_mapSize.y-1));
         }
 
+        if(m_snake.isAteHerself()) return Signal::end;
+
         m_snake.wrapping(1,1,m_mapSize.x, m_mapSize.y);
         m_time = 0.f;
     }

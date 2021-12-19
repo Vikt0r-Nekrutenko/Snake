@@ -19,7 +19,7 @@ public:
 
     void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
     Signal keyEvents(const int key) override;
-private:
+protected:
     Model* m_model = nullptr;
 };
 
@@ -31,14 +31,18 @@ public:
     Signal keyEvents(const int key) override;
 private:
     stf::AnimSprite m_menu;
+    stf::Sprite     m_bgrnd;
     uint8_t m_selector = 0;
 };
 
-class EndView : public View
+class EndView : public GameView
 {
 public:
+    EndView(Model* model);
     void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
     Signal keyEvents(const int key) override;
+private:
+    stf::Sprite m_end;
 };
 
 #endif // VIEW_HPP

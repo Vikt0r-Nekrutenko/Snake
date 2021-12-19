@@ -4,8 +4,11 @@ GameView::GameView(Model* model) : m_model(model) { }
 
 void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(auto &s : m_model->snake().body())
-        renderer.drawPixel(s - camera, '#');
+    for(size_t i = 0; i < m_model->snake().body().size(); ++i)
+    {
+        renderer.drawPixel(m_model->snake().body().at(i), i % 2 ? 'X' : 'O');
+    }
+
     renderer.drawPixel(m_model->eat(), '~');
     renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 
@@ -20,11 +23,12 @@ Signal GameView::keyEvents(const int key)
     return m_model->keyEvents(key);
 }
 
-MenuView::MenuView() : m_menu("menu.spr") { }
+MenuView::MenuView() : m_menu("menu.spr"), m_bgrnd("bgrnd.spr") { }
 
 void MenuView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
     m_menu.show(renderer, renderer.Size / 2 - m_menu.Size() / 2);
+    m_bgrnd.show(renderer, renderer.Size / 2 - m_bgrnd.Size() / 2 - stf::Vec2d(0, 7));
 }
 
 Signal MenuView::keyEvents(const int key)
@@ -39,9 +43,13 @@ Signal MenuView::keyEvents(const int key)
     return Signal::none;
 }
 
+EndView::EndView(Model *model) : GameView(model), m_end("end.spr") { }
+
 void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    renderer.drawText({1,1}, "Game over! Press any key");
+    m_end.show(renderer, renderer.Size / 2 - m_end.Size() / 2 - stf::Vec2d(0, 11));
+    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 0), "SCORE: %d", m_model->score());
+    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 2), "LEVEL: %d", m_model->lvl());
 }
 
 Signal EndView::keyEvents(const int key)

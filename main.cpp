@@ -9,17 +9,17 @@ using namespace stf;
 class Game : public Window
 {
     Model model;
-    GameView  view;
+    GameView  game;
     MenuView menu;
     EndView  end;
     View* current;
     bool  gameIsContinue = true;
 public:
-    Game() : Window(), model(renderer.Size), view(&model), current(&menu) {}
+    Game() : Window(), model(renderer.Size), game(&model), end(&model), current(&menu) {}
 
     bool onUpdate(const float dt) override
     {
-        if(current == &view)
+        if(current == &game)
             if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
                 model.reset();
@@ -32,7 +32,7 @@ public:
     void keyEvents(const int key) override
     {
         switch (current->keyEvents(key)) {
-        case Signal::start: current = &view;        break;
+        case Signal::start: current = &game;        break;
         case Signal::pause: current = &menu;        break;
         case Signal::end:   gameIsContinue = false; break;
         case Signal::none:                          break;

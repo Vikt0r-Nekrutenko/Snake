@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "vec2d.hpp"
-#include "renderer.hpp"
 
 class Snake
 {
@@ -16,7 +15,6 @@ public:
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }
 
     void wrapping(const int top, const int left, const int right, const int bottom);
-    void show(stf::Renderer &renderer);
     bool isAteHerself() const;
     void update();
 

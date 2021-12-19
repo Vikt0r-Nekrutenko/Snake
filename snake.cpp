@@ -28,8 +28,8 @@ void Snake::show(stf::Renderer& renderer)
 
 bool Snake::isAteHerself() const
 {
-    for(auto &s : m_body)
-        if(head().diff(s) < 1.f) return true;
+    for(size_t i = 1; i < m_body.size(); ++i)
+        if(head().diff(m_body.at(i)) < 1.f) return true;
     return false;
 }
 

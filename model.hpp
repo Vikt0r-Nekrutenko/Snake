@@ -17,6 +17,7 @@ public:
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};
+    stf::Vec2d m_eat = {7, 8};
     float m_time = 0.f;
 };
 

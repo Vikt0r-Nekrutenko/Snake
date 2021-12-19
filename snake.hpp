@@ -15,7 +15,7 @@ public:
     inline const stf::Vec2d& head() const { return m_body.front(); }
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }
 
-    void wrapping(const int top, const int left, const int bottom, const int right);
+    void wrapping(const int top, const int left, const int right, const int bottom);
     void show(stf::Renderer &renderer);
     bool isAteHerself() const;
     void update();

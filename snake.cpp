@@ -6,7 +6,7 @@ Snake::Snake(const stf::Vec2d startPos)
         m_body.push_back({startPos.x + i, startPos.y});
 }
 
-void Snake::wrapping(const int top, const int left, const int bottom, const int right)
+void Snake::wrapping(const int top, const int left, const int right, const int bottom)
 {
     if(head().x < left) {
         m_body.at(0).x = right - 1;

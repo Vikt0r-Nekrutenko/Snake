@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
         model.cpp \
-        snake.cpp
+        snake.cpp \
+        view.cpp
 
 unix:!macx|win32: LIBS += -L$$PWD/../stf/release/ -lstf
 
@@ -15,4 +16,5 @@ DEPENDPATH += $$PWD/../stf
 
 HEADERS += \
     model.hpp \
-    snake.hpp
+    snake.hpp \
+    view.hpp

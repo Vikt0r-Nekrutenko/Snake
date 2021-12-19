@@ -22,6 +22,7 @@ private:
     stf::Vec2d m_vel = {0,+1};
 
     void moveBody();
+    inline void setVel(const stf::Vec2d& vel) { if((head()+vel).diff(m_body.at(1)) > 0.5f) m_vel = vel; }
 };
 
 #endif // SNAKE_HPP

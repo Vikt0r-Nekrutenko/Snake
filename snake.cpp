@@ -22,3 +22,5 @@ void Snake::moveBody()
     for(auto it = m_body.end()-1; it > m_body.begin(); --it)
         *it = *(it - 1);
 }
+
+

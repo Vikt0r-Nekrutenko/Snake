@@ -12,7 +12,7 @@ class Game : public Window
 public:
     bool onUpdate(const float dt) override
     {
-        if(t > 1.f)
+        if(t > .3f)
         {
             snake.update();
             t = 0.f;
@@ -24,7 +24,12 @@ public:
 
     void keyEvents(const int key) override
     {
-
+        switch (key) {
+        case 'w': snake.setVel({0,-1}); break;
+        case 'a': snake.setVel({-1,0}); break;
+        case 's': snake.setVel({0,+1}); break;
+        case 'd': snake.setVel({+1,0}); break;
+        }
     }
 
     void mouseEvents(const MouseRecord &mr) override

@@ -19,9 +19,11 @@ Signal GameView::keyEvents(const int key)
     return m_model->keyEvents(key);
 }
 
+MenuView::MenuView() : m_menu("menu.spr") { }
+
 void MenuView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    renderer.drawText({1,1}, "press S to start, E to end");
+    m_menu.show(renderer, renderer.Size / 2 - m_menu.Size() / 2);
 }
 
 Signal MenuView::keyEvents(const int key)

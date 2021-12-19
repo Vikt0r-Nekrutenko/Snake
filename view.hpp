@@ -3,6 +3,7 @@
 
 #include "renderer.hpp"
 #include "model.hpp"
+#include "animsprite.hpp"
 
 class View
 {
@@ -25,8 +26,11 @@ private:
 class MenuView : public View
 {
 public:
+    MenuView();
     void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
     Signal keyEvents(const int key) override;
+private:
+    stf::AnimSprite m_menu;
 };
 
 class EndView : public View

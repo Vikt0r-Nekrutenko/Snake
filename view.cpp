@@ -18,3 +18,17 @@ Signal GameView::keyEvents(const int key)
 {
     return m_model->keyEvents(key);
 }
+
+void MenuView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
+{
+    renderer.drawText({1,1}, "press S to start, E to end");
+}
+
+Signal MenuView::keyEvents(const int key)
+{
+    switch (key) {
+    case 's': return Signal::start;
+    case 'e': return Signal::end;
+    }
+    return Signal::none;
+}

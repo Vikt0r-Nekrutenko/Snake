@@ -22,4 +22,11 @@ private:
     Model* m_model = nullptr;
 };
 
+class MenuView : public View
+{
+public:
+    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
+    Signal keyEvents(const int key) override;
+};
+
 #endif // VIEW_HPP

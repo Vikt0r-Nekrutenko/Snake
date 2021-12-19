@@ -17,6 +17,7 @@ public:
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};
+    float m_time = 0.f;
 };
 
 #endif // MODEL_HPP

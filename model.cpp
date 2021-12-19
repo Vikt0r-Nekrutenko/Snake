@@ -20,6 +20,8 @@ Signal Model::onUpdate(const float dt)
             m_snake.feed();
             m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
                                stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+            ++m_score;
+            if(m_score % 5) ++m_lvl;
         }
 
         if(m_snake.isAteHerself()) return Signal::end;

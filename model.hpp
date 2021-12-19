@@ -2,8 +2,9 @@
 #define MODEL_HPP
 
 #include "snake.hpp"
+#include <cstdint>
 
-enum class Signal
+enum class Signal : uint8_t
 {
     none, start, pause, end,
 };

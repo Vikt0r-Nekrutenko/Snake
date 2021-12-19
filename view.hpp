@@ -31,6 +31,7 @@ public:
     Signal keyEvents(const int key) override;
 private:
     stf::AnimSprite m_menu;
+    uint8_t m_selector = 0;
 };
 
 class EndView : public View

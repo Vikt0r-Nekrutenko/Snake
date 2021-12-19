@@ -21,11 +21,6 @@ void Snake::wrapping(const int top, const int left, const int right, const int b
     }
 }
 
-void Snake::show(stf::Renderer& renderer)
-{
-    for(auto &s : m_body) renderer.drawPixel(s, '#');
-}
-
 bool Snake::isAteHerself() const
 {
     for(size_t i = 1; i < m_body.size(); ++i)

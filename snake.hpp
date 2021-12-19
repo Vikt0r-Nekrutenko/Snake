@@ -17,6 +17,11 @@ public:
 
     void show(stf::Renderer &renderer);
     void update();
+
+    inline void W() { setVel({0,-1}); }
+    inline void A() { setVel({-1,0}); }
+    inline void S() { setVel({0,+1}); }
+    inline void D() { setVel({+1,0}); }
 private:
     std::vector<stf::Vec2d> m_body;
     stf::Vec2d m_vel = {0,+1};

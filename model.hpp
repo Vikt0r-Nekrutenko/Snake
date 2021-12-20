@@ -3,6 +3,8 @@
 
 #include "snake.hpp"
 #include <cstdint>
+#include "random.hpp"
+#include <ctime>
 
 enum class Signal : uint8_t
 {
@@ -27,8 +29,8 @@ public:
         {
             m_snake.update();
 
-            if(m_snake.isAteHerself())
-                m_snake.killSnake();
+//            if(m_snake.isAteHerself())
+//                m_snake.killSnake();
 
             m_snake.wrapping(2,1,m_mapSize.x-1, m_mapSize.y-1);
             m_time = 0.f;
@@ -56,9 +58,11 @@ public:
 
     void reset()
     {
-        m_snake = Snake();
+        m_snake = Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
+                         stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
+        m_snake.rebornSnake();
         m_score = 0u; m_lvl = 1u;
-        m_lvlDuration = 0.5f;
+        m_lvlDuration = 0.05f;
     }
 
     bool isCollideWithEat(const stf::Vec2d& pos) const
@@ -69,8 +73,8 @@ public:
 
     void collisionWithEatHandler()
     {
-        m_snake.feed();
-//        ++m_score;
+        if(m_snake.body().size() < 15) m_snake.feed();
+        ++m_score;
 //        if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
 //            m_lvlDuration -= 0.025f;
 //            ++m_lvl;
@@ -82,12 +86,13 @@ public:
     inline const Snake& snake() const { return m_snake; }
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
     inline bool aiIsEnable() const { return m_aiIsEnable; }
+    inline void killSnake() { m_snake.killSnake(); }
     stf::Vec2d *target = nullptr;
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};
     float m_time = 0.f;
-    float m_lvlDuration = 0.0f;
+    float m_lvlDuration = 0.05f;
     bool m_aiIsEnable = true;
     uint16_t m_score = 0u;
     uint16_t m_lvl   = 1u;
@@ -102,6 +107,8 @@ public:
     Signal keyEvents(const int key);
     void aiControl();
     void reset();
+    void kill(size_t s);
+
 
     inline const std::vector<stf::Vec2d>& eats() const { return m_eats;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}

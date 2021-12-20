@@ -23,8 +23,8 @@ protected:
     GameModel* m_model = nullptr;
 
 private:
-    void showSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
-    void showDeadSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
+    void showSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera);
+    void showDeadSnake(const Snake &deadSnake, stf::Renderer &renderer, const stf::Vec2d &camera);
 };
 
 class MenuView : public View

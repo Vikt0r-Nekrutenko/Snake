@@ -4,20 +4,20 @@ GameView::GameView(GameModel* model) : m_model(model) { }
 
 void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(auto &snakeModel : m_model->snakeModels())
-        if(snakeModel.snake().isDead())
-            showDeadSnake(renderer, camera);
-        else
-            showSnake(renderer, camera);
-
-    for(auto &eat : m_model->eats())
-        renderer.drawPixel(eat, '~');
-//    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
-
     for(int y = 1; y < m_model->mapSize().y; ++y)
         for(int x = 0; x < m_model->mapSize().x; ++x)
             if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1)
                 renderer.drawPixel({x,y}, '*');
+
+    for(auto &snakeModel : m_model->snakeModels())
+        if(snakeModel.snake().isDead())
+            showDeadSnake(snakeModel.snake(), renderer, camera);
+        else
+            showSnake(snakeModel.snake(), renderer, camera);
+
+    for(auto &eat : m_model->eats())
+        renderer.drawPixel(eat, '~');
+//    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 }
 
 Signal GameView::keyEvents(const int key)
@@ -25,19 +25,17 @@ Signal GameView::keyEvents(const int key)
     return m_model->keyEvents(key);
 }
 
-void GameView::showSnake(stf::Renderer &renderer, const stf::Vec2d &camera)
+void GameView::showSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(auto &snakeModel : m_model->snakeModels())
-        for(size_t i = 0; i < snakeModel.snake().body().size(); ++i) {
-            renderer.drawPixel(snakeModel.snake().body().at(i), i % 2 ? 'X' : 'O');
-        }
+    for(size_t i = 0; i < snake.body().size(); ++i) {
+        renderer.drawPixel(snake.body().at(i), i % 2 ? 'X' : 'O');
+    }
 }
 
-void GameView::showDeadSnake(stf::Renderer &renderer, const stf::Vec2d &camera)
+void GameView::showDeadSnake(const Snake &deadSnake, stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(auto &snakeModel : m_model->snakeModels())
-        for(auto &s : snakeModel.snake().body())
-            renderer.drawPixel(s, '+');
+    for(auto &s : deadSnake.body())
+        renderer.drawPixel(s, '+');
 }
 
 MenuView::MenuView() : m_menu("menu.spr"), m_bgrnd("bgrnd.spr") { }

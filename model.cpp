@@ -7,26 +7,28 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
 {
     snakeMods.push_back(SnakeModel(mapSize));
     snakeMods.push_back(SnakeModel(mapSize, {20,10}));
-    int i = 0; while(i++ < 10) m_eats.push_back({stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                                                 stf::Random(time(0)).getNum(2, m_mapSize.y-1)});
+    snakeMods.push_back(SnakeModel(mapSize, {30,10}));
+
+    int i = 0; while(i++ < 15) m_eats.push_back({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
+                                                 stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
 }
 
 Signal GameModel::onUpdate(const float dt)
 {
     for(auto &snakeMod : snakeMods) {
         if(snakeMod.aiIsEnable()) {
-            snakeMod.m_aiTarget = &m_eats.front();
+            stf::Vec2d *target = &m_eats.front();
             for(auto &eat : m_eats) {
-                if(snakeMod.snake().head().diff(eat) < snakeMod.snake().head().diff(*snakeMod.m_aiTarget))
-                    snakeMod.m_aiTarget = &eat;
+                if(snakeMod.snake().head().diff(eat) < snakeMod.snake().head().diff(*target))
+                    target = &eat;
             }
-            snakeMod.aiControl();
+            snakeMod.aiControl(*target);
         }
         for(auto &eat : m_eats)
             if(snakeMod.isCollideWithEat(eat)) {
                 snakeMod.collisionWithEatHandler();
-                eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                                 stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+                eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-2),
+                                 stf::Random(time(0)).getNum(2, m_mapSize.y-2));
             }
         snakeMod.onUpdate(dt);
     }

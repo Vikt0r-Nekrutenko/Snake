@@ -88,7 +88,7 @@ private:
     stf::Vec2d m_mapSize = {0,0};
     float m_time = 0.f;
     float m_lvlDuration = 0.5f;
-    bool m_aiIsEnable = false;
+    bool m_aiIsEnable = true;
     uint16_t m_score = 0u;
     uint16_t m_lvl   = 1u;
 };
@@ -105,9 +105,9 @@ public:
 
     inline const stf::Vec2d& eat() const { return m_eat;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
-    inline const SnakeModel& snakeModel() const { return snakeMod; }
+    inline const std::vector<SnakeModel>& snakeModels() const { return snakeMods; }
 private:
-    SnakeModel snakeMod;
+    std::vector<SnakeModel> snakeMods;
 
     stf::Vec2d m_mapSize = {0,0};
     stf::Vec2d m_eat = {7, 8};

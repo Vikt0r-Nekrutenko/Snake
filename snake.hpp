@@ -11,6 +11,7 @@ public:
 
     inline void feed() { m_body.push_back(m_body.back()); }
 
+    inline void killSnake() { m_isDead = true; }
     inline bool isDead() const { return m_isDead; }
     inline const stf::Vec2d& head() const { return m_body.front(); }
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }

@@ -1,6 +1,7 @@
 #include "snake.hpp"
 
 Snake::Snake(const stf::Vec2d startPos)
+    : m_isDead(false)
 {
     for(int i = 0; i < 5; ++i)
         m_body.push_back({startPos.x + i, startPos.y});

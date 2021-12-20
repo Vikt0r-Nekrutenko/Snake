@@ -54,5 +54,6 @@ void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 
 Signal EndView::keyEvents(const int key)
 {
+    m_model->reset();
     return Signal::pause;
 }

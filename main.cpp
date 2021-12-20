@@ -22,7 +22,6 @@ public:
         if(current == &game)
             if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
-                model.reset();
             }
         current->show(renderer);
 

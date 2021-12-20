@@ -40,29 +40,19 @@ Signal GameModel::onUpdate(const float dt)
 
 Signal GameModel::keyEvents(const int key)
 {
-    switch (key) {
-    case 'w': m_snake.W(); break;
-    case 'a': m_snake.A(); break;
-    case 's': m_snake.S(); break;
-    case 'd': m_snake.D(); break;
-    case ' ': return Signal::pause;
-    }
+    snakeMod.keyEvents(key);
+    if(key == ' ') return Signal::pause;
     return Signal::none;
 }
 
 void GameModel::aiControl()
 {
-    if(m_snake.head().x > m_eat.x) m_snake.A();
-    if(m_snake.head().x < m_eat.x) m_snake.D();
-    if(m_snake.head().y > m_eat.y) m_snake.W();
-    if(m_snake.head().y < m_eat.y) m_snake.S();
+
 }
 
 void GameModel::reset()
 {
-    m_snake = Snake();
-    m_score = 0u; m_lvl = 1u;
-    m_lvlDuration = 0.5f;
+    snakeMod.reset();
     m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
                        stf::Random(time(0)).getNum(2, m_mapSize.y-1));
 }

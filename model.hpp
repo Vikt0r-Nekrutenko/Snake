@@ -12,8 +12,9 @@ enum class Signal : uint8_t
 class SnakeModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize)
-        : m_mapSize(mapSize)
+    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10})
+        : m_snake(startPos),
+          m_mapSize(mapSize)
     {
 
     }
@@ -29,7 +30,7 @@ public:
             if(m_snake.isAteHerself())
                 m_snake.killSnake();
 
-            m_snake.wrapping(1,1,m_mapSize.x, m_mapSize.y);
+            m_snake.wrapping(2,1,m_mapSize.x-1, m_mapSize.y-1);
             m_time = 0.f;
         }
         m_time += dt;

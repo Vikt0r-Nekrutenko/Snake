@@ -40,8 +40,3 @@ void GameModel::reset()
     m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
                        stf::Random(time(0)).getNum(2, m_mapSize.y-1));
 }
-
-bool SnakeModel::aiIsEnable() const
-{
-    return m_aiIsEnable;
-}

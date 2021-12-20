@@ -18,8 +18,7 @@ Signal GameModel::onUpdate(const float dt)
 
         if(m_snake.head().diff(m_eat) < 1.f) {
             m_snake.feed();
-            m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                               stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+
             ++m_score;
             if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
                 m_lvlDuration -= 0.025f;
@@ -34,6 +33,11 @@ Signal GameModel::onUpdate(const float dt)
     }
     m_time += dt;
     */
+    if(snakeMod.isCollideWithEat(m_eat)) {
+        snakeMod.collisionWithEatHandler();
+        m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
+                           stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+    }
     snakeMod.onUpdate(dt);
     return Signal::none;
 }

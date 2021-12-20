@@ -60,6 +60,22 @@ public:
         m_lvlDuration = 0.5f;
     }
 
+    bool isCollideWithEat(const stf::Vec2d& pos) const
+    {
+        if(m_snake.head().diff(pos) < 1.f) return true;
+        return false;
+    }
+
+    void collisionWithEatHandler()
+    {
+        m_snake.feed();
+        ++m_score;
+        if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
+            m_lvlDuration -= 0.025f;
+            ++m_lvl;
+        }
+    }
+
     inline uint16_t score() const { return m_score; }
     inline uint16_t lvl() const { return m_lvl; }
     inline const Snake& snake() const { return m_snake; }
@@ -86,7 +102,6 @@ public:
 
     inline const stf::Vec2d& eat() const { return m_eat;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
-
     inline const SnakeModel& snakeModel() const { return snakeMod; }
 private:
     SnakeModel snakeMod;

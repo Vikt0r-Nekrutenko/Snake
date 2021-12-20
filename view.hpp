@@ -15,12 +15,12 @@ public:
 class GameView : public View
 {
 public:
-    GameView(Model* model);
+    GameView(GameModel* model);
 
     void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
     Signal keyEvents(const int key) override;
 protected:
-    Model* m_model = nullptr;
+    GameModel* m_model = nullptr;
 
 private:
     void showSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
@@ -42,7 +42,7 @@ private:
 class EndView : public GameView
 {
 public:
-    EndView(Model* model);
+    EndView(GameModel* model);
     void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
     Signal keyEvents(const int key) override;
 private:

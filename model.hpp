@@ -9,10 +9,10 @@ enum class Signal : uint8_t
     none, start, pause, end,
 };
 
-class Model
+class GameModel
 {
 public:
-    Model(const stf::Vec2d& mapSize);
+    GameModel(const stf::Vec2d& mapSize);
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);

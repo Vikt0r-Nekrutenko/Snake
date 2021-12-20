@@ -8,7 +8,7 @@ using namespace stf;
 
 class Game : public Window
 {
-    Model model;
+    GameModel model;
     GameView  game;
     MenuView menu;
     EndView  end;

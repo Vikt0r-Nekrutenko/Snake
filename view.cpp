@@ -1,6 +1,6 @@
 #include "view.hpp"
 
-GameView::GameView(Model* model) : m_model(model) { }
+GameView::GameView(GameModel* model) : m_model(model) { }
 
 void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
@@ -56,7 +56,7 @@ Signal MenuView::keyEvents(const int key)
     return Signal::none;
 }
 
-EndView::EndView(Model *model) : GameView(model), m_end("end.spr") { }
+EndView::EndView(GameModel *model) : GameView(model), m_end("end.spr") { }
 
 void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {

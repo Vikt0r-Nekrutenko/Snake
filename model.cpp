@@ -2,13 +2,13 @@
 #include "random.hpp"
 #include <ctime>
 
-Model::Model(const stf::Vec2d &mapSize)
+GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_mapSize(mapSize)
 {
 
 }
 
-Signal Model::onUpdate(const float dt)
+Signal GameModel::onUpdate(const float dt)
 {
     if(m_time > m_lvlDuration)
     {
@@ -36,7 +36,7 @@ Signal Model::onUpdate(const float dt)
     return Signal::none;
 }
 
-Signal Model::keyEvents(const int key)
+Signal GameModel::keyEvents(const int key)
 {
     switch (key) {
     case 'w': m_snake.W(); break;
@@ -48,7 +48,7 @@ Signal Model::keyEvents(const int key)
     return Signal::none;
 }
 
-void Model::aiControl()
+void GameModel::aiControl()
 {
     if(m_snake.head().x > m_eat.x) m_snake.A();
     if(m_snake.head().x < m_eat.x) m_snake.D();
@@ -56,7 +56,7 @@ void Model::aiControl()
     if(m_snake.head().y < m_eat.y) m_snake.S();
 }
 
-void Model::reset()
+void GameModel::reset()
 {
     m_snake = Snake();
     m_score = 0u; m_lvl = 1u;

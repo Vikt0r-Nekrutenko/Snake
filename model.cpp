@@ -6,20 +6,21 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_mapSize(mapSize)
 {
     snakeMods.push_back(SnakeModel(mapSize));
-    snakeMods.push_back(SnakeModel(mapSize, {20,10}));
+//    snakeMods.push_back(SnakeModel(mapSize, {20,10}));
+    m_eats.push_back({8, 7});
 }
 
 Signal GameModel::onUpdate(const float dt)
 {
     for(auto &snakeMod : snakeMods) {
-        if(snakeMod.aiIsEnable())
-            snakeMod.aiControl(m_eat);
-
-        if(snakeMod.isCollideWithEat(m_eat)) {
-            snakeMod.collisionWithEatHandler();
-            m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                               stf::Random(time(0)).getNum(2, m_mapSize.y-1));
-        }
+//        if(snakeMod.aiIsEnable())
+//            snakeMod.aiControl(m_eat);
+        for(auto &eat : m_eats)
+            if(snakeMod.isCollideWithEat(eat)) {
+                snakeMod.collisionWithEatHandler();
+                eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
+                                 stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+            }
         snakeMod.onUpdate(dt);
     }
     return Signal::none;
@@ -42,6 +43,6 @@ void GameModel::reset()
 {
     for(auto &snakeMod : snakeMods)
         snakeMod.reset();
-    m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+//    m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
+//                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
 }

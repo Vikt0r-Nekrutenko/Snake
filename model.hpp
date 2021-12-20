@@ -103,14 +103,14 @@ public:
     void aiControl();
     void reset();
 
-    inline const stf::Vec2d& eat() const { return m_eat;}
+    inline const std::vector<stf::Vec2d>& eats() const { return m_eats;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
     inline const std::vector<SnakeModel>& snakeModels() const { return snakeMods; }
 private:
     std::vector<SnakeModel> snakeMods;
+    std::vector<stf::Vec2d> m_eats;
 
     stf::Vec2d m_mapSize = {0,0};
-    stf::Vec2d m_eat = {7, 8};
     bool m_aiIsEnable = false;
 };
 

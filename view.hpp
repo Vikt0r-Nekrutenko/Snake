@@ -21,6 +21,10 @@ public:
     Signal keyEvents(const int key) override;
 protected:
     Model* m_model = nullptr;
+
+private:
+    void showSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
+    void showDeadSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
 };
 
 class MenuView : public View

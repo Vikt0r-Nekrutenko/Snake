@@ -4,10 +4,10 @@ GameView::GameView(Model* model) : m_model(model) { }
 
 void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(size_t i = 0; i < m_model->snake().body().size(); ++i)
-    {
-        renderer.drawPixel(m_model->snake().body().at(i), i % 2 ? 'X' : 'O');
-    }
+    if(m_model->snake().isDead())
+        showDeadSnake(renderer, camera);
+    else
+        showSnake(renderer, camera);
 
     renderer.drawPixel(m_model->eat(), '~');
     renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
@@ -21,6 +21,19 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 Signal GameView::keyEvents(const int key)
 {
     return m_model->keyEvents(key);
+}
+
+void GameView::showSnake(stf::Renderer &renderer, const stf::Vec2d &camera)
+{
+    for(size_t i = 0; i < m_model->snake().body().size(); ++i) {
+        renderer.drawPixel(m_model->snake().body().at(i), i % 2 ? 'X' : 'O');
+    }
+}
+
+void GameView::showDeadSnake(stf::Renderer &renderer, const stf::Vec2d &camera)
+{
+    for(auto &s : m_model->snake().body())
+        renderer.drawPixel(s, '+');
 }
 
 MenuView::MenuView() : m_menu("menu.spr"), m_bgrnd("bgrnd.spr") { }

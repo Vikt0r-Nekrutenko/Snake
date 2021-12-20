@@ -30,6 +30,7 @@ bool Snake::isAteHerself() const
 
 void Snake::update()
 {
+    if(m_isDead) return;
     moveBody();
     m_body.at(0) += m_vel;
 }

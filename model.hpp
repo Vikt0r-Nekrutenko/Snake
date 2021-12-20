@@ -90,6 +90,7 @@ public:
     inline const stf::Vec2d& eat() const { return m_eat;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
 private:
+    SnakeModel snakeMod;
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};
     stf::Vec2d m_eat = {7, 8};

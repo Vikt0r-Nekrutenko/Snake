@@ -3,14 +3,14 @@
 #include <ctime>
 
 GameModel::GameModel(const stf::Vec2d &mapSize)
-    : m_mapSize(mapSize)
+    : snakeMod(mapSize), m_mapSize(mapSize)
 {
 
 }
 
 Signal GameModel::onUpdate(const float dt)
 {
-    if(m_time > m_lvlDuration)
+    /*if(m_time > m_lvlDuration)
     {
         m_snake.update();
         if(m_aiIsEnable)
@@ -33,6 +33,8 @@ Signal GameModel::onUpdate(const float dt)
         m_time = 0.f;
     }
     m_time += dt;
+    */
+    snakeMod.onUpdate(dt);
     return Signal::none;
 }
 

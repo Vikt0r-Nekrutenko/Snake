@@ -46,12 +46,13 @@ public:
         }
     }
 
-    void aiControl(const stf::Vec2d& target)
+    void aiControl()
     {
-        if(m_snake.head().x > target.x) m_snake.A();
-        if(m_snake.head().x < target.x) m_snake.D();
-        if(m_snake.head().y > target.y) m_snake.W();
-        if(m_snake.head().y < target.y) m_snake.S();
+        if(m_aiTarget == nullptr) return;
+        if(m_snake.head().x > m_aiTarget->x) m_snake.A();
+        if(m_snake.head().x < m_aiTarget->x) m_snake.D();
+        if(m_snake.head().y > m_aiTarget->y) m_snake.W();
+        if(m_snake.head().y < m_aiTarget->y) m_snake.S();
     }
 
     void reset()
@@ -69,6 +70,7 @@ public:
 
     void collisionWithEatHandler()
     {
+        m_aiTarget = nullptr;
         m_snake.feed();
         ++m_score;
         if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
@@ -83,11 +85,12 @@ public:
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
     inline bool aiIsEnable() const { return m_aiIsEnable; }
 
+    stf::Vec2d* m_aiTarget = nullptr;
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};
     float m_time = 0.f;
-    float m_lvlDuration = 0.5f;
+    float m_lvlDuration = 0.2f;
     bool m_aiIsEnable = true;
     uint16_t m_score = 0u;
     uint16_t m_lvl   = 1u;

@@ -16,10 +16,9 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             showSnake(snakeModel.snake(), renderer, camera);
 
     for(auto &eat : m_model->eats())
-        renderer.drawPixel(eat, '~');
+        if(eat != stf::Vec2d(-1,-1))
+            renderer.drawPixel(eat, '~');
 
-    for(auto &eat : m_model->eats1())
-        renderer.drawPixel(eat, '~');
 //    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 }
 

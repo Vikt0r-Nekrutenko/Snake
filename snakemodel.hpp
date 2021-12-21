@@ -37,7 +37,7 @@ private:
 
     Snake       m_snake;
     stf::Vec2d  m_mapSize       = {0,0};
-    float       m_time          = 0.f;
+    float       m_duration      = 0.f;
     float       m_lvlDuration   = 0.05f;
     bool        m_aiIsEnable    = true;
     uint16_t    m_score         = 0u;

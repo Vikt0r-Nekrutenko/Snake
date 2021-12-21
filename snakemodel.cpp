@@ -12,7 +12,7 @@ void SnakeModel::onUpdate(const float dt)
 {
     if(m_snake.isDead()) return;
 
-    if(m_time > m_lvlDuration)
+    if(m_duration > m_lvlDuration)
     {
         m_snake.update();
 
@@ -20,9 +20,9 @@ void SnakeModel::onUpdate(const float dt)
         //                m_snake.killSnake();
 
         m_snake.wrapping(2,1,m_mapSize.x-1, m_mapSize.y-1);
-        m_time = 0.f;
+        m_duration = 0.f;
     }
-    m_time += dt;
+    m_duration += dt;
 }
 
 void SnakeModel::keyEvents(const int key)

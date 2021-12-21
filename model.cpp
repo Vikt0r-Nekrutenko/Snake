@@ -9,9 +9,11 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     snakeMods.push_back(SnakeModel(mapSize, {20,10}));
     snakeMods.push_back(SnakeModel(mapSize, {30,10}));
 
-    m_eats1.resize(mapSize.x * mapSize.y, {-1,-1});
-    int i = 0; while(i++ < 5) m_eats.push_back({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
-                                                 stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
+    m_eats.resize(mapSize.x * mapSize.y, {-1,-1});
+    int i = 0;
+    while(i++ < 5)
+        m_eats[i] = {stf::Random(time(0)).getNum(2, m_mapSize.x-2),
+                     stf::Random(time(0)).getNum(2, m_mapSize.y-2)};
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -30,11 +32,6 @@ Signal GameModel::onUpdate(const float dt)
                 if(snakeMod.snake().head().diff(eat) < snakeMod.snake().head().diff(*target))
                     target = &eat;
             }
-
-            for(auto &eat : m_eats1) {
-                if(snakeMod.snake().head().diff(eat) < snakeMod.snake().head().diff(*target))
-                    target = &eat;
-            }
             snakeMod.aiControl(*target);
         }
         for(auto &eat : m_eats)
@@ -42,11 +39,6 @@ Signal GameModel::onUpdate(const float dt)
                 snakeMod.collisionWithEatHandler();
                 eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-2),
                                  stf::Random(time(0)).getNum(2, m_mapSize.y-2));
-            }
-        for(auto &eat : m_eats1)
-            if(snakeMod.isCollideWithEat(eat)) {
-                snakeMod.collisionWithEatHandler();
-                eat = stf::Vec2d(-1,-1);
             }
         snakeMod.onUpdate(dt);
     }
@@ -84,7 +76,7 @@ void GameModel::kill(SnakeModel* snakeMod)
 void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
-        for(stf::Vec2d& emptyCell : m_eats1) {
+        for(auto &emptyCell : m_eats) {
             if(emptyCell == stf::Vec2d(-1,-1)) {
                 emptyCell = segment;
                 break;

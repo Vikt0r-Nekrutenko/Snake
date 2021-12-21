@@ -85,12 +85,14 @@ public:
     {
         if(m_snake.isDead() || snakeMod->snake().isDead()) return nullptr;
 
-        for(auto &sn : snakeMod->snake().body()) {
-            if(m_snake.head().diff(sn) < 2.f) {
-                if(m_score > snakeMod->score()) {
-                    return snakeMod;
-                } else {
-                    return this;
+        for(size_t s = 0; s < m_snake.body().size(); ++s) {
+            for (size_t s1 = 0; s1 < snakeMod->snake().body().size(); ++s1) {
+                if(m_snake.body().at(s).diff(snakeMod->snake().body().at(s1)) < 1.f) {
+                    if(m_score > snakeMod->score()) {
+                        return snakeMod;
+                    } else {
+                        return this;
+                    }
                 }
             }
         }
@@ -127,14 +129,18 @@ public:
 
 
     inline const std::vector<stf::Vec2d>& eats() const { return m_eats;}
+    inline const std::vector<stf::Vec2d>& eats1() const { return m_eats1;}
     inline const stf::Vec2d& mapSize() const { return m_mapSize;}
     inline const std::vector<SnakeModel>& snakeModels() const { return snakeMods; }
 private:
     std::vector<SnakeModel> snakeMods;
     std::vector<stf::Vec2d> m_eats;
+    std::vector<stf::Vec2d> m_eats1;
 
     stf::Vec2d m_mapSize = {0,0};
     bool m_aiIsEnable = false;
+
+    void pasteEat(const SnakeModel& snakeMod);
 };
 
 #endif // MODEL_HPP

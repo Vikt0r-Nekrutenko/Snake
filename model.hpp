@@ -81,6 +81,22 @@ public:
 //        }
     }
 
+    SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod)
+    {
+        if(m_snake.isDead() || snakeMod->snake().isDead()) return nullptr;
+
+        for(auto &sn : snakeMod->snake().body()) {
+            if(m_snake.head().diff(sn) < 2.f) {
+                if(m_score > snakeMod->score()) {
+                    return snakeMod;
+                } else {
+                    return this;
+                }
+            }
+        }
+        return nullptr;
+    }
+
     inline uint16_t score() const { return m_score; }
     inline uint16_t lvl() const { return m_lvl; }
     inline const Snake& snake() const { return m_snake; }
@@ -107,7 +123,7 @@ public:
     Signal keyEvents(const int key);
     void aiControl();
     void reset();
-    void kill(size_t s);
+    void kill(SnakeModel *snakeMod);
 
 
     inline const std::vector<stf::Vec2d>& eats() const { return m_eats;}

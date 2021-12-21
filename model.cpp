@@ -17,19 +17,9 @@ Signal GameModel::onUpdate(const float dt)
 {
     for(size_t s = 0; s < snakeModels().size() - 1; ++s) {
         for (size_t s1 = s+1; s1 < snakeModels().size(); ++s1) {
-            if(!snakeMods.at(s).snake().isDead() && !snakeMods.at(s1).snake().isDead()) {
-                for(auto &sn : snakeMods.at(s1).snake().body()) {
-                    if(snakeMods.at(s).snake().head().diff(sn) < 2.f) {
-                        if(snakeMods.at(s).score() > snakeMods.at(s1).score()) {
-                            kill(s);
-                            break;
-                        } else {
-                            kill(s1);
-                            break;
-                        }
-                    }
-                }
-            }
+            SnakeModel* deadSnake = snakeMods.at(s).collisionWithSnakeHandler(&snakeMods.at(s1));
+            if(deadSnake != nullptr)
+                kill(deadSnake);
         }
     }
     for(auto &snakeMod : snakeMods) {
@@ -73,11 +63,11 @@ void GameModel::reset()
     //                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
 }
 
-void GameModel::kill(size_t s)
+void GameModel::kill(SnakeModel* snakeMod)
 {
-    snakeMods.at(s).killSnake();
-    for(auto &segn : snakeMods.at(s).snake().body()) {
+    snakeMod->killSnake();
+    for(auto &segn : snakeMod->snake().body()) {
         m_eats.push_back(segn);
     }
-    snakeMods.at(s).reset();
+    snakeMod->reset();
 }

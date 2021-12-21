@@ -18,13 +18,19 @@ public:
 
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);
 
+    inline void W() { m_snake.setVel({0,-1}); }
+    inline void A() { m_snake.setVel({-1,0}); }
+    inline void S() { m_snake.setVel({0,+1}); }
+    inline void D() { m_snake.setVel({+1,0}); }
+
     inline uint16_t score() const { return m_score; }
     inline uint16_t lvl() const { return m_lvl; }
     inline const Snake &snake() const { return m_snake; }
     inline const stf::Vec2d &mapSize() const { return m_mapSize;}
     inline bool aiIsEnable() const { return m_aiIsEnable; }
 
-    void killSnake() { m_snake.killSnake(); }
+    inline void killSnake() { m_snake.setSnakeState(true); }
+    inline void rebornSnake() { m_snake.setSnakeState(false); }
 private:
     Snake m_snake;
     stf::Vec2d m_mapSize = {0,0};

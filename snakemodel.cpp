@@ -28,26 +28,26 @@ void SnakeModel::onUpdate(const float dt)
 void SnakeModel::keyEvents(const int key)
 {
     switch (key) {
-    case 'w': m_snake.W(); break;
-    case 'a': m_snake.A(); break;
-    case 's': m_snake.S(); break;
-    case 'd': m_snake.D(); break;
+    case 'w': W(); break;
+    case 'a': A(); break;
+    case 's': S(); break;
+    case 'd': D(); break;
     }
 }
 
 void SnakeModel::aiControl(const stf::Vec2d &target)
 {
-    if(m_snake.head().x > target.x) m_snake.A();
-    if(m_snake.head().x < target.x) m_snake.D();
-    if(m_snake.head().y > target.y) m_snake.W();
-    if(m_snake.head().y < target.y) m_snake.S();
+    if(m_snake.head().x > target.x) A();
+    if(m_snake.head().x < target.x) D();
+    if(m_snake.head().y > target.y) W();
+    if(m_snake.head().y < target.y) S();
 }
 
 void SnakeModel::reset()
 {
     m_snake = Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
                      stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
-    m_snake.rebornSnake();
+    rebornSnake();
     m_score = 0u; m_lvl = 1u;
     m_lvlDuration = 0.05f;
 }

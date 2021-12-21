@@ -9,11 +9,10 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     snakeMods.push_back(SnakeModel(mapSize, {20,10}));
     snakeMods.push_back(SnakeModel(mapSize, {30,10}));
 
-    m_eats.resize(mapSize.x * mapSize.y, {-1,-1});
+    m_eats.resize(mapSize.x * mapSize.y, { {-1,-1}, EatType::regular });
     int i = 0;
     while(i++ < 5)
-        m_eats[i] = {stf::Random(time(0)).getNum(2, m_mapSize.x-2),
-                     stf::Random(time(0)).getNum(2, m_mapSize.y-2)};
+        m_eats[i] = Eat({2,2}, mapSize-2);
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -27,18 +26,24 @@ Signal GameModel::onUpdate(const float dt)
     }
     for(auto &snakeMod : snakeMods) {
         if(snakeMod.aiIsEnable()) {
-            stf::Vec2d *target = &m_eats.front();
+            Eat *target = &m_eats.front();
             for(auto &eat : m_eats) {
-                if(snakeMod.snake().head().diff(eat) < snakeMod.snake().head().diff(*target))
+                if(snakeMod.snake().head().diff(eat.m_pos) < snakeMod.snake().head().diff(target->m_pos))
                     target = &eat;
             }
-            snakeMod.aiControl(*target);
+            snakeMod.aiControl(target->m_pos);
         }
         for(auto &eat : m_eats)
-            if(snakeMod.isCollideWithEat(eat)) {
+            if(snakeMod.isCollideWithEat(eat.m_pos)) {
                 snakeMod.collisionWithEatHandler();
-                eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-2),
-                                 stf::Random(time(0)).getNum(2, m_mapSize.y-2));
+                switch (eat.m_type) {
+                case EatType::regular:
+                    eat = Eat({2,2}, m_mapSize-2);
+                    break;
+                case EatType::snake:
+                    eat = Eat({-1,-1}, EatType::snake);
+                    break;
+                }
             }
         snakeMod.onUpdate(dt);
     }
@@ -77,8 +82,8 @@ void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
         for(auto &emptyCell : m_eats) {
-            if(emptyCell == stf::Vec2d(-1,-1)) {
-                emptyCell = segment;
+            if(emptyCell.m_pos == stf::Vec2d(-1,-1)) {
+                emptyCell = Eat(segment, EatType::snake);
                 break;
             }
         }

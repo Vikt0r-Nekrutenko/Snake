@@ -13,8 +13,8 @@ public:
     void keyEvents(const int key);
     void aiControl(const stf::Vec2d& target);
     void reset();
-    bool isCollideWithEat(const stf::Vec2d& pos) const;
     void collisionWithEatHandler();
+    bool isCollideWithEat(const stf::Vec2d& pos) const;
 
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);
 
@@ -23,11 +23,11 @@ public:
     inline void S() { m_snake.setVel({0,+1}); }
     inline void D() { m_snake.setVel({+1,0}); }
 
-    inline uint16_t score() const { return m_score; }
-    inline uint16_t lvl() const { return m_lvl; }
-    inline const Snake &snake() const { return m_snake; }
-    inline const stf::Vec2d &mapSize() const { return m_mapSize;}
-    inline bool aiIsEnable() const { return m_aiIsEnable; }
+    inline uint16_t score()             const { return m_score;     }
+    inline uint16_t lvl()               const { return m_lvl;       }
+    inline const Snake &snake()         const { return m_snake;     }
+    inline const stf::Vec2d &mapSize()  const { return m_mapSize;   }
+    inline bool aiIsEnable()            const { return m_aiIsEnable;}
 
     inline void killSnake() { m_snake.setSnakeState(true); }
     inline void rebornSnake() { m_snake.setSnakeState(false); }

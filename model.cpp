@@ -5,13 +5,12 @@
 GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_mapSize(mapSize)
 {
-    snakeMods.push_back(SnakeModel(mapSize));
-    snakeMods.push_back(SnakeModel(mapSize, {20,10}));
-    snakeMods.push_back(SnakeModel(mapSize, {30,10}));
+    for(int i = 0; i < 10; ++i)
+        snakeMods.push_back(SnakeModel(mapSize, {i*10, 0}));
 
     m_eats.resize(mapSize.x * mapSize.y, { {-1,-1}, EatType::regular });
     int i = 0;
-    while(i++ < 5)
+    while(i++ < 50)
         m_eats[i] = Eat({2,2}, mapSize-2);
 }
 
@@ -26,12 +25,17 @@ Signal GameModel::onUpdate(const float dt)
     }
     for(auto &snakeMod : snakeMods) {
         if(snakeMod.aiIsEnable()) {
-            Eat *target = &m_eats.front();
-            for(auto &eat : m_eats) {
-                if(snakeMod.snake().head().diff(eat.pos()) < snakeMod.snake().head().diff(target->pos()))
-                    target = &eat;
+//            Eat *target = &m_eats.front();
+            std::vector<const stf::Vec2d *> possibleEat;
+            for(auto &e : m_eats)
+                if(!e.isHidden()) possibleEat.push_back(&e.pos());
+
+            snakeMod.targ = *possibleEat.front();
+            for(auto eat : possibleEat) {
+                if(snakeMod.snake().head().diff(*eat) < snakeMod.snake().head().diff(snakeMod.targ))
+                    snakeMod.targ = *eat;
             }
-            snakeMod.aiControl(target->pos());
+            snakeMod.aiControl(snakeMod.targ);
         }
         for(auto &eat : m_eats)
             if(snakeMod.isCollideWithEat(eat.pos())) {

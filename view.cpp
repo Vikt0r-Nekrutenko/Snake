@@ -10,15 +10,15 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
                 renderer.drawPixel({x,y}, '*');
 
     for(auto &snakeModel : m_model->snakeModels())
-        if(snakeModel.snake().isDead())
+    {    if(snakeModel.snake().isDead())
             showDeadSnake(snakeModel.snake(), renderer, camera);
         else
             showSnake(snakeModel.snake(), renderer, camera);
-
+//        renderer.draw(snakeModel.segmet(0), "%d %d", snakeModel.targ.x, snakeModel.targ.y);
+    }
     for(auto &eat : m_model->eats())
         if(!eat.isHidden())
             renderer.drawPixel(eat.pos(), (char)eat.type());
-
 //    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 }
 

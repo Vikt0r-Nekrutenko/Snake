@@ -2,7 +2,8 @@
 #include <ctime>
 
 SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
-    : m_snake(startPos),
+    : targ({0,0}),
+      m_snake(startPos),
       m_mapSize(mapSize)
 {
 
@@ -19,7 +20,7 @@ void SnakeModel::onUpdate(const float dt)
         //            if(m_snake.isAteHerself())
         //                m_snake.killSnake();
 
-        m_snake.wrapping(2,1,m_mapSize.x-1, m_mapSize.y-1);
+        m_snake.wrapping(2, 1, m_mapSize.x-1, m_mapSize.y-1);
         m_duration = 0.f;
     }
     m_duration += dt;
@@ -47,10 +48,9 @@ void SnakeModel::reset()
 {
     m_snake = Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
                      stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
-    rebornSnake();
+    m_lvlDuration = snake_model_settings::MAX_DURATION;
     m_score = 0u;
-    m_lvl = 1u;
-    m_lvlDuration = 0.05f;
+    m_lvl   = 1u;
 }
 
 bool SnakeModel::isCollideWithEat(const stf::Vec2d &pos) const
@@ -62,12 +62,13 @@ bool SnakeModel::isCollideWithEat(const stf::Vec2d &pos) const
 
 void SnakeModel::collisionWithEatHandler()
 {
-    if(m_snake.body().size() < 15) m_snake.feed();
+    using namespace snake_model_settings;
+    if(m_snake.length() < MAX_LENTH) m_snake.feed();
     ++m_score;
-    //        if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
-    //            m_lvlDuration -= 0.025f;
-    //            ++m_lvl;
-    //        }
+    if(m_score != 1 && m_lvl < MAX_LEVEL && m_score % LVLUP_STEP == 0) {
+        if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
+        ++m_lvl;
+    }
 }
 
 SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)

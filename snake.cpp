@@ -29,6 +29,11 @@ bool Snake::isAteHerself() const
     return false;
 }
 
+bool Snake::isSegmetOverlapped(size_t nOfSeg, const stf::Vec2d &pos) const
+{
+    return m_body.at(nOfSeg).diff(pos) < 1.f;
+}
+
 void Snake::update()
 {
     moveBody();

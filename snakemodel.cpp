@@ -48,13 +48,15 @@ void SnakeModel::reset()
     m_snake = Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
                      stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
     rebornSnake();
-    m_score = 0u; m_lvl = 1u;
+    m_score = 0u;
+    m_lvl = 1u;
     m_lvlDuration = 0.05f;
 }
 
 bool SnakeModel::isCollideWithEat(const stf::Vec2d &pos) const
 {
-    if(m_snake.head().diff(pos) < 1.f) return true;
+    if(m_snake.head().diff(pos) < 1.f)
+        return true;
     return false;
 }
 
@@ -72,9 +74,9 @@ SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)
 {
     if(m_snake.isDead() || snakeMod->snake().isDead()) return nullptr;
 
-    for(size_t s = 0; s < m_snake.body().size(); ++s) {
-        for (size_t s1 = 0; s1 < snakeMod->snake().body().size(); ++s1) {
-            if(m_snake.body().at(s).diff(snakeMod->snake().body().at(s1)) < 1.f) {
+    for(size_t s1 = 0; s1 < m_snake.length(); ++s1) {
+        for (size_t s2 = 0; s2 < snakeMod->m_snake.length(); ++s2) {
+            if(m_snake.isSegmetOverlapped(s1, snakeMod->segmet(s2))) {
                 if(m_score > snakeMod->score()) {
                     return snakeMod;
                 } else {

@@ -16,7 +16,9 @@ public:
     inline bool isDead()                         const { return m_isDead; }
     inline const std::vector<stf::Vec2d>& body() const { return m_body; }
     inline const stf::Vec2d& head()              const { return m_body.front(); }
+    inline size_t length()                       const { return m_body.size(); }
     bool isAteHerself()                          const;
+    bool isSegmetOverlapped(size_t nOfSeg, const stf::Vec2d& pos) const;
 
     void wrapping(const int top, const int left, const int right, const int bottom);
     void update();

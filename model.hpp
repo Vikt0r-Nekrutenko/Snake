@@ -19,18 +19,28 @@ enum class EatType : char
     super   = 'O',
 };
 
-struct Eat
+class Eat
 {
-    stf::Vec2d m_pos;
-    EatType    m_type;
-
-    Eat(const stf::Vec2d& pos, EatType type = EatType::regular)
+public:
+    Eat(const stf::Vec2d& pos = {-1,-1}, EatType type = EatType::regular)
         : m_pos(pos), m_type(type)
     {   }
+
     Eat(const stf::Vec2d& lim1, const stf::Vec2d& lim2, EatType type = EatType::regular)
-        : m_pos(stf::Random(time(0)).getNum(lim1.x, lim2.x), stf::Random(time(0)).getNum(lim1.y, lim2.y)),
+        : m_pos(stf::Random(time(0)).getNum(lim1.x, lim2.x),
+                stf::Random(time(0)).getNum(lim1.y, lim2.y)),
           m_type(type)
     {   }
+
+    inline const stf::Vec2d& pos()  const { return m_pos; }
+    inline EatType type()           const { return m_type; }
+    inline bool isUnused()          const { return m_pos == stf::Vec2d(-1,-1); }
+    inline void hide()                    { m_pos = {-1,-1}; };
+
+private:
+
+    stf::Vec2d m_pos;
+    EatType    m_type;
 };
 
 class GameModel

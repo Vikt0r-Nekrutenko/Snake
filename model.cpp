@@ -28,21 +28,17 @@ Signal GameModel::onUpdate(const float dt)
         if(snakeMod.aiIsEnable()) {
             Eat *target = &m_eats.front();
             for(auto &eat : m_eats) {
-                if(snakeMod.snake().head().diff(eat.m_pos) < snakeMod.snake().head().diff(target->m_pos))
+                if(snakeMod.snake().head().diff(eat.pos()) < snakeMod.snake().head().diff(target->pos()))
                     target = &eat;
             }
-            snakeMod.aiControl(target->m_pos);
+            snakeMod.aiControl(target->pos());
         }
         for(auto &eat : m_eats)
-            if(snakeMod.isCollideWithEat(eat.m_pos)) {
+            if(snakeMod.isCollideWithEat(eat.pos())) {
                 snakeMod.collisionWithEatHandler();
-                switch (eat.m_type) {
-                case EatType::regular:
-                    eat = Eat({2,2}, m_mapSize-2);
-                    break;
-                case EatType::snake:
-                    eat = Eat({-1,-1}, EatType::snake);
-                    break;
+                switch (eat.type()) {
+                case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
+                case EatType::snake:    eat.hide();                     break;
                 }
             }
         snakeMod.onUpdate(dt);
@@ -82,7 +78,7 @@ void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
         for(auto &emptyCell : m_eats) {
-            if(emptyCell.m_pos == stf::Vec2d(-1,-1)) {
+            if(emptyCell.isUnused()) {
                 emptyCell = Eat(segment, EatType::snake);
                 break;
             }

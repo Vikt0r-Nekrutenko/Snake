@@ -18,6 +18,7 @@ public:
     inline const stf::Vec2d& head()              const { return m_body.front(); }
     inline size_t length()                       const { return m_body.size(); }
     bool isAteHerself()                          const;
+    bool isHeadOverlapped(const stf::Vec2d& pos) const;
     bool isSegmetOverlapped(size_t nOfSeg, const stf::Vec2d& pos) const;
 
     void wrapping(const int top, const int left, const int right, const int bottom);

@@ -39,6 +39,7 @@ Signal GameModel::onUpdate(const float dt)
                 switch (eat.type()) {
                 case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
                 case EatType::snake:    eat.hide();                     break;
+                case EatType::super:                                    break;
                 }
             }
         snakeMod.onUpdate(dt);
@@ -78,7 +79,7 @@ void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
         for(auto &emptyCell : m_eats) {
-            if(emptyCell.isUnused()) {
+            if(emptyCell.isHidden()) {
                 emptyCell = Eat(segment, EatType::snake);
                 break;
             }

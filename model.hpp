@@ -34,7 +34,7 @@ public:
 
     inline const stf::Vec2d& pos()  const { return m_pos; }
     inline EatType type()           const { return m_type; }
-    inline bool isUnused()          const { return m_pos == stf::Vec2d(-1,-1); }
+    inline bool isHidden()          const { return m_pos == stf::Vec2d(-1,-1); }
     inline void hide()                    { m_pos = {-1,-1}; };
 
 private:

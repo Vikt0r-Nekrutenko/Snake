@@ -10,7 +10,7 @@ constexpr float MIN_DURATION  = 0.05f;
 constexpr float DURATION_STEP = 0.025f;
 constexpr int MAX_LENTH = 15;
 constexpr int MAX_LEVEL = 20;
-constexpr int LVLUP_STEP= 5;
+constexpr int LVLUP_STEP= 15;
 }
 
 class SnakeModel
@@ -22,8 +22,9 @@ public:
     void keyEvents(const int key);
     void aiControl(const stf::Vec2d& target);
     void reset();
-    void collisionWithEatHandler();
+    void collisionWithEatHandler(uint8_t nutritionalValue);
     bool isCollideWithEat(const stf::Vec2d& pos) const;
+    bool isAteHerself()                          const;
 
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);
 

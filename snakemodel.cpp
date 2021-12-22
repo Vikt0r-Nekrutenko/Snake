@@ -60,11 +60,16 @@ bool SnakeModel::isCollideWithEat(const stf::Vec2d &pos) const
     return false;
 }
 
-void SnakeModel::collisionWithEatHandler()
+bool SnakeModel::isAteHerself() const
+{
+    return m_snake.isAteHerself();
+}
+
+void SnakeModel::collisionWithEatHandler(uint8_t nutritionalValue)
 {
     using namespace snake_model_settings;
     if(m_snake.length() < MAX_LENTH) m_snake.feed();
-    ++m_score;
+    m_score += nutritionalValue;
     if(m_score != 1 && m_lvl < MAX_LEVEL && m_score % LVLUP_STEP == 0) {
         if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
         ++m_lvl;

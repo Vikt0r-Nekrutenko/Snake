@@ -5,13 +5,13 @@
 GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_mapSize(mapSize)
 {
-    for(int i = 0; i < 10; ++i)
+    for(int i = 0; i < 2; ++i)
         snakeMods.push_back(SnakeModel(mapSize, {i*10, 0}));
 
-    m_eats.resize(mapSize.x * mapSize.y, { {-1,-1}, EatType::regular });
+    m_eats.resize(mapSize.x * mapSize.y);
     int i = 0;
-    while(i++ < 50)
-        m_eats[i] = Eat({2,2}, mapSize-2);
+    while(i++ < 10)
+        m_eats[i] = RegularEat({2,2}, mapSize-2);
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -24,6 +24,7 @@ Signal GameModel::onUpdate(const float dt)
         }
     }
     for(auto &snakeMod : snakeMods) {
+        if(snakeMod.isAteHerself()) kill(&snakeMod);
         if(snakeMod.aiIsEnable()) {
 //            Eat *target = &m_eats.front();
             std::vector<const stf::Vec2d *> possibleEat;
@@ -39,12 +40,12 @@ Signal GameModel::onUpdate(const float dt)
         }
         for(auto &eat : m_eats)
             if(snakeMod.isCollideWithEat(eat.pos())) {
-                snakeMod.collisionWithEatHandler();
-                switch (eat.type()) {
-                case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
-                case EatType::snake:    eat.hide();                     break;
-                case EatType::super:                                    break;
-                }
+                snakeMod.collisionWithEatHandler(eat.nutritionalValue());
+//                switch (eat.type()) {
+//                case EatType::super:
+//                case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
+//                case EatType::meat:     eat.hide();                     break;
+//                }
             }
         snakeMod.onUpdate(dt);
     }
@@ -84,7 +85,7 @@ void GameModel::pasteEat(const SnakeModel &snakeMod)
     for(auto &segment : snakeMod.snake().body()) {
         for(auto &emptyCell : m_eats) {
             if(emptyCell.isHidden()) {
-                emptyCell = Eat(segment, EatType::snake);
+                emptyCell = MeatEat(segment);
                 break;
             }
         }

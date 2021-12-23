@@ -51,7 +51,7 @@ private:
     stf::Vec2d  m_mapSize       = {0,0};
     float       m_duration      = 0.f;
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
-    bool        m_aiIsEnable    = true;
+    bool        m_aiIsEnable    = false;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
 };

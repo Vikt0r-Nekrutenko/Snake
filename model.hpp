@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <ctime>
 
-#include "eat.hpp"
+#include "food.hpp"
 #include "snake.hpp"
 #include "snakemodel.hpp"
 
@@ -20,17 +20,16 @@ public:
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
-    void aiControl();
     void reset();
     void kill(SnakeModel *snakeMod);
 
 
-    inline const EatModel& foodModel()                  const { return m_eats;}
+    inline const FoodModel& foodModel()                  const { return m_foodModel;}
     inline const stf::Vec2d& mapSize()                  const { return m_mapSize;}
     inline const std::vector<SnakeModel>& snakeModels() const { return snakeMods; }
 private:
     std::vector<SnakeModel> snakeMods;
-    EatModel m_eats;
+    FoodModel m_foodModel;
 
     stf::Vec2d m_mapSize = {0,0};
     bool m_aiIsEnable = false;

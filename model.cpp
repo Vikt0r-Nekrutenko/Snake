@@ -21,8 +21,8 @@ Signal GameModel::onUpdate(const float dt)
         }
     }
     for(auto &snakeModel : m_snakeModels) {
+        snakeModel.setTarget(m_foodModel.nearestFood(snakeModel.snake().head()));
         if(snakeModel.aiIsEnabled())
-            snakeModel.setTarget(m_foodModel.nearestFood(snakeModel.snake().head()));
             snakeModel.aiControl();
 
         if(snakeModel.isAteHerself())

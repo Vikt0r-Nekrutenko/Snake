@@ -1,5 +1,6 @@
 #include "snakemodel.hpp"
 #include <ctime>
+#include "food.hpp"
 
 SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
     : m_snake(startPos),
@@ -35,12 +36,13 @@ void SnakeModel::keyEvents(const int key)
     }
 }
 
-void SnakeModel::aiControl(const stf::Vec2d &target)
+void SnakeModel::aiControl()
 {
-    if(m_snake.head().x > target.x) A();
-    if(m_snake.head().x < target.x) D();
-    if(m_snake.head().y > target.y) W();
-    if(m_snake.head().y < target.y) S();
+    if(targ == nullptr) return;
+    if(m_snake.head().x > targ->pos().x) A();
+    if(m_snake.head().x < targ->pos().x) D();
+    if(m_snake.head().y > targ->pos().y) W();
+    if(m_snake.head().y < targ->pos().y) S();
 }
 
 void SnakeModel::reset()
@@ -52,9 +54,11 @@ void SnakeModel::reset()
     m_lvl   = 1u;
 }
 
-bool SnakeModel::isCollideWithEat(const stf::Vec2d &pos) const
+bool SnakeModel::isCollideWithEat() const
 {
-    if(m_snake.head().diff(pos) < 1.f)
+    if(targ == nullptr) return false;
+
+    if(m_snake.head().diff(targ->pos()) < 1.f)
         return true;
     return false;
 }

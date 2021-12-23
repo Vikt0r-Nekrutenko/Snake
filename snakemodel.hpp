@@ -20,10 +20,10 @@ public:
 
     void onUpdate(const float dt);
     void keyEvents(const int key);
-    void aiControl(const stf::Vec2d& target);
+    void aiControl();
     void reset();
     void collisionWithEatHandler(uint8_t nutritionalValue);
-    bool isCollideWithEat(const stf::Vec2d& pos) const;
+    bool isCollideWithEat() const;
     bool isAteHerself()                          const;
 
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);

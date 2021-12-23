@@ -33,8 +33,6 @@ private:
 
     stf::Vec2d m_mapSize = {0,0};
     bool m_aiIsEnable = false;
-
-    void pasteEat(const SnakeModel& snakeMod);
 };
 
 #endif // MODEL_HPP

@@ -20,14 +20,15 @@ Signal GameModel::onUpdate(const float dt)
         }
     }
     for(auto &snakeMod : snakeMods) {
-        if(snakeMod.isAteHerself()) kill(&snakeMod);
+        if(snakeMod.isAteHerself())
+            kill(&snakeMod);
+
         if(snakeMod.aiIsEnable()) {
             snakeMod.targ = m_foodModel.nearestFood(snakeMod.snake().head());
-            if(snakeMod.targ != nullptr)
-                snakeMod.aiControl(snakeMod.targ->pos());
+            snakeMod.aiControl();
         }
 
-        if(snakeMod.targ != nullptr && snakeMod.isCollideWithEat(snakeMod.targ->pos())) {
+        if(snakeMod.isCollideWithEat()) {
             snakeMod.collisionWithEatHandler(snakeMod.targ->nutritionalValue());
             delete snakeMod.targ;
             m_foodModel.remove(snakeMod.targ);

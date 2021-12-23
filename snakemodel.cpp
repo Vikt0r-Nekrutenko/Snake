@@ -2,8 +2,7 @@
 #include <ctime>
 
 SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
-    : targ({0,0}),
-      m_snake(startPos),
+    : m_snake(startPos),
       m_mapSize(mapSize)
 {
 

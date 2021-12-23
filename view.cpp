@@ -14,11 +14,10 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             showDeadSnake(snakeModel.snake(), renderer, camera);
         else
             showSnake(snakeModel.snake(), renderer, camera);
-//        renderer.draw(snakeModel.segmet(0), "%d %d", snakeModel.targ.x, snakeModel.targ.y);
+//        renderer.draw(snakeModel.segmet(0), "%d %d", snakeModel.targ->pos().x, snakeModel.targ->pos().y);
     }
-    for(auto eat : m_model->eats())
-        if(eat != nullptr)
-            renderer.drawPixel(eat->pos(), eat->symbol());
+    for(auto eat : m_model->foodModel().getPossibleEat())
+        renderer.drawPixel(eat->pos(), eat->symbol());
 //    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 }
 

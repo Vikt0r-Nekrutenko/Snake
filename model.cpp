@@ -3,15 +3,11 @@
 #include <ctime>
 
 GameModel::GameModel(const stf::Vec2d &mapSize)
-    : m_mapSize(mapSize)
+    : m_eats(mapSize),
+      m_mapSize(mapSize)
 {
-    for(int i = 0; i < 2; ++i)
-        snakeMods.push_back(SnakeModel(mapSize, {i*10, 0}));
-
-    m_eats.resize(mapSize.x * mapSize.y, nullptr);
-    int i = 0;
-    while(i++ < 10)
-        m_eats[i] = new RegularEat({2,2}, mapSize-2);
+    for(int i = 1; i < 3; ++i)
+        snakeMods.push_back(SnakeModel(mapSize, {i*10, 10}));
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -26,27 +22,17 @@ Signal GameModel::onUpdate(const float dt)
     for(auto &snakeMod : snakeMods) {
         if(snakeMod.isAteHerself()) kill(&snakeMod);
         if(snakeMod.aiIsEnable()) {
-//            Eat *target = &m_eats.front();
-            std::vector<const stf::Vec2d *> possibleEat;
-            for(auto e : m_eats)
-                if(e != nullptr) possibleEat.push_back(&e->pos());
-
-            snakeMod.targ = *possibleEat.front();
-            for(auto eat : possibleEat) {
-                if(snakeMod.snake().head().diff(*eat) < snakeMod.snake().head().diff(snakeMod.targ))
-                    snakeMod.targ = *eat;
-            }
-            snakeMod.aiControl(snakeMod.targ);
+            snakeMod.targ = m_eats.nearestFood(snakeMod.snake().head());
+            if(snakeMod.targ != nullptr)
+                snakeMod.aiControl(snakeMod.targ->pos());
         }
-        for(auto eat : m_eats)
-            if(eat != nullptr && snakeMod.isCollideWithEat(eat->pos())) {
-                snakeMod.collisionWithEatHandler(eat->nutritionalValue());
-//                switch (eat.type()) {
-//                case EatType::super:
-//                case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
-//                case EatType::meat:     eat.hide();                     break;
-//                }
-            }
+
+        if(snakeMod.targ != nullptr && snakeMod.isCollideWithEat(snakeMod.targ->pos())) {
+            snakeMod.collisionWithEatHandler(snakeMod.targ->nutritionalValue());
+            delete snakeMod.targ;
+            m_eats.remove(snakeMod.targ);
+            snakeMod.targ = nullptr;
+        }
         snakeMod.onUpdate(dt);
     }
     return Signal::none;
@@ -83,11 +69,11 @@ void GameModel::kill(SnakeModel* snakeMod)
 void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
-        for(auto emptyCell : m_eats) {
-            if(emptyCell == nullptr) {
-                emptyCell = new MeatEat(segment);
-                break;
-            }
-        }
+//        for(auto emptyCell : m_eats) {
+//            if(emptyCell == nullptr) {
+//                emptyCell = new MeatEat(segment);
+//                break;
+//            }
+//        }
     }
 }

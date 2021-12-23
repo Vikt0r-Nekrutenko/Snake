@@ -12,7 +12,7 @@ constexpr int MAX_LENTH = 15;
 constexpr int MAX_LEVEL = 20;
 constexpr int LVLUP_STEP= 15;
 }
-
+class Eat;
 class SnakeModel
 {
 public:
@@ -42,7 +42,7 @@ public:
 
     inline void killSnake() { m_snake.setSnakeState(true); }
     inline void rebornSnake() { m_snake.setSnakeState(false); }
-stf::Vec2d targ;
+Eat* targ = nullptr;
 private:
 
     Snake       m_snake;

@@ -25,12 +25,12 @@ public:
     void kill(SnakeModel *snakeMod);
 
 
-    inline const std::vector<Eat1 *>& eats()              const { return m_eats;}
+    inline const EatModel& foodModel()                  const { return m_eats;}
     inline const stf::Vec2d& mapSize()                  const { return m_mapSize;}
     inline const std::vector<SnakeModel>& snakeModels() const { return snakeMods; }
 private:
     std::vector<SnakeModel> snakeMods;
-    std::vector<Eat1 *> m_eats;
+    EatModel m_eats;
 
     stf::Vec2d m_mapSize = {0,0};
     bool m_aiIsEnable = false;

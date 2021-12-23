@@ -9,9 +9,9 @@ SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
 
 }
 
-void SnakeModel::onUpdate(const float dt)
+bool SnakeModel::onUpdate(const float dt)
 {
-    if(m_snake.isDead()) return;
+    if(m_snake.isDead() || lifes() == 0) return false;
 
     if(m_duration > m_lvlDuration)
     {
@@ -21,6 +21,7 @@ void SnakeModel::onUpdate(const float dt)
         m_duration = 0.f;
     }
     m_duration += dt;
+    return true;
 }
 
 void SnakeModel::keyEvents(const int key)
@@ -49,6 +50,7 @@ void SnakeModel::reset()
     m_lvlDuration = snake_model_settings::MAX_DURATION;
     m_score = 0u;
     m_lvl   = 1u;
+    --m_lifes;
 }
 
 bool SnakeModel::isCollideWithTarget() const

@@ -16,7 +16,10 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
         renderer.drawPixel(food->pos(), food->symbol());
 
     if(m_model->snakeModels().size() == 1) {
-        renderer.draw({10, 1}, "SCORE: %d LVL: %d", m_model->snakeModels().at(0).score(), m_model->snakeModels().at(0).lvl());
+        renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
+                      m_model->snakeModels().at(0).score(),
+                      m_model->snakeModels().at(0).lvl(),
+                      m_model->snakeModels().at(0).lifes());
     }
 }
 

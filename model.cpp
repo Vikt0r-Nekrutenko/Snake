@@ -33,7 +33,10 @@ Signal GameModel::onUpdate(const float dt)
             m_foodModel.remove(snakeModel.target());
             snakeModel.setTarget(nullptr);
         }
-        snakeModel.onUpdate(dt);
+
+        if(!snakeModel.onUpdate(dt)) {
+            return Signal::end;
+        }
     }
     m_foodModel.onUpdate(dt);
 

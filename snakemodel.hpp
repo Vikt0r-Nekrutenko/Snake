@@ -11,6 +11,7 @@ constexpr float DURATION_STEP = 0.025f;
 constexpr int MAX_LENTH = 15;
 constexpr int MAX_LEVEL = 20;
 constexpr int LVLUP_STEP= 15;
+constexpr uint8_t DEF_LIFES = 3;
 }
 class Food;
 class SnakeModel
@@ -18,7 +19,7 @@ class SnakeModel
 public:
     SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
 
-    void onUpdate(const float dt);
+    bool onUpdate(const float dt);
     void keyEvents(const int key);
     void aiControl();
     void reset();
@@ -33,11 +34,12 @@ public:
     inline void S() { m_snake.setVel({0,+1}); }
     inline void D() { m_snake.setVel({+1,0}); }
 
-    inline uint16_t score()             const { return m_score;     }
-    inline uint16_t lvl()               const { return m_lvl;       }
-    inline bool aiIsEnable()            const { return m_aiIsEnable;}
-    inline const Food* target()         const { return m_target;    }
-    inline const Snake &snake()         const { return m_snake;     }
+    inline uint16_t lvl()       const { return m_lvl;       }
+    inline uint8_t lifes()      const { return m_lifes;     }
+    inline uint16_t score()     const { return m_score;     }
+    inline bool aiIsEnable()    const { return m_aiIsEnable;}
+    inline const Food* target() const { return m_target;    }
+    inline const Snake &snake() const { return m_snake;     }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
     inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_snake.body().at(nOfSeg); }
 
@@ -54,6 +56,7 @@ private:
     bool        m_aiIsEnable    = false;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
+    uint8_t     m_lifes         = snake_model_settings::DEF_LIFES;
 };
 
 

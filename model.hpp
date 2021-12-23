@@ -4,9 +4,9 @@
 #include <cstdint>
 #include <ctime>
 
-#include "food.hpp"
 #include "snake.hpp"
 #include "snakemodel.hpp"
+#include "foodmodel.hpp"
 
 enum class Signal : uint8_t
 {

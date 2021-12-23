@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         food.cpp \
+        foodmodel.cpp \
         main.cpp \
         model.cpp \
         snake.cpp \
@@ -18,6 +19,7 @@ DEPENDPATH += $$PWD/../stf
 
 HEADERS += \
     food.hpp \
+    foodmodel.hpp \
     model.hpp \
     snake.hpp \
     snakemodel.hpp \

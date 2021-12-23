@@ -8,6 +8,11 @@ Food::Food(const stf::Vec2d &lim1, const stf::Vec2d &lim2)
            stf::Random(time(0)).getNum(lim1.y, lim2.y)})
 { }
 
+Food::Food(const Food &food)
+    : m_pos(food.m_pos),
+      m_nutritionalValue(food.m_nutritionalValue)
+{}
+
 RegularFood::RegularFood(const stf::Vec2d &pos) : Food(pos)
 {
     m_nutritionalValue = stf::Random(0).getNum(1, 5);
@@ -38,11 +43,13 @@ MeatFood::MeatFood(const stf::Vec2d &lim1, const stf::Vec2d &lim2) : Food(lim1, 
     m_nutritionalValue = stf::Random(0).getNum(5, 10);
 }
 
-FoodModel::FoodModel(const stf::Vec2d &mapSize, const size_t activeEats) : m_mapSize(mapSize)
+FoodModel::FoodModel(const stf::Vec2d &mapSize, const size_t activeFoodCount)
+    : m_mapSize(mapSize),
+      m_possibleFoodCount(activeFoodCount)
 {
     m_food.resize(mapSize.x * mapSize.y, nullptr);
     size_t i = 0;
-    while(i++ < activeEats)
+    while(i++ < activeFoodCount)
         m_food[i] = new RegularFood({2,2}, mapSize-2);
 }
 
@@ -71,20 +78,26 @@ Food *FoodModel::nearestFood(const stf::Vec2d &pos) const {
     return nearFood;
 }
 
+void FoodModel::onUpdate(const float dt)
+{
+    pasteFood<RegularFood>({ {2,2},m_mapSize-2 });
+}
+
 void FoodModel::remove(Food *food) {
     for(size_t i = 0; i < m_food.size(); ++i)
-        if(food == m_food[i]) {
+        if(food == m_food[i] && food != nullptr) {
             delete m_food[i];
             m_food[i] = nullptr;
             food = nullptr;
+            --m_possibleFoodCount;
         }
 }
 
 void FoodModel::pasteFoodFromDeadSnake(const std::vector<stf::Vec2d> &snakeBody) {
+    m_possibleFoodCount += snakeBody.size();
     for(auto s : snakeBody)
         for(size_t i = 0; i < m_food.size(); ++i)
-            if(m_food[i] == nullptr)
-            {
+            if(m_food[i] == nullptr) {
                 m_food[i] = new MeatFood(s);
                 break;
             }

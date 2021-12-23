@@ -34,6 +34,8 @@ Signal GameModel::onUpdate(const float dt)
         }
         snakeMod.onUpdate(dt);
     }
+    m_foodModel.onUpdate(dt);
+
     return Signal::none;
 }
 

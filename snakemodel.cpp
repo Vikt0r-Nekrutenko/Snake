@@ -17,9 +17,6 @@ void SnakeModel::onUpdate(const float dt)
     {
         m_snake.update();
 
-        //            if(m_snake.isAteHerself())
-        //                m_snake.killSnake();
-
         m_snake.wrapping(2, 1, m_mapSize.x-1, m_mapSize.y-1);
         m_duration = 0.f;
     }

@@ -9,16 +9,11 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1)
                 renderer.drawPixel({x,y}, '*');
 
-    for(auto &snakeModel : m_model->snakeModels())
-    {    if(snakeModel.snake().isDead())
-            showDeadSnake(snakeModel.snake(), renderer, camera);
-        else
-            showSnake(snakeModel.snake(), renderer, camera);
-//        renderer.draw(snakeModel.segmet(0), "%d %d", snakeModel.targ->pos().x, snakeModel.targ->pos().y);
+    for(auto &snakeModel : m_model->snakeModels()) {
+        showSnake(snakeModel.snake(), renderer, camera);
     }
     for(auto food : m_model->foodModel().getPossibleFood())
         renderer.drawPixel(food->pos(), food->symbol());
-//    renderer.draw({10, 0}, "SCORE: %d LVL: %d", m_model->score(), m_model->lvl());
 }
 
 Signal GameView::keyEvents(const int key)

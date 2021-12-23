@@ -2,9 +2,10 @@
 #include <ctime>
 #include "food.hpp"
 
-SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
+SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos, bool aiIsEnabled)
     : m_snake(startPos),
-      m_mapSize(mapSize)
+      m_mapSize(mapSize),
+      m_aiIsEnabled(aiIsEnabled)
 {
 
 }

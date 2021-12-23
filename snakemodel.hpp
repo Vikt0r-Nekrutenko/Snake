@@ -17,7 +17,7 @@ class Food;
 class SnakeModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10}, bool aiIsEnabled = false);
 
     bool onUpdate(const float dt);
     void keyEvents(const int key);
@@ -37,7 +37,7 @@ public:
     inline uint16_t lvl()       const { return m_lvl;       }
     inline uint8_t lifes()      const { return m_lifes;     }
     inline uint16_t score()     const { return m_score;     }
-    inline bool aiIsEnable()    const { return m_aiIsEnable;}
+    inline bool aiIsEnabled()   const { return m_aiIsEnabled;}
     inline const Food* target() const { return m_target;    }
     inline const Snake &snake() const { return m_snake;     }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
@@ -53,7 +53,7 @@ private:
     stf::Vec2d  m_mapSize       = {0,0};
     float       m_duration      = 0.f;
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
-    bool        m_aiIsEnable    = false;
+    bool        m_aiIsEnabled    = false;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
     uint8_t     m_lifes         = snake_model_settings::DEF_LIFES;

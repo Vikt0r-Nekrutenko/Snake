@@ -6,8 +6,9 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_foodModel(mapSize),
       m_mapSize(mapSize)
 {
-    for(int i = 1; i < 2; ++i)
-        m_snakeModels.push_back(SnakeModel(mapSize, {i*10, 10}));
+    m_snakeModels.push_back(SnakeModel(mapSize, {10, 10}));
+    for(int i = 2; i < 3; ++i)
+        m_snakeModels.push_back(SnakeModel(mapSize, {i*10, 10}, true));
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -20,13 +21,12 @@ Signal GameModel::onUpdate(const float dt)
         }
     }
     for(auto &snakeModel : m_snakeModels) {
+        if(snakeModel.aiIsEnabled())
+            snakeModel.setTarget(m_foodModel.nearestFood(snakeModel.snake().head()));
+            snakeModel.aiControl();
+
         if(snakeModel.isAteHerself())
             kill(&snakeModel);
-
-        snakeModel.setTarget(m_foodModel.nearestFood(snakeModel.snake().head()));
-
-        if(snakeModel.aiIsEnable())
-            snakeModel.aiControl();
 
         if(snakeModel.isCollideWithTarget()) {
             snakeModel.collisionWithTargetHandler();
@@ -34,7 +34,7 @@ Signal GameModel::onUpdate(const float dt)
             snakeModel.setTarget(nullptr);
         }
 
-        if(!snakeModel.onUpdate(dt)) {
+        if(!snakeModel.onUpdate(dt) && snakeModel.aiIsEnabled()) {
             return Signal::end;
         }
     }

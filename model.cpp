@@ -7,7 +7,7 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
       m_mapSize(mapSize)
 {
     m_snakeModels.push_back(new Player(mapSize, {10, 10}));
-    for(int i = 2; i < 3; ++i)
+    for(int i = 2; i < 5; ++i)
         m_snakeModels.push_back(new Bot(mapSize, {i*10, 10}));
 }
 

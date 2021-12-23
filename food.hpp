@@ -5,7 +5,7 @@
 #include "vec2d.hpp"
 
 namespace food_model_settings {
-constexpr size_t DEF_ACTIVE_FOOD_COUNT = 10;
+constexpr size_t DEF_ACTIVE_FOOD_COUNT = 50;
 }
 
 class Food

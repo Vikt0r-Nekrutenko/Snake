@@ -16,10 +16,13 @@ public:
     const std::vector<Food *> getPossibleFood() const;
 
     Food* nearestFood(const stf::Vec2d& pos) const;
+    void pasteFoodFromDeadSnake(const std::vector<stf::Vec2d>& snakeBody);
     void onUpdate(const float dt);
     void remove(const Food *food);
-    void pasteFoodFromDeadSnake(const std::vector<stf::Vec2d>& snakeBody);
+    void reset();
+
 private:
+
     std::vector<Food *> m_food;
     stf::Vec2d m_mapSize;
     size_t m_possibleFoodCount = 0;

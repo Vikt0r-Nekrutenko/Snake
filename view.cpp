@@ -9,16 +9,17 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1)
                 renderer.drawPixel({x,y}, '*');
 
-    for(auto &snakeModel : m_model->snakeModels())
-        showSnake(snakeModel.snake(), renderer, camera);
+    for(auto snakeModel : m_model->snakeModels())
+        showSnake(snakeModel->snake(), renderer, camera);
 
     for(auto food : m_model->foodModel().getPossibleFood())
         renderer.drawPixel(food->pos(), food->symbol());
 
-        renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
-                      m_model->snakeModels().at(0).score(),
-                      m_model->snakeModels().at(0).lvl(),
-                      m_model->snakeModels().at(0).lifes());
+    const Player* player = dynamic_cast<const Player *>(m_model->snakeModels().at(0));
+    renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
+                  player->score(),
+                  player->lvl(),
+                  player->lifes());
 }
 
 Signal GameView::keyEvents(const int key)
@@ -64,8 +65,8 @@ EndView::EndView(GameModel *model) : GameView(model), m_end("end.spr") { }
 void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {
     m_end.show(renderer, renderer.Size / 2 - m_end.Size() / 2 - stf::Vec2d(0, 11));
-    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 0), "SCORE: %d", m_model->snakeModels().at(0).score());
-    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 2), "LEVEL: %d", m_model->snakeModels().at(0).lvl());
+    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 0), "SCORE: %d", m_model->snakeModels().at(0)->score());
+    renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 2), "LEVEL: %d", m_model->snakeModels().at(0)->lvl());
 }
 
 Signal EndView::keyEvents(const int key)

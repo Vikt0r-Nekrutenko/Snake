@@ -11,6 +11,8 @@ SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
 
 bool SnakeModel::onUpdate(const float dt)
 {
+    if(m_target == nullptr) return true;
+
     if(m_duration > m_lvlDuration)
     {
         m_snake.update();
@@ -36,6 +38,26 @@ bool SnakeModel::isAteHerself() const
     return m_snake.isAteHerself();
 }
 
+bool SnakeModel::isCollideWithTarget() const
+{
+    if(m_target == nullptr) return false;
+
+    if(m_snake.head().diff(m_target->pos()) < 1.f)
+        return true;
+    return false;
+}
+
+void SnakeModel::collisionWithTargetHandler()
+{
+    using namespace snake_model_settings;
+    m_snake.feed();
+    m_score += m_target->nutritionalValue();
+    if(m_lvl < MAX_LEVEL && m_snake.length() % LVLUP_STEP == 0) {
+        if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
+        ++m_lvl;
+    }
+}
+
 SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)
 {
     if(m_snake.isDead() || snakeMod->snake().isDead()) return nullptr;
@@ -54,6 +76,13 @@ SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)
     return nullptr;
 }
 
+
+Player::Player(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
+    : SnakeModel(mapSize, startPos)
+{
+
+}
+
 void Player::keyEvents(const int key)
 {
     switch (key) {
@@ -66,35 +95,26 @@ void Player::keyEvents(const int key)
 
 void Player::reset()
 {
-    SnakeModel::reset();
     --m_lifes;
+    if(m_lifes > 0) {
+        SnakeModel::reset();
+    } else if (m_lifes == -1) m_lifes = 4;
 }
 
-void Bot::aiControl()
+Bot::Bot(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
+    : SnakeModel(mapSize, startPos)
 {
-    if(m_target == nullptr) return;
+
+}
+
+bool Bot::onUpdate(const float dt)
+{
+    if(m_target == nullptr) return SnakeModel::onUpdate(dt);
+
     if(m_snake.head().x > m_target->pos().x) A();
     if(m_snake.head().x < m_target->pos().x) D();
     if(m_snake.head().y > m_target->pos().y) W();
     if(m_snake.head().y < m_target->pos().y) S();
-}
 
-bool Bot::isCollideWithTarget() const
-{
-    if(m_target == nullptr) return false;
-
-    if(m_snake.head().diff(m_target->pos()) < 1.f)
-        return true;
-    return false;
-}
-
-void Bot::collisionWithTargetHandler()
-{
-    using namespace snake_model_settings;
-    m_snake.feed();
-    m_score += m_target->nutritionalValue();
-    if(m_lvl < MAX_LEVEL && m_snake.length() % LVLUP_STEP == 0) {
-        if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
-        ++m_lvl;
-    }
+    return SnakeModel::onUpdate(dt);
 }

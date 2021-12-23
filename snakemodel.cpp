@@ -54,7 +54,7 @@ void SnakeModel::reset()
     m_lvl   = 1u;
 }
 
-bool SnakeModel::isCollideWithEat() const
+bool SnakeModel::isCollideWithTarget() const
 {
     if(targ == nullptr) return false;
 
@@ -68,11 +68,11 @@ bool SnakeModel::isAteHerself() const
     return m_snake.isAteHerself();
 }
 
-void SnakeModel::collisionWithEatHandler(uint8_t nutritionalValue)
+void SnakeModel::collisionWithTargetHandler()
 {
     using namespace snake_model_settings;
     if(m_snake.length() < MAX_LENTH) m_snake.feed();
-    m_score += nutritionalValue;
+    m_score += targ->nutritionalValue();
     if(m_score != 1 && m_lvl < MAX_LEVEL && m_score % LVLUP_STEP == 0) {
         if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
         ++m_lvl;

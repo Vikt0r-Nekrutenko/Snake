@@ -28,11 +28,9 @@ Signal GameModel::onUpdate(const float dt)
             snakeMod.aiControl();
         }
 
-        if(snakeMod.isCollideWithEat()) {
-            snakeMod.collisionWithEatHandler(snakeMod.targ->nutritionalValue());
-            delete snakeMod.targ;
+        if(snakeMod.isCollideWithTarget()) {
+            snakeMod.collisionWithTargetHandler();
             m_foodModel.remove(snakeMod.targ);
-            snakeMod.targ = nullptr;
         }
         snakeMod.onUpdate(dt);
     }
@@ -51,8 +49,6 @@ void GameModel::reset()
 {
     for(auto &snakeMod : snakeMods)
         snakeMod.reset();
-//    m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-    //                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
 }
 
 void GameModel::kill(SnakeModel* snakeMod)

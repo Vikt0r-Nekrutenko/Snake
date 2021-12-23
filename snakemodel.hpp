@@ -22,8 +22,8 @@ public:
     void keyEvents(const int key);
     void aiControl();
     void reset();
-    void collisionWithEatHandler(uint8_t nutritionalValue);
-    bool isCollideWithEat() const;
+    void collisionWithTargetHandler();
+    bool isCollideWithTarget() const;
     bool isAteHerself()                          const;
 
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);

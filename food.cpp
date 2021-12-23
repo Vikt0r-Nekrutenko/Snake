@@ -73,7 +73,11 @@ Food *FoodModel::nearestFood(const stf::Vec2d &pos) const {
 
 void FoodModel::remove(Food *food) {
     for(size_t i = 0; i < m_food.size(); ++i)
-        if(food == m_food[i]) m_food[i] = nullptr;
+        if(food == m_food[i]) {
+            delete m_food[i];
+            m_food[i] = nullptr;
+            food = nullptr;
+        }
 }
 
 void FoodModel::pasteFoodFromDeadSnake(const std::vector<stf::Vec2d> &snakeBody) {

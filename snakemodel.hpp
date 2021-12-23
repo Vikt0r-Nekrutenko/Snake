@@ -17,16 +17,12 @@ class Food;
 class SnakeModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10}, bool aiIsEnabled = false);
+    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
 
-    bool onUpdate(const float dt);
-    void keyEvents(const int key);
-    void aiControl();
-    void reset();
-    void collisionWithTargetHandler();
-    bool isCollideWithTarget() const;
-    bool isAteHerself()                          const;
+    virtual bool onUpdate(const float dt);
+    virtual void reset();
 
+    bool isAteHerself() const;
     SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);
 
     inline void W() { m_snake.setVel({0,-1}); }
@@ -35,29 +31,47 @@ public:
     inline void D() { m_snake.setVel({+1,0}); }
 
     inline uint16_t lvl()       const { return m_lvl;       }
-    inline uint8_t lifes()      const { return m_lifes;     }
     inline uint16_t score()     const { return m_score;     }
-    inline bool aiIsEnabled()   const { return m_aiIsEnabled;}
-    inline const Food* target() const { return m_target;    }
     inline const Snake &snake() const { return m_snake;     }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
     inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_snake.body().at(nOfSeg); }
 
-    inline void setTarget(Food* food) { m_target = food; }
-    inline void killSnake() { m_snake.setSnakeState(true); }
-    inline void rebornSnake() { m_snake.setSnakeState(false); }
-private:
+protected:
 
     Snake       m_snake;
-    Food*       m_target        = nullptr;
     stf::Vec2d  m_mapSize       = {0,0};
     float       m_duration      = 0.f;
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
-    bool        m_aiIsEnabled    = false;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
-    uint8_t     m_lifes         = snake_model_settings::DEF_LIFES;
 };
 
+class Player : public SnakeModel
+{
+public:
+    Player(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+
+    inline uint8_t lifes() const { return m_lifes; }
+    void keyEvents(const int key);
+    void reset() override;
+
+private:
+    uint8_t m_lifes = snake_model_settings::DEF_LIFES;
+};
+
+class Bot : public SnakeModel
+{
+public:
+    Bot(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+
+    void aiControl();
+    void collisionWithTargetHandler();
+    bool isCollideWithTarget() const;
+
+    inline const Food* target() const { return m_target; }
+    inline void setTarget(Food* food) { m_target = food; }
+private:
+    Food* m_target = nullptr;
+};
 
 #endif // SNAKEMODEL_HPP

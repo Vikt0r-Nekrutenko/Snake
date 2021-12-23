@@ -8,10 +8,10 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     for(int i = 0; i < 2; ++i)
         snakeMods.push_back(SnakeModel(mapSize, {i*10, 0}));
 
-    m_eats.resize(mapSize.x * mapSize.y);
+    m_eats.resize(mapSize.x * mapSize.y, nullptr);
     int i = 0;
     while(i++ < 10)
-        m_eats[i] = RegularEat({2,2}, mapSize-2);
+        m_eats[i] = new RegularEat({2,2}, mapSize-2);
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -28,8 +28,8 @@ Signal GameModel::onUpdate(const float dt)
         if(snakeMod.aiIsEnable()) {
 //            Eat *target = &m_eats.front();
             std::vector<const stf::Vec2d *> possibleEat;
-            for(auto &e : m_eats)
-                if(!e.isHidden()) possibleEat.push_back(&e.pos());
+            for(auto e : m_eats)
+                if(e != nullptr) possibleEat.push_back(&e->pos());
 
             snakeMod.targ = *possibleEat.front();
             for(auto eat : possibleEat) {
@@ -38,9 +38,9 @@ Signal GameModel::onUpdate(const float dt)
             }
             snakeMod.aiControl(snakeMod.targ);
         }
-        for(auto &eat : m_eats)
-            if(snakeMod.isCollideWithEat(eat.pos())) {
-                snakeMod.collisionWithEatHandler(eat.nutritionalValue());
+        for(auto eat : m_eats)
+            if(eat != nullptr && snakeMod.isCollideWithEat(eat->pos())) {
+                snakeMod.collisionWithEatHandler(eat->nutritionalValue());
 //                switch (eat.type()) {
 //                case EatType::super:
 //                case EatType::regular:  eat = Eat({2,2}, m_mapSize-2);  break;
@@ -83,9 +83,9 @@ void GameModel::kill(SnakeModel* snakeMod)
 void GameModel::pasteEat(const SnakeModel &snakeMod)
 {
     for(auto &segment : snakeMod.snake().body()) {
-        for(auto &emptyCell : m_eats) {
-            if(emptyCell.isHidden()) {
-                emptyCell = MeatEat(segment);
+        for(auto emptyCell : m_eats) {
+            if(emptyCell == nullptr) {
+                emptyCell = new MeatEat(segment);
                 break;
             }
         }

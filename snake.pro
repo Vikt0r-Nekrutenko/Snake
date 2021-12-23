@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        eat.cpp \
         main.cpp \
         model.cpp \
         snake.cpp \
@@ -16,6 +17,7 @@ INCLUDEPATH += $$PWD/../stf
 DEPENDPATH += $$PWD/../stf
 
 HEADERS += \
+    eat.hpp \
     model.hpp \
     snake.hpp \
     snakemodel.hpp \

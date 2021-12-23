@@ -9,8 +9,9 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1)
                 renderer.drawPixel({x,y}, '*');
 
-    for(auto snakeModel : m_model->snakeModels())
-        showSnake(snakeModel->snake(), renderer, camera);
+    showPlayerSnake(m_model->snakeModels().at(0)->snake(), renderer, camera);
+    for(size_t s = 1; s < m_model->snakeModels().size(); ++s)
+        showSnake(m_model->snakeModels().at(s)->snake(), renderer, camera);
 
     for(auto food : m_model->foodModel().getPossibleFood())
         renderer.drawPixel(food->pos(), food->symbol());
@@ -30,14 +31,15 @@ Signal GameView::keyEvents(const int key)
 void GameView::showSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera)
 {
     for(size_t i = 0; i < snake.body().size(); ++i) {
-        renderer.drawPixel(snake.body().at(i), i % 2 ? 'X' : 'O');
+        renderer.drawPixel(snake.body().at(i), i % 2 ? 'x' : 'o');
     }
 }
 
-void GameView::showDeadSnake(const Snake &deadSnake, stf::Renderer &renderer, const stf::Vec2d &camera)
+void GameView::showPlayerSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera)
 {
-    for(auto &s : deadSnake.body())
-        renderer.drawPixel(s, '+');
+    for(size_t i = 0; i < snake.body().size(); ++i) {
+        renderer.drawPixel(snake.body().at(i), i % 2 ? 'X' : 'O');
+    }
 }
 
 MenuView::MenuView() : m_menu("menu.spr"), m_bgrnd("bgrnd.spr") { }

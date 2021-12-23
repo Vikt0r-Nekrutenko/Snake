@@ -36,16 +36,18 @@ public:
     inline uint16_t score()             const { return m_score;     }
     inline uint16_t lvl()               const { return m_lvl;       }
     inline bool aiIsEnable()            const { return m_aiIsEnable;}
+    inline const Food* target()         const { return m_target;    }
     inline const Snake &snake()         const { return m_snake;     }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
     inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_snake.body().at(nOfSeg); }
 
+    inline void setTarget(Food* food) { m_target = food; }
     inline void killSnake() { m_snake.setSnakeState(true); }
     inline void rebornSnake() { m_snake.setSnakeState(false); }
-Food* targ = nullptr;
 private:
 
     Snake       m_snake;
+    Food*       m_target        = nullptr;
     stf::Vec2d  m_mapSize       = {0,0};
     float       m_duration      = 0.f;
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;

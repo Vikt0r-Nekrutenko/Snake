@@ -45,12 +45,11 @@ void FoodModel::onUpdate(const float dt)
         pasteFood<RegularFood>({ {2,2},m_mapSize-2 });
 }
 
-void FoodModel::remove(Food *food) {
+void FoodModel::remove(const Food *food) {
     for(size_t i = 0; i < m_food.size(); ++i)
         if(food == m_food[i] && food != nullptr) {
             delete m_food[i];
             m_food[i] = nullptr;
-            food = nullptr;
             --m_possibleFoodCount;
         }
 }

@@ -7,32 +7,33 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
       m_mapSize(mapSize)
 {
     for(int i = 1; i < 3; ++i)
-        snakeMods.push_back(SnakeModel(mapSize, {i*10, 10}));
+        m_snakeModels.push_back(SnakeModel(mapSize, {i*10, 10}));
 }
 
 Signal GameModel::onUpdate(const float dt)
 {
-    for(size_t s = 0; s < snakeModels().size() - 1; ++s) {
-        for (size_t s1 = s+1; s1 < snakeModels().size(); ++s1) {
-            SnakeModel* deadSnake = snakeMods.at(s).collisionWithSnakeHandler(&snakeMods.at(s1));
+    for(size_t s = 0; s < m_snakeModels.size() - 1; ++s) {
+        for (size_t s1 = s+1; s1 < m_snakeModels.size(); ++s1) {
+            SnakeModel* deadSnake = m_snakeModels.at(s).collisionWithSnakeHandler(&m_snakeModels.at(s1));
             if(deadSnake != nullptr)
                 kill(deadSnake);
         }
     }
-    for(auto &snakeMod : snakeMods) {
-        if(snakeMod.isAteHerself())
-            kill(&snakeMod);
+    for(auto &snakeModel : m_snakeModels) {
+        if(snakeModel.isAteHerself())
+            kill(&snakeModel);
 
-        if(snakeMod.aiIsEnable()) {
-            snakeMod.targ = m_foodModel.nearestFood(snakeMod.snake().head());
-            snakeMod.aiControl();
+        if(snakeModel.aiIsEnable()) {
+            snakeModel.setTarget(m_foodModel.nearestFood(snakeModel.snake().head()));
+            snakeModel.aiControl();
         }
 
-        if(snakeMod.isCollideWithTarget()) {
-            snakeMod.collisionWithTargetHandler();
-            m_foodModel.remove(snakeMod.targ);
+        if(snakeModel.isCollideWithTarget()) {
+            snakeModel.collisionWithTargetHandler();
+            m_foodModel.remove(snakeModel.target());
+            snakeModel.setTarget(nullptr);
         }
-        snakeMod.onUpdate(dt);
+        snakeModel.onUpdate(dt);
     }
     m_foodModel.onUpdate(dt);
 
@@ -41,21 +42,20 @@ Signal GameModel::onUpdate(const float dt)
 
 Signal GameModel::keyEvents(const int key)
 {
-    for(auto &snakeMod : snakeMods)
-        snakeMod.keyEvents(key);
+    for(auto &snakeModel : m_snakeModels)
+        snakeModel.keyEvents(key);
     if(key == ' ') return Signal::pause;
     return Signal::none;
 }
 
 void GameModel::reset()
 {
-    for(auto &snakeMod : snakeMods)
-        snakeMod.reset();
+    for(auto &snakeModel : m_snakeModels)
+        snakeModel.reset();
 }
 
-void GameModel::kill(SnakeModel* snakeMod)
+void GameModel::kill(SnakeModel* snakeModel)
 {
-    snakeMod->killSnake();
-    m_foodModel.pasteFoodFromDeadSnake(snakeMod->snake().body());
-    snakeMod->reset();
+    m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake().body());
+    snakeModel->reset();
 }

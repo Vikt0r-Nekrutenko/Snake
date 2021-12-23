@@ -35,11 +35,11 @@ void SnakeModel::keyEvents(const int key)
 
 void SnakeModel::aiControl()
 {
-    if(targ == nullptr) return;
-    if(m_snake.head().x > targ->pos().x) A();
-    if(m_snake.head().x < targ->pos().x) D();
-    if(m_snake.head().y > targ->pos().y) W();
-    if(m_snake.head().y < targ->pos().y) S();
+    if(m_target == nullptr) return;
+    if(m_snake.head().x > m_target->pos().x) A();
+    if(m_snake.head().x < m_target->pos().x) D();
+    if(m_snake.head().y > m_target->pos().y) W();
+    if(m_snake.head().y < m_target->pos().y) S();
 }
 
 void SnakeModel::reset()
@@ -53,9 +53,9 @@ void SnakeModel::reset()
 
 bool SnakeModel::isCollideWithTarget() const
 {
-    if(targ == nullptr) return false;
+    if(m_target == nullptr) return false;
 
-    if(m_snake.head().diff(targ->pos()) < 1.f)
+    if(m_snake.head().diff(m_target->pos()) < 1.f)
         return true;
     return false;
 }
@@ -68,9 +68,9 @@ bool SnakeModel::isAteHerself() const
 void SnakeModel::collisionWithTargetHandler()
 {
     using namespace snake_model_settings;
-    if(m_snake.length() < MAX_LENTH) m_snake.feed();
-    m_score += targ->nutritionalValue();
-    if(m_score != 1 && m_lvl < MAX_LEVEL && m_score % LVLUP_STEP == 0) {
+    m_snake.feed();
+    m_score += m_target->nutritionalValue();
+    if(m_score != 1 && m_lvl < MAX_LEVEL && m_snake.length() % LVLUP_STEP == 0) {
         if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
         ++m_lvl;
     }

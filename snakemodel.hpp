@@ -18,7 +18,7 @@ class SnakeModel
 {
 public:
     SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
-
+    virtual ~SnakeModel() = default;
     virtual bool onUpdate(const float dt);
     virtual void reset();
 

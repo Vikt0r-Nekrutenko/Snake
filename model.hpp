@@ -17,6 +17,7 @@ class GameModel
 {
 public:
     GameModel(const stf::Vec2d& mapSize);
+    ~GameModel();
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);

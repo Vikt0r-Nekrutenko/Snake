@@ -23,7 +23,9 @@ public:
             if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
             }
-        current->show(renderer);
+        current->show(renderer, {0,0});
+//        current->show(renderer, Vec2d(camera.x, camera.y));
+//        camUpdate(Vec2f(model.snakeModels().at(0)->segmet(0).x, model.snakeModels().at(0)->segmet(0).y), {0,0});
 
         return gameIsContinue;
     }

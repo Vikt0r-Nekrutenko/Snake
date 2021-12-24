@@ -98,7 +98,7 @@ void Player::reset()
     --m_lifes;
     if(m_lifes > 0) {
         SnakeModel::reset();
-    } else if (m_lifes == -1) m_lifes = 4;
+    }
 }
 
 Bot::Bot(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)

@@ -11,6 +11,14 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
         m_snakeModels.push_back(new Bot(mapSize, {i*10, 10}));
 }
 
+GameModel::~GameModel()
+{
+    for(size_t i = 0; i < m_snakeModels.size(); ++i) {
+        delete m_snakeModels[i];
+    }
+    m_snakeModels.clear();
+}
+
 Signal GameModel::onUpdate(const float dt)
 {
     for(size_t s = 0; s < m_snakeModels.size() - 1; ++s) {
@@ -47,8 +55,14 @@ Signal GameModel::keyEvents(const int key)
 
 void GameModel::reset()
 {
-    for(auto snakeModel : m_snakeModels)
-        snakeModel->reset();
+    for(size_t i = 0; i < m_snakeModels.size(); ++i) {
+        delete m_snakeModels[i];
+    }
+    m_snakeModels.clear();
+
+    m_snakeModels.push_back(new Player(m_mapSize, {10, 10}));
+    for(int i = 2; i < 5; ++i)
+        m_snakeModels.push_back(new Bot(m_mapSize, {i*10, 10}));
     m_foodModel.reset();
 }
 

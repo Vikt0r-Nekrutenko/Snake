@@ -60,8 +60,6 @@ void SnakeModel::collisionWithTargetHandler()
 
 SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)
 {
-    if(m_snake.isDead() || snakeMod->snake().isDead()) return nullptr;
-
     for(size_t s1 = 0; s1 < m_snake.length(); ++s1) {
         for (size_t s2 = 0; s2 < snakeMod->m_snake.length(); ++s2) {
             if(m_snake.isSegmetOverlapped(s1, snakeMod->segmet(s2))) {

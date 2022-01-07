@@ -11,19 +11,24 @@ FoodModel::FoodModel(const stf::Vec2d &mapSize, const size_t activeFoodCount)
 {
     m_food.resize(mapSize.x * mapSize.y, nullptr);
     size_t i = 0;
-    while(i++ < activeFoodCount)
+    while(i++ < activeFoodCount) {
         m_food[i] = new RegularFood({2,2}, mapSize-2);
+    }
 }
 
 FoodModel::~FoodModel() {
-    for(size_t i = 0; i < m_food.size(); ++i) delete  m_food[i];
+    for(size_t i = 0; i < m_food.size(); ++i) {
+        delete  m_food[i];
+    }
 }
 
 const std::vector<Food *> FoodModel::getPossibleFood() const {
     std::vector<Food *> possibleFood;
-    for(size_t i = 0; i < m_food.size(); ++i)
-        if(m_food.at(i) != nullptr)
+    for(size_t i = 0; i < m_food.size(); ++i) {
+        if(m_food.at(i) != nullptr) {
             possibleFood.push_back(m_food.at(i));
+        }
+    }
     return possibleFood;
 }
 

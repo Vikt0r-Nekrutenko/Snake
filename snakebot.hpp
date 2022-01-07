@@ -9,7 +9,7 @@ public:
     ~SnakeBotModel() = default;
 
     void reset() override;
-    bool isAteHerself() const;
+    bool onUpdate(const float dt) override;
 };
 
 #endif // SNAKEBOT_HPP

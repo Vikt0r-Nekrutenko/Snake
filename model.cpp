@@ -31,16 +31,13 @@ Signal GameModel::onUpdate(const float dt)
     }
     for(auto hunterModel : m_hunterModels) {
         hunterModel->setTarget(m_foodModel.nearestFood(hunterModel->hunter()->head()));
-
-//        if(hunterModel->isAteHerself())
-//            killSnakeHandler(hunterModel);
-
         if(hunterModel->isCollideWithTarget()) {
             hunterModel->collisionWithTargetHandler();
             m_foodModel.remove(hunterModel->target());
             hunterModel->setTarget(nullptr);
         }
-        hunterModel->onUpdate(dt);
+        if(!hunterModel->onUpdate(dt))
+            killHunterHandler(hunterModel);
     }
     m_foodModel.onUpdate();
 
@@ -50,11 +47,11 @@ Signal GameModel::onUpdate(const float dt)
 
 Signal GameModel::keyEvents(const int key)
 {
-//    static_cast<Player *>(m_snakeModels.at(0))->keyEvents(key);
+    static_cast<Player *>(m_hunterModels.at(0))->keyEvents(key);
 
-//    if(key == ' ') {
-//        return Signal::pause;
-//    }
+    if(key == ' ') {
+        return Signal::pause;
+    }
 
     return Signal::none;
 }

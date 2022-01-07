@@ -23,13 +23,13 @@ Signal GameModel::onUpdate(const float dt)
 {
     for(size_t s = 0; s < m_snakeModels.size() - 1; ++s) {
         for (size_t s1 = s+1; s1 < m_snakeModels.size(); ++s1) {
-            SnakeModel* deadSnake = m_snakeModels.at(s)->collisionWithSnakeHandler(m_snakeModels.at(s1));
+            SnakeModel* deadSnake = (SnakeModel *)m_snakeModels.at(s)->collisionWithEntityHandler(m_snakeModels.at(s1));
             if(deadSnake != nullptr)
                 kill(deadSnake);
         }
     }
     for(auto snakeModel : m_snakeModels) {
-        snakeModel->setTarget(m_foodModel.nearestFood(snakeModel->snake().head()));
+        snakeModel->setTarget(m_foodModel.nearestFood(snakeModel->snake()->head()));
 
         if(snakeModel->isAteHerself())
             kill(snakeModel);
@@ -68,6 +68,6 @@ void GameModel::reset()
 
 void GameModel::kill(SnakeModel* snakeModel)
 {
-    m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake().body());
+    m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake()->body());
     snakeModel->reset();
 }

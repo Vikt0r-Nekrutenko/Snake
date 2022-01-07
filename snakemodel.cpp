@@ -3,10 +3,9 @@
 #include "food.hpp"
 
 SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
-    : m_snake(startPos),
-      m_mapSize(mapSize)
+    : SegmentedEntityModel(mapSize)
 {
-
+    m_entity = new Snake(startPos);
 }
 
 bool SnakeModel::onUpdate(const float dt)
@@ -15,9 +14,9 @@ bool SnakeModel::onUpdate(const float dt)
 
     if(m_duration > m_lvlDuration)
     {
-        m_snake.update();
+        m_entity->update();
 
-        m_snake.wrapping(2, 1, m_mapSize.x-1, m_mapSize.y-1);
+        m_entity->wrapping(2, 1, m_mapSize.x-1, m_mapSize.y-1);
         m_duration = 0.f;
     }
     m_duration += dt;
@@ -26,8 +25,8 @@ bool SnakeModel::onUpdate(const float dt)
 
 void SnakeModel::reset()
 {
-    m_snake = Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
-                     stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
+    m_entity = new Snake({stf::Random(time(0)).getNum(2, m_mapSize.x-2),
+                          stf::Random(time(0)).getNum(2, m_mapSize.y-2)});
     m_lvlDuration = snake_model_settings::MAX_DURATION;
     m_score = 0u;
     m_lvl   = 1u;
@@ -35,14 +34,20 @@ void SnakeModel::reset()
 
 bool SnakeModel::isAteHerself() const
 {
-    return m_snake.isAteHerself();
+    return snake()->isAteHerself();
 }
 
-bool SnakeModel::isCollideWithTarget() const
+SegmentedEntityModel::SegmentedEntityModel(const stf::Vec2d &mapSize)
+    : m_mapSize(mapSize)
+{
+
+}
+
+bool SegmentedEntityModel::isCollideWithTarget() const
 {
     if(m_target == nullptr) return false;
 
-    if(m_snake.head().diff(m_target->pos()) < 1.f)
+    if(m_entity->head().diff(m_target->pos()) < 1.f)
         return true;
     return false;
 }
@@ -50,20 +55,20 @@ bool SnakeModel::isCollideWithTarget() const
 void SnakeModel::collisionWithTargetHandler()
 {
     using namespace snake_model_settings;
-    m_snake.feed();
+    m_entity->feed();
     m_score += m_target->nutritionalValue();
-    if(m_lvl < MAX_LEVEL && m_snake.length() % LVLUP_STEP == 0) {
+    if(m_lvl < MAX_LEVEL && m_entity->length() % LVLUP_STEP == 0) {
         if(m_lvlDuration > MIN_DURATION) m_lvlDuration -= DURATION_STEP;
         ++m_lvl;
     }
 }
 
-SnakeModel *SnakeModel::collisionWithSnakeHandler(SnakeModel *snakeMod)
+SegmentedEntityModel *SnakeModel::collisionWithEntityHandler(SegmentedEntityModel *snakeMod)
 {
-    for(size_t s1 = 0; s1 < m_snake.length(); ++s1) {
-        for (size_t s2 = 0; s2 < snakeMod->m_snake.length(); ++s2) {
-            if(m_snake.isSegmetOverlapped(s1, snakeMod->segmet(s2))) {
-                if(m_score > snakeMod->score()) {
+    for(size_t s1 = 0; s1 < m_entity->length(); ++s1) {
+        for (size_t s2 = 0; s2 < (*snakeMod)()->length(); ++s2) {
+            if(m_entity->isSegmetOverlapped(s1, snakeMod->segmet(s2))) {
+                if(m_score > (*snakeMod)()->length()) {
                     return snakeMod;
                 } else {
                     return this;
@@ -109,10 +114,10 @@ bool Bot::onUpdate(const float dt)
 {
     if(m_target == nullptr) return SnakeModel::onUpdate(dt);
 
-    if(m_snake.head().x > m_target->pos().x) A();
-    if(m_snake.head().x < m_target->pos().x) D();
-    if(m_snake.head().y > m_target->pos().y) W();
-    if(m_snake.head().y < m_target->pos().y) S();
+    if(m_entity->head().x > m_target->pos().x) A();
+    if(m_entity->head().x < m_target->pos().x) D();
+    if(m_entity->head().y > m_target->pos().y) W();
+    if(m_entity->head().y < m_target->pos().y) S();
 
     return SnakeModel::onUpdate(dt);
 }

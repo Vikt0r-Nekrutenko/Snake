@@ -14,40 +14,59 @@ constexpr int LVLUP_STEP= 15;
 constexpr uint8_t DEF_LIFES = 3;
 }
 class Food;
-class SnakeModel
+
+class SegmentedEntityModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
-    virtual ~SnakeModel() = default;
-    virtual bool onUpdate(const float dt);
-    virtual void reset();
+    SegmentedEntityModel(const stf::Vec2d& mapSize);
+    virtual ~SegmentedEntityModel() = default;
+    virtual bool onUpdate(const float dt) = 0;
+    virtual void reset() = 0;
 
-    void collisionWithTargetHandler();
+    virtual void collisionWithTargetHandler() = 0;
     bool isCollideWithTarget() const;
 
     inline const Food* target() const { return m_target; }
     inline void setTarget(Food* food) { m_target = food; }
 
-    bool isAteHerself() const;
-    SnakeModel* collisionWithSnakeHandler(SnakeModel* snakeMod);
+    virtual SegmentedEntityModel* collisionWithEntityHandler(SegmentedEntityModel* snakeMod) = 0;
 
-    inline void W() { m_snake.setVel({0,-1}); }
-    inline void A() { m_snake.setVel({-1,0}); }
-    inline void S() { m_snake.setVel({0,+1}); }
-    inline void D() { m_snake.setVel({+1,0}); }
+    inline void W() { m_entity->setVel({0,-1}); }
+    inline void A() { m_entity->setVel({-1,0}); }
+    inline void S() { m_entity->setVel({0,+1}); }
+    inline void D() { m_entity->setVel({+1,0}); }
 
-    inline uint16_t lvl()       const { return m_lvl;       }
-    inline uint16_t score()     const { return m_score;     }
-    inline const Snake &snake() const { return m_snake;     }
+    inline SegmentedEntity* operator()()                  { return m_entity; }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
-    inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_snake.body().at(nOfSeg); }
+    inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_entity->body().at(nOfSeg); }
 
 protected:
 
-    Snake       m_snake;
+    SegmentedEntity* m_entity = nullptr;
     stf::Vec2d  m_mapSize       = {0,0};
     Food*       m_target = nullptr;
     float       m_duration      = 0.f;
+};
+
+class SnakeModel : public SegmentedEntityModel
+{
+public:
+    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+    virtual ~SnakeModel() = default;
+    bool onUpdate(const float dt) override;
+    void reset() override;
+
+    bool isAteHerself() const;
+    void collisionWithTargetHandler() override;
+//    SegmentedEntityModel* collisionWithSnakeHandler(SegmentedEntityModel* snakeMod) override;
+    SegmentedEntityModel* collisionWithEntityHandler(SegmentedEntityModel* snakeMod) override;
+
+    inline uint16_t lvl()       const { return m_lvl;       }
+    inline uint16_t score()     const { return m_score;     }
+    inline const Snake* snake() const { return dynamic_cast<Snake *>(m_entity);     }
+
+protected:
+
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;

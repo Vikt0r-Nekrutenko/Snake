@@ -9,9 +9,9 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
             if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1)
                 renderer.drawPixel(stf::Vec2d(x,y) - camera, '*');
 
-    showPlayerSnake(m_model->snakeModels().at(0)->snake(), renderer, camera);
+    showPlayerSnake(*m_model->snakeModels().at(0)->snake(), renderer, camera);
     for(size_t s = 1; s < m_model->snakeModels().size(); ++s)
-        showSnake(m_model->snakeModels().at(s)->snake(), renderer, camera);
+        showSnake(*m_model->snakeModels().at(s)->snake(), renderer, camera);
 
     for(auto food : m_model->foodModel().getPossibleFood())
         renderer.drawPixel(food->pos() - camera, food->symbol());

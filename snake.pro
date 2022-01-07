@@ -11,6 +11,7 @@ SOURCES += \
         regularfood.cpp \
         snake.cpp \
         snakemodel.cpp \
+        superfood.cpp \
         view.cpp
 
 unix:!macx|win32: LIBS += -L$$PWD/../stf/release/ -lstf
@@ -25,4 +26,5 @@ HEADERS += \
     regularfood.h \
     snake.hpp \
     snakemodel.hpp \
+    superfood.hpp \
     view.hpp

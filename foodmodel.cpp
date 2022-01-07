@@ -1,4 +1,7 @@
 #include "foodmodel.hpp"
+#include "regularfood.hpp"
+#include "superfood.hpp"
+#include "meatfood.hpp"
 #include "random.hpp"
 #include <ctime>
 

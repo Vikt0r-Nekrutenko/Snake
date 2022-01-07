@@ -7,8 +7,9 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
       m_mapSize(mapSize)
 {
     m_snakeModels.push_back(new Player(mapSize, {10, 10}));
-    for(int i = 2; i < 5; ++i)
+    for(int i = 2; i < 5; ++i) {
         m_snakeModels.push_back(new Bot(mapSize, {i*10, 10}));
+    }
 }
 
 GameModel::~GameModel()
@@ -24,8 +25,9 @@ Signal GameModel::onUpdate(const float dt)
     for(size_t s = 0; s < m_snakeModels.size() - 1; ++s) {
         for (size_t s1 = s+1; s1 < m_snakeModels.size(); ++s1) {
             SnakeModel* deadSnake = (SnakeModel *)m_snakeModels.at(s)->collisionWithEntityHandler(m_snakeModels.at(s1));
-            if(deadSnake != nullptr)
+            if(deadSnake != nullptr) {
                 kill(deadSnake);
+            }
         }
     }
     for(auto snakeModel : m_snakeModels) {
@@ -41,7 +43,7 @@ Signal GameModel::onUpdate(const float dt)
         }
         snakeModel->onUpdate(dt);
     }
-    m_foodModel.onUpdate(dt);
+    m_foodModel.onUpdate();
 
     return dynamic_cast<Player*>(m_snakeModels.at(0))->lifes() != 0 ? Signal::none : Signal::end;
 }

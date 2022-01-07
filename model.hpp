@@ -25,8 +25,8 @@ public:
     void kill(SnakeModel *snakeMod);
 
 
-    inline const FoodModel& foodModel()                  const { return m_foodModel;}
-    inline const stf::Vec2d& mapSize()                  const { return m_mapSize;}
+    inline const FoodModel& foodModel()                   const { return m_foodModel;}
+    inline const stf::Vec2d& mapSize()                    const { return m_mapSize;}
     inline const std::vector<SnakeModel *>& snakeModels() const { return m_snakeModels; }
 private:
     std::vector<SnakeModel *> m_snakeModels;

@@ -1,8 +1,7 @@
 #ifndef SNAKE_HPP
 #define SNAKE_HPP
 
-#include <vector>
-#include "vec2d.hpp"
+#include "segmentedentity.hpp"
 
 
 

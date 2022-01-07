@@ -7,7 +7,6 @@
 class SegmentedEntity
 {
 public:
-    SegmentedEntity(const stf::Vec2d startPos = { 10, 10 });
     virtual ~SegmentedEntity() = default;
     virtual void update() = 0;
     virtual void feed() = 0;

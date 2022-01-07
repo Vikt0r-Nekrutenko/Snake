@@ -29,11 +29,12 @@ private:
 
     template<class t> void pasteFood(const t food)
     {
-        for(size_t i = 0; i < m_food.size() && m_possibleFoodCount < food_model_settings::DEF_ACTIVE_FOOD_COUNT; ++i)
+        for(size_t i = 0; i < m_food.size() && m_possibleFoodCount < food_model_settings::DEF_ACTIVE_FOOD_COUNT; ++i) {
             if(m_food[i] == nullptr) {
                 m_food[i] = new t(food);
                 ++m_possibleFoodCount;
             }
+        }
     }
 };
 

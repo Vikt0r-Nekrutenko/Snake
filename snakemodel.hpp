@@ -17,7 +17,7 @@ constexpr uint8_t DEF_LIFES = 3;
 class SnakeModel : public SegmentedEntityModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = snake_settings::DEF_START_POS);
     virtual ~SnakeModel() = default;
     bool onUpdate(const float dt) override;
     void reset() override;

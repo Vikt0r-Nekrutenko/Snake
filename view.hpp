@@ -26,14 +26,6 @@ private:
     uint8_t m_selector = 0;
 };
 
-class EndView : public GameView
-{
-public:
-    EndView(GameModel* model);
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
-private:
-    stf::Sprite m_end;
-};
+
 
 #endif // VIEW_HPP

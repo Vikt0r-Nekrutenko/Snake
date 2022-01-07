@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         bot.cpp \
+        endview.cpp \
         food.cpp \
         foodmodel.cpp \
         gameview.cpp \
@@ -28,6 +29,7 @@ DEPENDPATH += $$PWD/../stf
 
 HEADERS += \
     bot.hpp \
+    endview.hpp \
     food.hpp \
     foodmodel.hpp \
     gameview.hpp \

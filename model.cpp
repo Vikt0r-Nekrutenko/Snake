@@ -78,3 +78,9 @@ void GameModel::killSnakeHandler(SnakeModel* snakeModel)
     m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake()->body());
     snakeModel->reset();
 }
+
+void GameModel::killHunterHandler(HunterModel *hunterModel)
+{
+    m_foodModel.pasteFoodFromDeadSnake(hunterModel->hunter()->body());
+    hunterModel->reset();
+}

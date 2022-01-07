@@ -26,6 +26,7 @@ public:
 
     inline uint16_t lvl()       const { return m_lvl;       }
     inline uint16_t score()     const { return m_score;     }
+    inline SegmentedEntity* hunter()     const { return m_entity;    }
 
 protected:
 

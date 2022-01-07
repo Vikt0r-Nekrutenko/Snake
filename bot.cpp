@@ -1,10 +1,10 @@
 #include "bot.hpp"
 
-Bot::Bot(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
+BotModel::BotModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
     : HunterModel(mapSize)
 {}
 
-bool Bot::onUpdate(const float dt)
+bool BotModel::onUpdate(const float dt)
 {
     if(m_target == nullptr) return HunterModel::onUpdate(dt);
 

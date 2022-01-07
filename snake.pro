@@ -15,11 +15,13 @@ SOURCES += \
         menuview.cpp \
         model.cpp \
         mouse.cpp \
+        mousebot.cpp \
         player.cpp \
         regularfood.cpp \
         segmentedentity.cpp \
         segmentedentitymodel.cpp \
         snake.cpp \
+        snakebot.cpp \
         snakemodel.cpp \
         superfood.cpp
 
@@ -39,11 +41,13 @@ HEADERS += \
     menuview.hpp \
     model.hpp \
     mouse.hpp \
+    mousebot.hpp \
     player.hpp \
     regularfood.hpp \
     segmentedentity.hpp \
     segmentedentitymodel.hpp \
     snake.hpp \
+    snakebot.hpp \
     snakemodel.hpp \
     superfood.hpp \
     view.hpp

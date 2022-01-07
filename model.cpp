@@ -1,6 +1,7 @@
 #include "model.hpp"
 #include "player.hpp"
-#include "bot.hpp"
+#include "mousebot.hpp"
+#include "snakebot.hpp"
 #include <ctime>
 
 GameModel::GameModel(const stf::Vec2d &mapSize)
@@ -67,8 +68,11 @@ void GameModel::reset()
     m_hunterModels.clear();
 
     m_hunterModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
-    for(int i = 2; i < 5; ++i) {
-        m_hunterModels.push_back(new MouseBot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+    for(int i = 2; i < 3; ++i) {
+        m_hunterModels.push_back(new MouseBotModel(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+    }
+    for(int i = 3; i < 4; ++i) {
+        m_hunterModels.push_back(new SnakeBotModel(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
     }
 
     m_foodModel.reset();

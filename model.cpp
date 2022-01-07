@@ -26,7 +26,7 @@ Signal GameModel::onUpdate(const float dt)
         for (size_t s1 = s+1; s1 < m_snakeModels.size(); ++s1) {
             SnakeModel* deadSnake = (SnakeModel *)m_snakeModels.at(s)->collisionWithEntityHandler(m_snakeModels.at(s1));
             if(deadSnake != nullptr) {
-                kill(deadSnake);
+                killSnakeHandler(deadSnake);
             }
         }
     }
@@ -34,7 +34,7 @@ Signal GameModel::onUpdate(const float dt)
         snakeModel->setTarget(m_foodModel.nearestFood(snakeModel->snake()->head()));
 
         if(snakeModel->isAteHerself())
-            kill(snakeModel);
+            killSnakeHandler(snakeModel);
 
         if(snakeModel->isCollideWithTarget()) {
             snakeModel->collisionWithTargetHandler();
@@ -64,15 +64,19 @@ void GameModel::reset()
     for(size_t i = 0; i < m_snakeModels.size(); ++i) {
         delete m_snakeModels[i];
     }
+
     m_snakeModels.clear();
 
     m_snakeModels.push_back(new Player(m_mapSize, {10, 10}));
-    for(int i = 2; i < 5; ++i)
+
+    for(int i = 2; i < 5; ++i) {
         m_snakeModels.push_back(new Bot(m_mapSize, {i*10, 10}));
+    }
+
     m_foodModel.reset();
 }
 
-void GameModel::kill(SnakeModel* snakeModel)
+void GameModel::killSnakeHandler(SnakeModel* snakeModel)
 {
     m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake()->body());
     snakeModel->reset();

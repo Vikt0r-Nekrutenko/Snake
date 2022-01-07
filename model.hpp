@@ -22,7 +22,7 @@ public:
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
     void reset();
-    void kill(SnakeModel *snakeMod);
+    void killSnakeHandler(SnakeModel *snakeMod);
 
 
     inline const FoodModel& foodModel()                   const { return m_foodModel;}

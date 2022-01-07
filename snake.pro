@@ -12,6 +12,7 @@ SOURCES += \
         mouse.cpp \
         regularfood.cpp \
         segmentedentity.cpp \
+        segmentedentitymodel.cpp \
         snake.cpp \
         snakemodel.cpp \
         superfood.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     mouse.hpp \
     regularfood.hpp \
     segmentedentity.hpp \
+    segmentedentitymodel.hpp \
     snake.hpp \
     snakemodel.hpp \
     superfood.hpp \

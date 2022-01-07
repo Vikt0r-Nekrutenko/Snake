@@ -1,6 +1,6 @@
 #include "snakemodel.hpp"
 #include <ctime>
-#include "food.hpp"
+#include "random.hpp"
 
 SnakeModel::SnakeModel(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
     : SegmentedEntityModel(mapSize)
@@ -35,21 +35,6 @@ void SnakeModel::reset()
 bool SnakeModel::isAteHerself() const
 {
     return snake()->isAteHerself();
-}
-
-SegmentedEntityModel::SegmentedEntityModel(const stf::Vec2d &mapSize)
-    : m_mapSize(mapSize)
-{
-
-}
-
-bool SegmentedEntityModel::isCollideWithTarget() const
-{
-    if(m_target == nullptr) return false;
-
-    if(m_entity->head().diff(m_target->pos()) < 1.f)
-        return true;
-    return false;
 }
 
 void SnakeModel::collisionWithTargetHandler()

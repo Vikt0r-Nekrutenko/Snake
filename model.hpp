@@ -5,7 +5,7 @@
 #include <ctime>
 
 #include "snake.hpp"
-#include "snakemodel.hpp"
+#include "huntermodel.hpp"
 #include "foodmodel.hpp"
 
 enum class Signal : uint8_t

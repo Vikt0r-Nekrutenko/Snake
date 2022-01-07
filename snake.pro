@@ -22,7 +22,6 @@ SOURCES += \
         segmentedentitymodel.cpp \
         snake.cpp \
         snakebot.cpp \
-        snakemodel.cpp \
         superfood.cpp
 
 unix:!macx|win32: LIBS += -L$$PWD/../stf/release/ -lstf
@@ -48,6 +47,5 @@ HEADERS += \
     segmentedentitymodel.hpp \
     snake.hpp \
     snakebot.hpp \
-    snakemodel.hpp \
     superfood.hpp \
     view.hpp

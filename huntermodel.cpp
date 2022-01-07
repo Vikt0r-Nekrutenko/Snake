@@ -44,7 +44,7 @@ SegmentedEntityModel *HunterModel::collisionWithEntityHandler(SegmentedEntityMod
     for(size_t s1 = 0; s1 < m_entity->length(); ++s1) {
         for (size_t s2 = 0; s2 < (*entity)()->length(); ++s2) {
             if(m_entity->isSegmetOverlapped(s1, entity->segmet(s2))) {
-                if(m_score > (*entity)()->length()) {
+                if(m_entity->length() > (*entity)()->length()) {
                     return entity;
                 } else {
                     return this;

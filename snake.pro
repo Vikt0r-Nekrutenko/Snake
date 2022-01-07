@@ -25,7 +25,7 @@ HEADERS += \
     foodmodel.hpp \
     meatfood.hpp \
     model.hpp \
-    regularfood.h \
+    regularfood.hpp \
     snake.hpp \
     snakemodel.hpp \
     superfood.hpp \

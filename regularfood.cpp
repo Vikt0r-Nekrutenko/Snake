@@ -1,4 +1,4 @@
-#include "regularfood.h"
+#include "regularfood.hpp"
 #include "random.hpp"
 
 RegularFood::RegularFood(const stf::Vec2d &pos)

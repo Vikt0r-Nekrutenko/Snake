@@ -21,6 +21,12 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
         showSnake(*m_model->snakeModels().at(s)->snake(), renderer, camera);
     }
 
+    for(size_t s = 1; s < m_model->hunterModels().size(); ++s) {
+        for (size_t i  = 0; i < m_model->hunterModels().at(s)->hunter()->body().size(); ++i) {
+            renderer.drawPixel(m_model->hunterModels().at(s)->hunter()->body().at(i) - camera, i % 2 ? 'x' : '0');
+        }
+    }
+
     for(auto food : m_model->foodModel().getPossibleFood()) {
         renderer.drawPixel(food->pos() - camera, food->symbol());
     }

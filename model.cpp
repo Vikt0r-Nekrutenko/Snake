@@ -48,6 +48,31 @@ Signal GameModel::onUpdate(const float dt)
     }
     m_foodModel.onUpdate();
 
+
+    for(size_t s = 0; s < m_hunterModels.size() - 1; ++s) {
+        for (size_t s1 = s+1; s1 < m_hunterModels.size(); ++s1) {
+            HunterModel* deadSnake = (HunterModel *)m_hunterModels.at(s)->collisionWithEntityHandler(m_hunterModels.at(s1));
+            if(deadSnake != nullptr) {
+                killHunterHandler(deadSnake);
+            }
+        }
+    }
+    for(auto hunterModel : m_hunterModels) {
+        hunterModel->setTarget(m_foodModel.nearestFood(hunterModel->hunter()->head()));
+
+//        if(hunterModel->isAteHerself())
+//            killSnakeHandler(hunterModel);
+
+        if(hunterModel->isCollideWithTarget()) {
+            hunterModel->collisionWithTargetHandler();
+            m_foodModel.remove(hunterModel->target());
+            hunterModel->setTarget(nullptr);
+        }
+        hunterModel->onUpdate(dt);
+    }
+    m_foodModel.onUpdate();
+
+
     return dynamic_cast<Player*>(m_snakeModels.at(0))->lifes() != 0 ? Signal::none : Signal::end;
 }
 

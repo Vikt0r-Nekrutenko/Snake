@@ -9,6 +9,7 @@ SOURCES += \
         food.cpp \
         foodmodel.cpp \
         gameview.cpp \
+        huntermodel.cpp \
         main.cpp \
         meatfood.cpp \
         menuview.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     food.hpp \
     foodmodel.hpp \
     gameview.hpp \
+    huntermodel.hpp \
     meatfood.hpp \
     menuview.hpp \
     model.hpp \

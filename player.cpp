@@ -2,9 +2,7 @@
 
 Player::Player(const stf::Vec2d &mapSize, const stf::Vec2d &startPos)
     : SnakeModel(mapSize, startPos)
-{
-
-}
+{}
 
 void Player::keyEvents(const int key)
 {

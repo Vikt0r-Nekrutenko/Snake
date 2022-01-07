@@ -7,6 +7,7 @@ SOURCES += \
         bot.cpp \
         food.cpp \
         foodmodel.cpp \
+        gameview.cpp \
         main.cpp \
         meatfood.cpp \
         model.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     bot.hpp \
     food.hpp \
     foodmodel.hpp \
+    gameview.hpp \
     meatfood.hpp \
     model.hpp \
     mouse.hpp \

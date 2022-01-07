@@ -11,6 +11,7 @@ SOURCES += \
         gameview.cpp \
         main.cpp \
         meatfood.cpp \
+        menuview.cpp \
         model.cpp \
         mouse.cpp \
         player.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     foodmodel.hpp \
     gameview.hpp \
     meatfood.hpp \
+    menuview.hpp \
     model.hpp \
     mouse.hpp \
     player.hpp \

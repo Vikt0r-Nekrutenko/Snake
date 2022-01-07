@@ -56,12 +56,13 @@ void FoodModel::onUpdate(const float dt)
 }
 
 void FoodModel::remove(const Food *food) {
-    for(size_t i = 0; i < m_food.size(); ++i)
+    for(size_t i = 0; i < m_food.size(); ++i) {
         if(food == m_food[i] && food != nullptr) {
             delete m_food[i];
             m_food[i] = nullptr;
             --m_possibleFoodCount;
         }
+    }
 }
 
 void FoodModel::reset()
@@ -72,16 +73,19 @@ void FoodModel::reset()
     }
 
     size_t i = 0;
-    while(i++ < food_model_settings::DEF_ACTIVE_FOOD_COUNT)
+    while(i++ < food_model_settings::DEF_ACTIVE_FOOD_COUNT) {
         m_food[i] = new RegularFood({2,2}, m_mapSize-2);
+    }
 }
 
 void FoodModel::pasteFoodFromDeadSnake(const std::vector<stf::Vec2d> &snakeBody) {
     m_possibleFoodCount += snakeBody.size();
-    for(auto s : snakeBody)
-        for(size_t i = 0; i < m_food.size(); ++i)
+    for(auto s : snakeBody) {
+        for(size_t i = 0; i < m_food.size(); ++i) {
             if(m_food[i] == nullptr) {
                 m_food[i] = new MeatFood(s);
                 break;
             }
+        }
+    }
 }

@@ -26,18 +26,4 @@ protected:
     uint8_t    m_nutritionalValue = 0;
 };
 
-
-
-
-
-class MeatFood : public Food
-{
-public:
-
-    MeatFood(const stf::Vec2d& pos);
-    MeatFood(const stf::Vec2d& lim1, const stf::Vec2d& lim2);
-    ~MeatFood() override = default;
-    inline char symbol() const override { return '+'; }
-};
-
 #endif // EAT_HPP

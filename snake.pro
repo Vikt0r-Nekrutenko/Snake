@@ -7,6 +7,7 @@ SOURCES += \
         food.cpp \
         foodmodel.cpp \
         main.cpp \
+        meatfood.cpp \
         model.cpp \
         regularfood.cpp \
         snake.cpp \
@@ -22,6 +23,7 @@ DEPENDPATH += $$PWD/../stf
 HEADERS += \
     food.hpp \
     foodmodel.hpp \
+    meatfood.hpp \
     model.hpp \
     regularfood.h \
     snake.hpp \

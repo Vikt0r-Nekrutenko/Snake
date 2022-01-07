@@ -1,5 +1,6 @@
 #include "model.hpp"
-#include "random.hpp"
+#include "player.hpp"
+#include "bot.hpp"
 #include <ctime>
 
 GameModel::GameModel(const stf::Vec2d &mapSize)

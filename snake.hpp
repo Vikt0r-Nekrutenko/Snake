@@ -3,8 +3,6 @@
 
 #include "segmentedentity.hpp"
 
-
-
 class Snake : public SegmentedEntity
 {
 public:
@@ -13,15 +11,6 @@ public:
     void update() override;
     void feed() override;
     bool isAteHerself() const;
-
-private:
-    void moveBody() override;
-};
-
-class Mouse : public SegmentedEntity
-{
-public:
-    void update() override;
 
 private:
     void moveBody() override;

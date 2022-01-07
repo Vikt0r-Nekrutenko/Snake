@@ -31,17 +31,3 @@ void Snake::moveBody()
     for(auto it = m_body.end()-1; it > m_body.begin(); --it)
         *it = *(it - 1);
 }
-
-
-
-void Mouse::update()
-{
-    m_body[1] += m_vel;
-    moveBody();
-}
-
-void Mouse::moveBody()
-{
-    m_body[0] = m_body[1] + m_vel;
-    m_body[2] = m_body[1] - m_vel;
-}

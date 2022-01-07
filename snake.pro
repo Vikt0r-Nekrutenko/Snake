@@ -9,6 +9,7 @@ SOURCES += \
         main.cpp \
         meatfood.cpp \
         model.cpp \
+        mouse.cpp \
         regularfood.cpp \
         segmentedentity.cpp \
         snake.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     foodmodel.hpp \
     meatfood.hpp \
     model.hpp \
+    mouse.hpp \
     regularfood.hpp \
     segmentedentity.hpp \
     snake.hpp \

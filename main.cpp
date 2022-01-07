@@ -1,7 +1,9 @@
 #include <iostream>
 #include "window.hpp"
 #include "model.hpp"
-#include "view.hpp"
+#include "gameview.hpp"
+#include "menuview.hpp"
+#include "endview.hpp"
 
 using namespace std;
 using namespace stf;
@@ -19,10 +21,12 @@ public:
 
     bool onUpdate(const float dt) override
     {
-        if(current == &game)
+        if(current == &game) {
             if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
             }
+        }
+
         current->show(renderer, {0,0});
 
         return gameIsContinue;
@@ -38,9 +42,7 @@ public:
         }
     }
 
-    void mouseEvents(const MouseRecord &mr) override
-    {
-    }
+    void mouseEvents(const MouseRecord &mr) override {}
 };
 
 int main()

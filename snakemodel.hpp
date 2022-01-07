@@ -16,7 +16,6 @@ constexpr uint8_t DEF_LIFES = 3;
 class Food;
 
 
-
 class SnakeModel : public SegmentedEntityModel
 {
 public:
@@ -38,19 +37,6 @@ protected:
     float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
-};
-
-class Player : public SnakeModel
-{
-public:
-    Player(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
-
-    inline int lifes() const { return m_lifes; }
-    void keyEvents(const int key);
-    void reset() override;
-
-private:
-    int m_lifes = snake_model_settings::DEF_LIFES;
 };
 
 class Bot : public SnakeModel

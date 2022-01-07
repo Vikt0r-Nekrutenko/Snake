@@ -10,6 +10,7 @@ SOURCES += \
         meatfood.cpp \
         model.cpp \
         mouse.cpp \
+        player.cpp \
         regularfood.cpp \
         segmentedentity.cpp \
         segmentedentitymodel.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     meatfood.hpp \
     model.hpp \
     mouse.hpp \
+    player.hpp \
     regularfood.hpp \
     segmentedentity.hpp \
     segmentedentitymodel.hpp \

@@ -1,12 +1,11 @@
 #include "snake.hpp"
 
 
-
-
-Snake::Snake(const stf::Vec2d startPos) : SegmentedEntity(startPos)
+Snake::Snake(const stf::Vec2d startPos)
 {
-    for(int i = 0; i < 5; ++i)
+    for(int i = 0; i < 5; ++i) {
         m_body.push_back({startPos.x + i, startPos.y});
+    }
 }
 
 void Snake::feed()

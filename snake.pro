@@ -20,8 +20,7 @@ SOURCES += \
         segmentedentitymodel.cpp \
         snake.cpp \
         snakemodel.cpp \
-        superfood.cpp \
-        view.cpp
+        superfood.cpp
 
 unix:!macx|win32: LIBS += -L$$PWD/../stf/release/ -lstf
 

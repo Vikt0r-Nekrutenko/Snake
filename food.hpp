@@ -26,14 +26,7 @@ protected:
     uint8_t    m_nutritionalValue = 0;
 };
 
-class RegularFood : public Food
-{
-public:
-    RegularFood(const stf::Vec2d& pos);
-    RegularFood(const stf::Vec2d& lim1, const stf::Vec2d& lim2);
-    ~RegularFood() override = default;
-    char symbol() const override { return '~'; }
-};
+
 
 class SuperFood : public Food
 {

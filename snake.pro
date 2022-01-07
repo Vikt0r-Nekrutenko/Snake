@@ -8,6 +8,7 @@ SOURCES += \
         foodmodel.cpp \
         main.cpp \
         model.cpp \
+        regularfood.cpp \
         snake.cpp \
         snakemodel.cpp \
         view.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     food.hpp \
     foodmodel.hpp \
     model.hpp \
+    regularfood.h \
     snake.hpp \
     snakemodel.hpp \
     view.hpp

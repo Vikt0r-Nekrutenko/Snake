@@ -15,9 +15,6 @@ Food::Food(const Food &food)
       m_nutritionalValue(food.m_nutritionalValue)
 {}
 
-RegularFood::RegularFood(const stf::Vec2d &pos) : Food(pos, stf::Random(0).getNum(1, 5)) {}
-
-RegularFood::RegularFood(const stf::Vec2d &lim1, const stf::Vec2d &lim2) : Food(lim1, lim2, stf::Random(0).getNum(1, 5)) {}
 
 SuperFood::SuperFood(const stf::Vec2d &pos) : Food(pos, stf::Random(0).getNum(10, 15)) {}
 

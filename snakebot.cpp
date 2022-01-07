@@ -21,5 +21,5 @@ bool SnakeBotModel::onUpdate(const float dt)
 {
     if (dynamic_cast<Snake*>(m_entity)->isAteHerself())
         return false;
-    else return BotModel::onUpdate(dt);
+    return BotModel::onUpdate(dt);
 }

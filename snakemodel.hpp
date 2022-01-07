@@ -39,11 +39,4 @@ protected:
     uint16_t    m_lvl           = 1u;
 };
 
-class Bot : public SnakeModel
-{
-public:
-    Bot(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
-    bool onUpdate(const float dt) override;
-};
-
 #endif // SNAKEMODEL_HPP

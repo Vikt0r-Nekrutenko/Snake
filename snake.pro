@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        bot.cpp \
         food.cpp \
         foodmodel.cpp \
         main.cpp \
@@ -25,6 +26,7 @@ INCLUDEPATH += $$PWD/../stf
 DEPENDPATH += $$PWD/../stf
 
 HEADERS += \
+    bot.hpp \
     food.hpp \
     foodmodel.hpp \
     meatfood.hpp \

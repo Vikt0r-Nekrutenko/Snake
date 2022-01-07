@@ -13,8 +13,6 @@ constexpr int MAX_LEVEL = 20;
 constexpr int LVLUP_STEP= 15;
 constexpr uint8_t DEF_LIFES = 3;
 }
-class Food;
-
 
 class SnakeModel : public SegmentedEntityModel
 {

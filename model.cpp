@@ -97,7 +97,7 @@ void GameModel::reset()
 
     m_snakeModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
     for(int i = 2; i < 2; ++i) {
-        m_snakeModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+//        m_snakeModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
     }
 
     m_foodModel.reset();
@@ -111,7 +111,7 @@ void GameModel::reset()
 
     m_hunterModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
     for(int i = 2; i < 5; ++i) {
-        m_hunterModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+        m_hunterModels.push_back(new SnakeBot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
     }
 
     m_foodModel.reset();

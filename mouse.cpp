@@ -6,6 +6,11 @@ void Mouse::update()
     moveBody();
 }
 
+void Mouse::feed()
+{
+
+}
+
 void Mouse::moveBody()
 {
     m_body[0] = m_body[1] + m_vel;

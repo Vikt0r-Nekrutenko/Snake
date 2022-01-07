@@ -16,6 +16,11 @@ GameModel::~GameModel()
         delete m_snakeModels[i];
     }
     m_snakeModels.clear();
+
+    for(size_t i = 0; i < m_hunterModels.size(); ++i) {
+        delete m_hunterModels[i];
+    }
+    m_hunterModels.clear();
 }
 
 Signal GameModel::onUpdate(const float dt)
@@ -48,11 +53,11 @@ Signal GameModel::onUpdate(const float dt)
 
 Signal GameModel::keyEvents(const int key)
 {
-    static_cast<Player *>(m_snakeModels.at(0))->keyEvents(key);
+//    static_cast<Player *>(m_snakeModels.at(0))->keyEvents(key);
 
-    if(key == ' ') {
-        return Signal::pause;
-    }
+//    if(key == ' ') {
+//        return Signal::pause;
+//    }
 
     return Signal::none;
 }
@@ -68,6 +73,20 @@ void GameModel::reset()
     m_snakeModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
     for(int i = 2; i < 2; ++i) {
         m_snakeModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+    }
+
+    m_foodModel.reset();
+
+
+    for(size_t i = 0; i < m_hunterModels.size(); ++i) {
+        delete m_hunterModels[i];
+    }
+
+    m_hunterModels.clear();
+
+    m_hunterModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
+    for(int i = 2; i < 5; ++i) {
+        m_hunterModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
     }
 
     m_foodModel.reset();

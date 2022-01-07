@@ -1,36 +1,24 @@
 #ifndef SNAKE_HPP
 #define SNAKE_HPP
 
-#include <vector>
-#include "vec2d.hpp"
+#include "segmentedentity.hpp"
 
-class Snake
+namespace snake_settings {
+const stf::Vec2d DEF_START_POS { 10, 10 };
+constexpr unsigned int DEF_LENGHT = 5;
+}
+
+class Snake : public SegmentedEntity
 {
 public:
-    Snake(const stf::Vec2d startPos = { 10, 10 });
+    Snake(const stf::Vec2d startPos = snake_settings::DEF_START_POS);
 
-    inline void feed() { m_body.push_back(m_body.back()); }
-
-    inline void killSnake() { m_isDead = true; }
-    inline bool isDead() const { return m_isDead; }
-    inline const stf::Vec2d& head() const { return m_body.front(); }
-    inline const std::vector<stf::Vec2d>& body() const { return m_body; }
-
-    void wrapping(const int top, const int left, const int right, const int bottom);
+    void update() override;
+    void feed() override;
     bool isAteHerself() const;
-    void update();
 
-    inline void W() { setVel({0,-1}); }
-    inline void A() { setVel({-1,0}); }
-    inline void S() { setVel({0,+1}); }
-    inline void D() { setVel({+1,0}); }
 private:
-    std::vector<stf::Vec2d> m_body;
-    stf::Vec2d m_vel = {0,+1};
-    bool m_isDead = false;
-
-    void moveBody();
-    inline void setVel(const stf::Vec2d& vel) { if((head()+vel).diff(m_body.at(1)) > 0.5f) m_vel = vel; }
+    void moveBody() override;
 };
 
 #endif // SNAKE_HPP

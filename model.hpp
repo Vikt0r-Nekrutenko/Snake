@@ -1,8 +1,12 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "snake.hpp"
 #include <cstdint>
+#include <ctime>
+
+#include "snake.hpp"
+#include "snakemodel.hpp"
+#include "foodmodel.hpp"
 
 enum class Signal : uint8_t
 {
@@ -13,26 +17,23 @@ class GameModel
 {
 public:
     GameModel(const stf::Vec2d& mapSize);
+    ~GameModel();
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
-    void aiControl();
     void reset();
+    void killSnakeHandler(SnakeModel *snakeMod);
 
-    inline uint16_t score() const { return m_score; }
-    inline uint16_t lvl() const { return m_lvl; }
-    inline const Snake& snake() const { return m_snake; }
-    inline const stf::Vec2d& eat() const { return m_eat;}
-    inline const stf::Vec2d& mapSize() const { return m_mapSize;}
+
+    inline const FoodModel& foodModel()                   const { return m_foodModel;}
+    inline const stf::Vec2d& mapSize()                    const { return m_mapSize;}
+    inline const std::vector<SnakeModel *>& snakeModels() const { return m_snakeModels; }
 private:
-    Snake m_snake;
+    std::vector<SnakeModel *> m_snakeModels;
+    FoodModel m_foodModel;
+
     stf::Vec2d m_mapSize = {0,0};
-    stf::Vec2d m_eat = {7, 8};
-    float m_time = 0.f;
-    float m_lvlDuration = 0.5f;
     bool m_aiIsEnable = false;
-    uint16_t m_score = 0u;
-    uint16_t m_lvl   = 1u;
 };
 
 #endif // MODEL_HPP

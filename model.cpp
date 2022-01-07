@@ -1,66 +1,80 @@
 #include "model.hpp"
-#include "random.hpp"
+#include "player.hpp"
+#include "bot.hpp"
 #include <ctime>
 
 GameModel::GameModel(const stf::Vec2d &mapSize)
-    : m_mapSize(mapSize)
+    : m_foodModel(mapSize),
+      m_mapSize(mapSize)
 {
+    reset();
+}
 
+GameModel::~GameModel()
+{
+    for(size_t i = 0; i < m_snakeModels.size(); ++i) {
+        delete m_snakeModels[i];
+    }
+    m_snakeModels.clear();
 }
 
 Signal GameModel::onUpdate(const float dt)
 {
-    if(m_time > m_lvlDuration)
-    {
-        m_snake.update();
-        if(m_aiIsEnable)
-            aiControl();
-
-        if(m_snake.head().diff(m_eat) < 1.f) {
-            m_snake.feed();
-            m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                               stf::Random(time(0)).getNum(2, m_mapSize.y-1));
-            ++m_score;
-            if(m_score != 1 && m_lvl < 20 && m_score % 5 == 0) {
-                m_lvlDuration -= 0.025f;
-                ++m_lvl;
+    for(size_t s = 0; s < m_snakeModels.size() - 1; ++s) {
+        for (size_t s1 = s+1; s1 < m_snakeModels.size(); ++s1) {
+            SnakeModel* deadSnake = (SnakeModel *)m_snakeModels.at(s)->collisionWithEntityHandler(m_snakeModels.at(s1));
+            if(deadSnake != nullptr) {
+                killSnakeHandler(deadSnake);
             }
         }
-
-        if(m_snake.isAteHerself()) return Signal::end;
-
-        m_snake.wrapping(1,1,m_mapSize.x, m_mapSize.y);
-        m_time = 0.f;
     }
-    m_time += dt;
-    return Signal::none;
+    for(auto snakeModel : m_snakeModels) {
+        snakeModel->setTarget(m_foodModel.nearestFood(snakeModel->snake()->head()));
+
+        if(snakeModel->isAteHerself())
+            killSnakeHandler(snakeModel);
+
+        if(snakeModel->isCollideWithTarget()) {
+            snakeModel->collisionWithTargetHandler();
+            m_foodModel.remove(snakeModel->target());
+            snakeModel->setTarget(nullptr);
+        }
+        snakeModel->onUpdate(dt);
+    }
+    m_foodModel.onUpdate();
+
+    return dynamic_cast<Player*>(m_snakeModels.at(0))->lifes() != 0 ? Signal::none : Signal::end;
 }
 
 Signal GameModel::keyEvents(const int key)
 {
-    switch (key) {
-    case 'w': m_snake.W(); break;
-    case 'a': m_snake.A(); break;
-    case 's': m_snake.S(); break;
-    case 'd': m_snake.D(); break;
-    case ' ': return Signal::pause;
-    }
-    return Signal::none;
-}
+    static_cast<Player *>(m_snakeModels.at(0))->keyEvents(key);
 
-void GameModel::aiControl()
-{
-    if(m_snake.head().x > m_eat.x) m_snake.A();
-    if(m_snake.head().x < m_eat.x) m_snake.D();
-    if(m_snake.head().y > m_eat.y) m_snake.W();
-    if(m_snake.head().y < m_eat.y) m_snake.S();
+    if(key == ' ') {
+        return Signal::pause;
+    }
+
+    return Signal::none;
 }
 
 void GameModel::reset()
 {
-    m_snake = Snake();
-    m_score = 0u; m_lvl = 1u;
-    m_lvlDuration = 0.5f;
-    m_eat = stf::Vec2d(stf::Random(time(0)).getNum(2, m_mapSize.x-1),
-                       stf::Random(time(0)).getNum(2, m_mapSize.y-1));
+    for(size_t i = 0; i < m_snakeModels.size(); ++i) {
+        delete m_snakeModels[i];
+    }
+
+    m_snakeModels.clear();
+
+    m_snakeModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
+    for(int i = 2; i < 5; ++i) {
+        m_snakeModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+    }
+
+    m_foodModel.reset();
+}
+
+void GameModel::killSnakeHandler(SnakeModel* snakeModel)
+{
+    m_foodModel.pasteFoodFromDeadSnake(snakeModel->snake()->body());
+    snakeModel->reset();
 }

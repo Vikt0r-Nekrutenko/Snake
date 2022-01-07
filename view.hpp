@@ -12,41 +12,4 @@ public:
     virtual Signal keyEvents(const int key) = 0;
 };
 
-class GameView : public View
-{
-public:
-    GameView(GameModel* model);
-
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
-protected:
-    GameModel* m_model = nullptr;
-
-private:
-    void showSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
-    void showDeadSnake(stf::Renderer &renderer, const stf::Vec2d &camera);
-};
-
-class MenuView : public View
-{
-public:
-    MenuView();
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
-private:
-    stf::AnimSprite m_menu;
-    stf::Sprite     m_bgrnd;
-    uint8_t m_selector = 0;
-};
-
-class EndView : public GameView
-{
-public:
-    EndView(GameModel* model);
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
-private:
-    stf::Sprite m_end;
-};
-
 #endif // VIEW_HPP

@@ -51,7 +51,11 @@ Signal GameModel::onUpdate(const float dt)
 Signal GameModel::keyEvents(const int key)
 {
     static_cast<Player *>(m_snakeModels.at(0))->keyEvents(key);
-    if(key == ' ') return Signal::pause;
+
+    if(key == ' ') {
+        return Signal::pause;
+    }
+
     return Signal::none;
 }
 

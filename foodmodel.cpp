@@ -34,7 +34,8 @@ const std::vector<Food *> FoodModel::getPossibleFood() const {
 
 Food *FoodModel::nearestFood(const stf::Vec2d &pos) const {
     std::vector<Food *> possibleFood = getPossibleFood();
-    if(possibleFood.size() == 0) return nullptr;
+    if(possibleFood.size() == 0)
+        return nullptr;
 
     Food* nearFood = possibleFood.front();
     for(auto food : possibleFood) {
@@ -47,10 +48,11 @@ Food *FoodModel::nearestFood(const stf::Vec2d &pos) const {
 
 void FoodModel::onUpdate(const float dt)
 {
-    if(stf::Random(time(0)).getNum(0,15) == 0)
-        pasteFood<SuperFood>({ {2,2},m_mapSize-2 });
-    else
-        pasteFood<RegularFood>({ {2,2},m_mapSize-2 });
+    if(stf::Random(time(0)).getNum(0,15) == 0) {
+        pasteFood<SuperFood>({ {2,2}, m_mapSize-2 });
+    } else {
+        pasteFood<RegularFood>({ {2,2}, m_mapSize-2 });
+    }
 }
 
 void FoodModel::remove(const Food *food) {

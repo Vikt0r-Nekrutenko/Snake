@@ -10,6 +10,7 @@ SOURCES += \
         meatfood.cpp \
         model.cpp \
         regularfood.cpp \
+        segmentedentity.cpp \
         snake.cpp \
         snakemodel.cpp \
         superfood.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     meatfood.hpp \
     model.hpp \
     regularfood.hpp \
+    segmentedentity.hpp \
     snake.hpp \
     snakemodel.hpp \
     superfood.hpp \

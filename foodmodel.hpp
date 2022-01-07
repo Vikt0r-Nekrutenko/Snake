@@ -17,7 +17,7 @@ public:
 
     Food* nearestFood(const stf::Vec2d& pos) const;
     void pasteFoodFromDeadSnake(const std::vector<stf::Vec2d>& snakeBody);
-    void onUpdate(const float dt);
+    void onUpdate();
     void remove(const Food *food);
     void reset();
 

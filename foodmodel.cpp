@@ -46,7 +46,7 @@ Food *FoodModel::nearestFood(const stf::Vec2d &pos) const {
     return nearFood;
 }
 
-void FoodModel::onUpdate(const float dt)
+void FoodModel::onUpdate()
 {
     if(stf::Random(time(0)).getNum(0,15) == 0) {
         pasteFood<SuperFood>({ {2,2}, m_mapSize-2 });

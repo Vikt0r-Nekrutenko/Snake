@@ -7,10 +7,7 @@ GameModel::GameModel(const stf::Vec2d &mapSize)
     : m_foodModel(mapSize),
       m_mapSize(mapSize)
 {
-    m_snakeModels.push_back(new Player(mapSize, snake_settings::DEF_START_POS));
-    for(int i = 2; i < 5; ++i) {
-        m_snakeModels.push_back(new Bot(mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
-    }
+    reset();
 }
 
 GameModel::~GameModel()
@@ -68,10 +65,9 @@ void GameModel::reset()
 
     m_snakeModels.clear();
 
-    m_snakeModels.push_back(new Player(m_mapSize, {10, 10}));
-
+    m_snakeModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
     for(int i = 2; i < 5; ++i) {
-        m_snakeModels.push_back(new Bot(m_mapSize, {i*10, 10}));
+        m_snakeModels.push_back(new Bot(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
     }
 
     m_foodModel.reset();

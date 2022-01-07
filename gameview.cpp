@@ -15,23 +15,19 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
         }
     }
 
-    showPlayerSnake(*m_model->snakeModels().at(0)->snake(), renderer, camera);
-
-    for(size_t s = 1; s < m_model->snakeModels().size(); ++s) {
-        showSnake(*m_model->snakeModels().at(s)->snake(), renderer, camera);
+    for(auto food : m_model->foodModel().getPossibleFood()) {
+        renderer.drawPixel(food->pos() - camera, food->symbol());
     }
 
-    for(size_t s = 1; s < m_model->hunterModels().size(); ++s) {
+    for(size_t s = 0; s < m_model->hunterModels().size(); ++s) {
         for (size_t i  = 0; i < m_model->hunterModels().at(s)->hunter()->body().size(); ++i) {
             renderer.drawPixel(m_model->hunterModels().at(s)->hunter()->body().at(i) - camera, i % 2 ? 'x' : '0');
         }
     }
 
-    for(auto food : m_model->foodModel().getPossibleFood()) {
-        renderer.drawPixel(food->pos() - camera, food->symbol());
-    }
 
-    const Player* player = dynamic_cast<const Player *>(m_model->snakeModels().at(0));
+
+    const Player* player = dynamic_cast<const Player *>(m_model->hunterModels().at(0));
     renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
                   player->score(),
                   player->lvl(),

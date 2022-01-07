@@ -13,7 +13,7 @@ public:
     virtual void reset() = 0;
 
     virtual void collisionWithTargetHandler() = 0;
-    bool isCollideWithTarget() const;
+    virtual bool isCollideWithTarget() const;
 
     inline const Food* target() const { return m_target; }
     inline void setTarget(Food* food) { m_target = food; }

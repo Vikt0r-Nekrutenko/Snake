@@ -16,12 +16,12 @@ enum class Signal : uint8_t
 class GameModel
 {
 public:
-    GameModel(const stf::Vec2d& mapSize);
+    GameModel(const stf::Vec2d& mapSize, uint8_t snakes = 0u, uint8_t mouses = 5u);
     ~GameModel();
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
-    void reset();
+    void reset(uint8_t snakes = 0u, uint8_t mouses = 5u);
     void killHunterHandler(HunterModel *hunterModel);
 
 

@@ -2,13 +2,14 @@
 #include "player.hpp"
 #include "mousebot.hpp"
 #include "snakebot.hpp"
+#include "random.hpp"
 #include <ctime>
 
-GameModel::GameModel(const stf::Vec2d &mapSize)
+GameModel::GameModel(const stf::Vec2d &mapSize, uint8_t snakes, uint8_t mouses)
     : m_foodModel(mapSize),
       m_mapSize(mapSize)
 {
-    reset();
+    reset(snakes, mouses);
 }
 
 GameModel::~GameModel()
@@ -56,7 +57,7 @@ Signal GameModel::keyEvents(const int key)
     return Signal::none;
 }
 
-void GameModel::reset()
+void GameModel::reset(uint8_t snakes, uint8_t mouses)
 {
     for(size_t i = 0; i < m_hunterModels.size(); ++i) {
         delete m_hunterModels[i];
@@ -65,11 +66,15 @@ void GameModel::reset()
     m_hunterModels.clear();
 
     m_hunterModels.push_back(new Player(m_mapSize, snake_settings::DEF_START_POS));
-    for(int i = 2; i < 7; ++i) {
-        m_hunterModels.push_back(new MouseBotModel(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+
+    for(int i = 0; i < mouses; ++i) {
+        m_hunterModels.push_back(new MouseBotModel(m_mapSize, {stf::Random(time(0)).getNum(2, m_mapSize.x - 2),
+                                                                stf::Random(time(0)).getNum(2, m_mapSize.y - 2)}));
     }
-    for(int i = 7; i < 10; ++i) {
-        m_hunterModels.push_back(new SnakeBotModel(m_mapSize, {i*snake_settings::DEF_START_POS.x, snake_settings::DEF_START_POS.y}));
+
+    for(int i = 0; i < snakes; ++i) {
+        m_hunterModels.push_back(new SnakeBotModel(m_mapSize, {stf::Random(time(0)).getNum(2, m_mapSize.x - 2),
+                                                               stf::Random(time(0)).getNum(2, m_mapSize.y - 2)}));
     }
 
     m_foodModel.reset();

@@ -1,12 +1,12 @@
 #ifndef BOT_HPP
 #define BOT_HPP
 
-#include "snakemodel.hpp"
+#include "huntermodel.hpp"
 
-class Bot : public SnakeModel
+class BotModel : public HunterModel
 {
 public:
-    Bot(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
+    BotModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = {10,10});
     bool onUpdate(const float dt) override;
 };
 

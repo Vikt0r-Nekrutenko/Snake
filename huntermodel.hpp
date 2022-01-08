@@ -1,10 +1,9 @@
-#ifndef SNAKEMODEL_HPP
-#define SNAKEMODEL_HPP
+#ifndef HUNTERMODEL_HPP
+#define HUNTERMODEL_HPP
 
 #include "segmentedentitymodel.hpp"
-#include "snake.hpp"
 
-namespace snake_model_settings {
+namespace hunter_model_settings {
 constexpr float MAX_DURATION  = 0.3f;
 constexpr float MIN_DURATION  = 0.05f;
 constexpr float DURATION_STEP = 0.025f;
@@ -14,27 +13,26 @@ constexpr int LVLUP_STEP= 15;
 constexpr uint8_t DEF_LIFES = 3;
 }
 
-class SnakeModel : public SegmentedEntityModel
+class HunterModel : public SegmentedEntityModel
 {
 public:
-    SnakeModel(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = snake_settings::DEF_START_POS);
-    virtual ~SnakeModel() = default;
+    HunterModel(const stf::Vec2d& mapSize);
+    virtual ~HunterModel() = default;
     bool onUpdate(const float dt) override;
     void reset() override;
 
-    bool isAteHerself() const;
     void collisionWithTargetHandler() override;
-    SegmentedEntityModel* collisionWithEntityHandler(SegmentedEntityModel* snakeMod) override;
+    SegmentedEntityModel* collisionWithEntityHandler(SegmentedEntityModel *entity) override;
 
     inline uint16_t lvl()       const { return m_lvl;       }
     inline uint16_t score()     const { return m_score;     }
-    inline const Snake* snake() const { return dynamic_cast<Snake *>(m_entity);     }
+    inline SegmentedEntity* hunter()     const { return m_entity;    }
 
 protected:
 
-    float       m_lvlDuration   = snake_model_settings::MAX_DURATION;
+    float       m_lvlDuration   = hunter_model_settings::MAX_DURATION;
     uint16_t    m_score         = 0u;
     uint16_t    m_lvl           = 1u;
 };
 
-#endif // SNAKEMODEL_HPP
+#endif // HUNTERMODEL_HPP

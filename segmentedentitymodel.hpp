@@ -11,9 +11,8 @@ public:
     virtual ~SegmentedEntityModel() = default;
     virtual bool onUpdate(const float dt) = 0;
     virtual void reset() = 0;
-
     virtual void collisionWithTargetHandler() = 0;
-    bool isCollideWithTarget() const;
+    virtual bool isCollideWithTarget() const;
 
     inline const Food* target() const { return m_target; }
     inline void setTarget(Food* food) { m_target = food; }
@@ -28,6 +27,7 @@ public:
     inline SegmentedEntity* operator()()                  { return m_entity; }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
     inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_entity->body().at(nOfSeg); }
+    void show(stf::Renderer &renderer, const stf::Vec2d& camera);
 
 protected:
 

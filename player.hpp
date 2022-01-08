@@ -1,9 +1,10 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "snakemodel.hpp"
+#include "snakebot.hpp"
+#include "snake.hpp"
 
-class Player : public SnakeModel
+class Player : public SnakeBotModel
 {
 public:
     Player(const stf::Vec2d& mapSize, const stf::Vec2d& startPos = snake_settings::DEF_START_POS);
@@ -11,6 +12,8 @@ public:
     inline int lifes() const { return m_lifes; }
     void keyEvents(const int key);
     void reset() override;
+
+    bool onUpdate(const float dt) override;
 
 private:
     int m_lifes = snake_model_settings::DEF_LIFES;

@@ -1,4 +1,5 @@
 #include "snake.hpp"
+#include "renderer.hpp"
 
 
 Snake::Snake(const stf::Vec2d startPos)
@@ -21,6 +22,17 @@ bool Snake::isAteHerself() const
         }
     }
     return false;
+}
+
+void Snake::show(stf::Renderer &renderer, const stf::Vec2d &camera)
+{
+    for (size_t i = 0; i < m_body.size(); ++i) {
+        char sym = 'o';
+        if(i != 0 && i % 2 == 0) {
+            sym = 'x';
+        }
+        renderer.drawPixel(m_body.at(i) - camera, sym);
+    }
 }
 
 void Snake::update()

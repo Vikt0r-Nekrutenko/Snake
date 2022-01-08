@@ -21,13 +21,13 @@ public:
 
     bool onUpdate(const float dt) override
     {
+        current->show(renderer, {0,0});
         if(current == &game) {
             if(model.onUpdate(dt) == Signal::end) {
                 current = &end;
             }
         }
 
-        current->show(renderer, {0,0});
 
         return gameIsContinue;
     }

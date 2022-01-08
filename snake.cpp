@@ -4,7 +4,7 @@
 
 Snake::Snake(const stf::Vec2d startPos)
 {
-    for(unsigned int i = 0; i < snake_settings::DEF_LENGHT; ++i) {
+    for(int i = 0; i < snake_settings::DEF_LENGHT; ++i) {
         m_body.push_back({startPos.x + i, startPos.y});
     }
 }

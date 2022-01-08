@@ -1,6 +1,13 @@
 #include "mouse.hpp"
 #include "renderer.hpp"
 
+Mouse::Mouse(const stf::Vec2d startPos)
+{
+    for(int i = 0; i < 3; ++i) {
+        m_body.push_back({startPos.x + i, startPos.y});
+    }
+}
+
 void Mouse::update()
 {
     m_body[1] += m_vel;

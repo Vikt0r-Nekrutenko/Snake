@@ -14,3 +14,8 @@ bool SegmentedEntityModel::isCollideWithTarget() const
     return false;
 }
 
+void SegmentedEntityModel::show(stf::Renderer& renderer, const stf::Vec2d &camera)
+{
+    m_entity->show(renderer, camera);
+}
+

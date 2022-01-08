@@ -27,6 +27,7 @@ public:
     inline SegmentedEntity* operator()()                  { return m_entity; }
     inline const stf::Vec2d &mapSize()              const { return m_mapSize;   }
     inline const stf::Vec2d &segmet(size_t nOfSeg)  const { return m_entity->body().at(nOfSeg); }
+    void show(stf::Renderer &renderer, const stf::Vec2d& camera);
 
 protected:
 

@@ -17,6 +17,8 @@ public:
     void feed() override;
     bool isAteHerself() const;
 
+    void show(stf::Renderer &renderer, const stf::Vec2d &camera) override;
+
 private:
     void moveBody() override;
 };

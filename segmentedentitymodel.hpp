@@ -11,7 +11,6 @@ public:
     virtual ~SegmentedEntityModel() = default;
     virtual bool onUpdate(const float dt) = 0;
     virtual void reset() = 0;
-
     virtual void collisionWithTargetHandler() = 0;
     virtual bool isCollideWithTarget() const;
 

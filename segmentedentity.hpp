@@ -4,6 +4,10 @@
 #include "vec2d.hpp"
 #include <vector>
 
+namespace stf {
+class Renderer;
+}
+
 class SegmentedEntity
 {
 public:
@@ -18,6 +22,7 @@ public:
     bool isHeadOverlapped(const stf::Vec2d& pos) const;
     bool isSegmetOverlapped(size_t nOfSeg, const stf::Vec2d& pos) const;
     void wrapping(const int top, const int left, const int right, const int bottom);
+    virtual void show(stf::Renderer& renderer, const stf::Vec2d& camera) = 0;
 protected:
     std::vector<stf::Vec2d> m_body;
     stf::Vec2d              m_vel = {0,+1};

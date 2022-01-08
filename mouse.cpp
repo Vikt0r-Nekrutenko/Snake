@@ -14,10 +14,7 @@ void Mouse::update()
     moveBody();
 }
 
-void Mouse::feed()
-{
-
-}
+void Mouse::feed() {}
 
 void Mouse::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 {

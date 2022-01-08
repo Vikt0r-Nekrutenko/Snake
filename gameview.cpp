@@ -19,13 +19,9 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
         renderer.drawPixel(food->pos() - camera, food->symbol());
     }
 
-    for(size_t s = 0; s < m_model->hunterModels().size(); ++s) {
-        for (size_t i  = 0; i < m_model->hunterModels().at(s)->hunter()->body().size(); ++i) {
-            renderer.drawPixel(m_model->hunterModels().at(s)->hunter()->body().at(i) - camera, i % 2 ? 'x' : '0');
-        }
+    for(auto hunter : m_model->hunterModels()) {
+        hunter->show(renderer, camera);
     }
-
-
 
     const Player* player = dynamic_cast<const Player *>(m_model->hunterModels().at(0));
     renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
@@ -37,18 +33,4 @@ void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
 Signal GameView::keyEvents(const int key)
 {
     return m_model->keyEvents(key);
-}
-
-void GameView::showSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera)
-{
-    for(size_t i = 0; i < snake.body().size(); ++i) {
-        renderer.drawPixel(snake.body().at(i) - camera, i % 2 ? 'x' : 'o');
-    }
-}
-
-void GameView::showPlayerSnake(const Snake &snake, stf::Renderer &renderer, const stf::Vec2d &camera)
-{
-    for(size_t i = 0; i < snake.body().size(); ++i) {
-        renderer.drawPixel(snake.body().at(i) - camera, i % 2 ? 'X' : 'O');
-    }
 }

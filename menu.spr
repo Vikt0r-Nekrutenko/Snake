@@ -1,4 +1,8 @@
-7 3 2
->START<,START,
-,,,,,,,,,,,,,,
-,EXIT,,>EXIT<,
+10 7 4
+,>START<,,,,START,,,,,START,,,,,START,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,NORMAL,,,>NORMAL<,,,NORMAL,,,,NORMAL,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,SURVIVAL,,SURVIVAL,>SURVIVAL<,SURVIVAL,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,EXIT,,,,,,EXIT,,,,,,EXIT,,,,,>EXIT<,,

@@ -1,7 +1,8 @@
 #include "endview.hpp"
 
 EndView::EndView(GameModel *model)
-    : GameView(model), m_end("end.spr")
+    : View(model),
+      m_end("end.spr")
 { }
 
 void EndView::show(stf::Renderer &renderer, const stf::Vec2d &camera)

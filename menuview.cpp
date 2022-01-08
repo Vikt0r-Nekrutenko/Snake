@@ -1,7 +1,9 @@
 #include "menuview.hpp"
+#include "random.hpp"
 
-MenuView::MenuView()
-    : m_menu("menu.spr"),
+MenuView::MenuView(GameModel *model)
+    : View(model),
+      m_menu("menu.spr"),
       m_bgrnd("bgrnd.spr")
 {}
 
@@ -35,6 +37,13 @@ Signal MenuView::keyEvents(const int key)
     case ' ':
         if (m_selector == 0) {
             return Signal::start;
+        } else if (m_selector == 1) {
+            m_model->reset(game_model_settings::NORMAL_SNAKES_COUNT, game_model_settings::NORMAL_MOUSE_COUNT);
+            return Signal::normal;
+        } else if (m_selector == 2) {
+            m_model->reset(stf::Random(time(0)).getNum(game_model_settings::SURVIVAL_SNAKES_MIN_COUNT, game_model_settings::SURVIVAL_SNAKES_MAX_COUNT),
+                           stf::Random(time(0)).getNum(game_model_settings::SURVIVAL_MOUSES_MIN_COUNT, game_model_settings::SURVIVAL_MOUSES_MAX_COUNT));
+            return Signal::survival;
         } else if (m_selector == m_menu.frames() - 1) {
             return Signal::end;
         }

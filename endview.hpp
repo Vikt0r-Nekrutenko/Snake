@@ -1,9 +1,9 @@
 #ifndef ENDVIEW_HPP
 #define ENDVIEW_HPP
 
-#include "gameview.hpp"
+#include "view.hpp"
 
-class EndView : public GameView
+class EndView : public View
 {
 public:
     EndView(GameModel* model);

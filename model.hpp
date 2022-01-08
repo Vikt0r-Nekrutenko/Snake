@@ -10,8 +10,19 @@
 
 enum class Signal : uint8_t
 {
-    none, start, pause, end,
+    none, start, normal, survival, pause, end,
 };
+
+namespace game_model_settings {
+constexpr uint8_t NORMAL_SNAKES_COUNT = 0;
+constexpr uint8_t NORMAL_MOUSE_COUNT = 5;
+
+constexpr uint8_t SURVIVAL_SNAKES_MIN_COUNT = 3;
+constexpr uint8_t SURVIVAL_SNAKES_MAX_COUNT = 7;
+
+constexpr uint8_t SURVIVAL_MOUSES_MIN_COUNT = 5;
+constexpr uint8_t SURVIVAL_MOUSES_MAX_COUNT = 10;
+}
 
 class GameModel
 {

@@ -2,7 +2,7 @@
 #include "player.hpp"
 
 GameView::GameView(GameModel* model)
-    : m_model(model)
+    : View(model)
 { }
 
 void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)

@@ -14,6 +14,7 @@ public:
     }
     void update() override;
     void feed() override;
+    void show(stf::Renderer &renderer, const stf::Vec2d &camera) override;
 
 private:
     void moveBody() override;

@@ -57,6 +57,17 @@ Signal GameModel::keyEvents(const int key)
     return Signal::none;
 }
 
+stf::smv::ModelBaseState GameModel::update(const float dt)
+{
+    return onUpdate(dt) == Signal::none ? stf::smv::ModelBaseState::none : stf::smv::ModelBaseState::end;
+}
+
+stf::smv::ModelBaseState GameModel::keyEventsHandler(const int key)
+{
+    static_cast<Player *>(m_hunterModels.at(0))->keyEvents(key);
+    return stf::smv::ModelBaseState::none;
+}
+
 void GameModel::reset(uint8_t snakes, uint8_t mouses)
 {
     for(size_t i = 0; i < m_hunterModels.size(); ++i) {

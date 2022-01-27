@@ -65,7 +65,7 @@ stf::smv::ModelBaseState GameModel::update(const float dt)
 stf::smv::ModelBaseState GameModel::keyEventsHandler(const int key)
 {
     static_cast<Player *>(m_hunterModels.at(0))->keyEvents(key);
-    return stf::smv::ModelBaseState::none;
+    return stf::smv::BaseModel::keyEventsHandler(key);
 }
 
 void GameModel::reset(uint8_t snakes, uint8_t mouses)

@@ -16,6 +16,7 @@ class Game : public Window
     EndView  end;
     View* current;
 
+    PausedGameView1 paused = PausedGameView1(&model);
     GameView1 game1 = GameView1(&model);
     EndView1 end1 = EndView1(&model);
     stf::smv::BaseView *current1 = &game1;
@@ -41,7 +42,7 @@ public:
         case stf::smv::ModelBaseState::start:   return &game1;
         case stf::smv::ModelBaseState::end:     return &end1;
 //        case stf::smv::ModelBaseState::menu:    return &menu;
-//        case stf::smv::ModelBaseState::pause:   return &pause;
+        case stf::smv::ModelBaseState::pause:   return &paused;
         case stf::smv::ModelBaseState::exit:    return current1;
         case stf::smv::ModelBaseState::none:    return current1;
         }

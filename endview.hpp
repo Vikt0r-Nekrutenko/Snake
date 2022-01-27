@@ -13,4 +13,21 @@ private:
     stf::Sprite m_end;
 };
 
+#include "smv/baseendview.hpp"
+#include "model.hpp"
+
+class EndView1 : public stf::smv::BaseEndView
+{
+public:
+    EndView1(stf::smv::BaseModel *model)
+        : BaseEndView(model)
+    {}
+
+    void show(stf::Renderer& renderer) override
+    {
+        renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 0), "SCORE: %d", model<GameModel>()->hunterModels().at(0)->score());
+        renderer.draw(renderer.Size / 2 - stf::Vec2d(4, 2), "LEVEL: %d", model<GameModel>()->hunterModels().at(0)->lvl());
+    }
+};
+
 #endif // ENDVIEW_HPP

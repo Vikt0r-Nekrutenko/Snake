@@ -14,19 +14,21 @@ class Game : public Window
     GameView  game;
     MenuView menu;
     EndView  end;
+    EndView1 end1 = EndView1(&model);
     View* current;
+    stf::smv::BaseView *current1 = &end1;
     bool  gameIsContinue = true;
 public:
     Game() : Window(), model(renderer.Size), game(&model), menu(&model), end(&model), current(&menu) {}
 
     bool onUpdate(const float dt) override
     {
-        current->show(renderer, {0,0});
-        if(current == &game) {
-            if(model.onUpdate(dt) == Signal::end) {
-                current = &end;
-            }
-        }
+        current1->show(renderer);
+//        if(current == &game) {
+//            if(model.onUpdate(dt) == Signal::end) {
+//                current = &end;
+//            }
+//        }
         return gameIsContinue;
     }
 

@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <ctime>
 
+#include "smv/imodel.hpp"
 #include "snake.hpp"
 #include "huntermodel.hpp"
 #include "foodmodel.hpp"
@@ -24,14 +25,18 @@ constexpr uint8_t SURVIVAL_MOUSES_MIN_COUNT = 5;
 constexpr uint8_t SURVIVAL_MOUSES_MAX_COUNT = 10;
 }
 
-class GameModel
+class GameModel : public stf::smv::BaseModel
 {
 public:
     GameModel(const stf::Vec2d& mapSize, uint8_t snakes = 0u, uint8_t mouses = 5u);
-    ~GameModel();
+    ~GameModel() override;
 
     Signal onUpdate(const float dt);
     Signal keyEvents(const int key);
+
+    stf::smv::ModelBaseState update(const float dt) override;
+    stf::smv::ModelBaseState keyEventsHandler(const int key) override;
+
     void reset(uint8_t snakes = 0u, uint8_t mouses = 5u);
     void killHunterHandler(HunterModel *hunterModel);
 

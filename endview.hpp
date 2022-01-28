@@ -1,16 +1,20 @@
 #ifndef ENDVIEW_HPP
 #define ENDVIEW_HPP
 
-#include "view.hpp"
+#include "smv/baseendview.hpp"
+#include "model.hpp"
+#include "sprite.hpp"
 
-class EndView : public View
+class EndView : public stf::smv::BaseEndView
 {
 public:
-    EndView(GameModel* model);
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
+    EndView(stf::smv::BaseModel *model);
+
+    void show(stf::Renderer& renderer) override;
+
 private:
-    stf::Sprite m_end;
+    stf::Sprite m_end = stf::Sprite("end.spr");
+
 };
 
 #endif // ENDVIEW_HPP

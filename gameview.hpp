@@ -3,13 +3,24 @@
 
 #include "view.hpp"
 
-class GameView : public View
+#include "smv/basegameview.hpp"
+#include "smv/basepausedgameview.hpp"
+
+class GameView : public stf::smv::BaseGameView
 {
 public:
-    GameView(GameModel* model);
+    GameView(stf::smv::BaseModel *model);
 
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
+    void show(stf::Renderer& renderer) override;
 };
+
+class PausedGameView : public stf::smv::BasePausedGameView
+{
+public:
+    PausedGameView(stf::smv::BaseModel *model);
+
+    void show(stf::Renderer& renderer) override;
+};
+
 
 #endif // GAMEVIEW_HPP

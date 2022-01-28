@@ -1,18 +1,27 @@
 #ifndef MENUVIEW_HPP
 #define MENUVIEW_HPP
 
-#include "view.hpp"
+#include "smv/basemenuview.hpp"
+#include "random.hpp"
+#include "sprite.hpp"
 
-class MenuView : public View
+class MenuView : public stf::smv::BaseMenuView
 {
 public:
-    MenuView(GameModel* model);
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
+    MenuView(stf::smv::BaseModel *model, const stf::Vec2d& wndSize);
+
+    void show(stf::Renderer &renderer) override;
+
+    stf::smv::ModelBaseState onStartBtnClick(const stf::MouseRecord& mr);
+
+    stf::smv::ModelBaseState onSurvivalBtnClick(const stf::MouseRecord& mr);
+
+    stf::smv::ModelBaseState onNormalBtnClick(const stf::MouseRecord& mr);
+
+    stf::smv::ModelBaseState onExitBtnClick(const stf::MouseRecord& mr);
+
 private:
-    stf::AnimSprite m_menu;
     stf::Sprite     m_bgrnd;
-    uint8_t m_selector = 0;
 };
 
 #endif // MENUVIEW_HPP

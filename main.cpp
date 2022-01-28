@@ -10,39 +10,50 @@ using namespace stf;
 
 class Game : public Window
 {
-    GameModel model;
-    GameView  game;
-    MenuView menu;
-    EndView  end;
-    View* current;
+    GameModel model = GameModel(renderer.Size);
+
+    PausedGameView paused = PausedGameView(&model);
+    MenuView menu = MenuView(&model, renderer.Size);
+    GameView game = GameView(&model);
+    EndView end = EndView(&model);
+    stf::smv::BaseView *current = &menu;
     bool  gameIsContinue = true;
+
 public:
-    Game() : Window(), model(renderer.Size), game(&model), menu(&model), end(&model), current(&menu) {}
+
+    Game() : Window() {}
 
     bool onUpdate(const float dt) override
     {
-        current->show(renderer, {0,0});
-        if(current == &game) {
-            if(model.onUpdate(dt) == Signal::end) {
-                current = &end;
-            }
-        }
+        current->update(dt);
+        current->show(renderer);
+
         return gameIsContinue;
+    }
+
+    stf::smv::BaseView* viewSwitcher(stf::smv::ModelBaseState state)
+    {
+        switch (state) {
+        case stf::smv::ModelBaseState::start:   return &game;
+        case stf::smv::ModelBaseState::end:     return &end;
+        case stf::smv::ModelBaseState::menu:    return &menu;
+        case stf::smv::ModelBaseState::pause:   return &paused;
+        case stf::smv::ModelBaseState::none:    return current;
+        case stf::smv::ModelBaseState::exit:
+            gameIsContinue = false;
+            return current;
+        }
     }
 
     void keyEvents(const int key) override
     {
-        switch (current->keyEvents(key)) {
-        case Signal::normal:
-        case Signal::survival:
-        case Signal::start: current = &game;        break;
-        case Signal::pause: current = &menu;        break;
-        case Signal::end:   gameIsContinue = false; break;
-        case Signal::none:                          break;
-        }
+        current = viewSwitcher(current->keyEventsHandler(key));
     }
 
-    void mouseEvents(const MouseRecord &mr) override {}
+    void mouseEvents(const MouseRecord &mr) override
+    {
+        current = viewSwitcher(current->mouseEventsHandler(mr));
+    }
 };
 
 int main()

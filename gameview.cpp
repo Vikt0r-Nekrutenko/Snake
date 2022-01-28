@@ -1,36 +1,55 @@
 #include "gameview.hpp"
 #include "player.hpp"
 
-GameView::GameView(GameModel* model)
-    : View(model)
-{ }
 
-void GameView::show(stf::Renderer &renderer, const stf::Vec2d &camera)
+GameView::GameView(stf::smv::BaseModel *model)
+    : BaseGameView(model)
+{}
+
+void GameView::show(stf::Renderer &renderer)
 {
-    for(int y = 1; y < m_model->mapSize().y; ++y) {
-        for(int x = 0; x < m_model->mapSize().x; ++x) {
-            if(x==0||y==1||x==m_model->mapSize().x-1||y==m_model->mapSize().y-1) {
-                renderer.drawPixel(stf::Vec2d(x,y) - camera, '*');
+    for(int y = 1; y < model<GameModel>()->mapSize().y; ++y) {
+        for(int x = 0; x < model<GameModel>()->mapSize().x; ++x) {
+            if(x==0||y==1||x==model<GameModel>()->mapSize().x-1||y==model<GameModel>()->mapSize().y-1) {
+                renderer.drawPixel(stf::Vec2d(x,y), '*');
             }
         }
     }
 
-    for(auto food : m_model->foodModel().getPossibleFood()) {
-        renderer.drawPixel(food->pos() - camera, food->symbol());
+    for(auto food : model<GameModel>()->foodModel().getPossibleFood()) {
+        renderer.drawPixel(food->pos(), food->symbol());
     }
 
-    for(auto hunter : m_model->hunterModels()) {
-        hunter->show(renderer, camera);
+    for(auto hunter : model<GameModel>()->hunterModels()) {
+        hunter->show(renderer, {0,0});
     }
 
-    const Player* player = dynamic_cast<const Player *>(m_model->hunterModels().at(0));
+    const Player* player = dynamic_cast<const Player *>(model<GameModel>()->hunterModels().at(0));
     renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
                   player->score(),
                   player->lvl(),
                   player->lifes());
+
 }
 
-Signal GameView::keyEvents(const int key)
+PausedGameView::PausedGameView(stf::smv::BaseModel *model)
+    : BasePausedGameView(model)
+{}
+
+void PausedGameView::show(stf::Renderer &renderer)
 {
-    return m_model->keyEvents(key);
+    for(auto food : model<GameModel>()->foodModel().getPossibleFood()) {
+        renderer.drawPixel(food->pos(), food->symbol());
+    }
+
+    for(auto hunter : model<GameModel>()->hunterModels()) {
+        hunter->show(renderer, {0,0});
+    }
+
+    const Player* player = dynamic_cast<const Player *>(model<GameModel>()->hunterModels().at(0));
+    renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
+                  player->score(),
+                  player->lvl(),
+                  player->lifes());
+
 }

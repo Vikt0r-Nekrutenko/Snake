@@ -3,70 +3,23 @@
 
 #include "view.hpp"
 
-class GameView : public View
-{
-public:
-    GameView(GameModel* model);
-
-    void show(stf::Renderer &renderer, const stf::Vec2d &camera = {0,0}) override;
-    Signal keyEvents(const int key) override;
-};
-
 #include "smv/basegameview.hpp"
 #include "smv/basepausedgameview.hpp"
-#include "model.hpp"
-#include "player.hpp"
 
 class GameView : public stf::smv::BaseGameView
 {
 public:
-    GameView(stf::smv::BaseModel *model)
-        : BaseGameView(model)
-    {}
+    GameView(stf::smv::BaseModel *model);
 
-    void show(stf::Renderer& renderer) override
-    {
-        for(auto food : model<GameModel>()->foodModel().getPossibleFood()) {
-            renderer.drawPixel(food->pos(), food->symbol());
-        }
-
-        for(auto hunter : model<GameModel>()->hunterModels()) {
-            hunter->show(renderer, {0,0});
-        }
-
-        const Player* player = dynamic_cast<const Player *>(model<GameModel>()->hunterModels().at(0));
-        renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
-                      player->score(),
-                      player->lvl(),
-                      player->lifes());
-
-    }
+    void show(stf::Renderer& renderer) override;
 };
 
 class PausedGameView : public stf::smv::BasePausedGameView
 {
 public:
-    PausedGameView(stf::smv::BaseModel *model)
-        : BasePausedGameView(model)
-    {}
+    PausedGameView(stf::smv::BaseModel *model);
 
-    void show(stf::Renderer& renderer) override
-    {
-        for(auto food : model<GameModel>()->foodModel().getPossibleFood()) {
-            renderer.drawPixel(food->pos(), food->symbol());
-        }
-
-        for(auto hunter : model<GameModel>()->hunterModels()) {
-            hunter->show(renderer, {0,0});
-        }
-
-        const Player* player = dynamic_cast<const Player *>(model<GameModel>()->hunterModels().at(0));
-        renderer.draw({10, 0}, "SCORE: %d LVL: %d LIFES: %d",
-                      player->score(),
-                      player->lvl(),
-                      player->lifes());
-
-    }
+    void show(stf::Renderer& renderer) override;
 };
 
 

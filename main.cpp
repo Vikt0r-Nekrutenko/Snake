@@ -12,11 +12,11 @@ class Game : public Window
 {
     GameModel model = GameModel(renderer.Size);
 
-    PausedGameView1 paused = PausedGameView1(&model);
-    MenuView1 menu1 = MenuView1(&model, renderer.Size);
-    GameView1 game1 = GameView1(&model);
-    EndView1 end1 = EndView1(&model);
-    stf::smv::BaseView *current1 = &menu1;
+    PausedGameView paused = PausedGameView(&model);
+    MenuView menu = MenuView(&model, renderer.Size);
+    GameView game = GameView(&model);
+    EndView end = EndView(&model);
+    stf::smv::BaseView *current = &menu;
     bool  gameIsContinue = true;
 
 public:
@@ -25,8 +25,8 @@ public:
 
     bool onUpdate(const float dt) override
     {
-        current1->update(dt);
-        current1->show(renderer);
+        current->update(dt);
+        current->show(renderer);
 
         return gameIsContinue;
     }
@@ -34,25 +34,25 @@ public:
     stf::smv::BaseView* viewSwitcher(stf::smv::ModelBaseState state)
     {
         switch (state) {
-        case stf::smv::ModelBaseState::start:   return &game1;
-        case stf::smv::ModelBaseState::end:     return &end1;
-        case stf::smv::ModelBaseState::menu:    return &menu1;
+        case stf::smv::ModelBaseState::start:   return &game;
+        case stf::smv::ModelBaseState::end:     return &end;
+        case stf::smv::ModelBaseState::menu:    return &menu;
         case stf::smv::ModelBaseState::pause:   return &paused;
-        case stf::smv::ModelBaseState::none:    return current1;
+        case stf::smv::ModelBaseState::none:    return current;
         case stf::smv::ModelBaseState::exit:
             gameIsContinue = false;
-            return current1;
+            return current;
         }
     }
 
     void keyEvents(const int key) override
     {
-        current1 = viewSwitcher(current1->keyEventsHandler(key));
+        current = viewSwitcher(current->keyEventsHandler(key));
     }
 
     void mouseEvents(const MouseRecord &mr) override
     {
-        current1 = viewSwitcher(current1->mouseEventsHandler(mr));
+        current = viewSwitcher(current->mouseEventsHandler(mr));
     }
 };
 

@@ -17,10 +17,10 @@ public:
 #include "model.hpp"
 #include "player.hpp"
 
-class GameView1 : public stf::smv::BaseGameView
+class GameView : public stf::smv::BaseGameView
 {
 public:
-    GameView1(stf::smv::BaseModel *model)
+    GameView(stf::smv::BaseModel *model)
         : BaseGameView(model)
     {}
 
@@ -43,10 +43,10 @@ public:
     }
 };
 
-class PausedGameView1 : public stf::smv::BasePausedGameView
+class PausedGameView : public stf::smv::BasePausedGameView
 {
 public:
-    PausedGameView1(stf::smv::BaseModel *model)
+    PausedGameView(stf::smv::BaseModel *model)
         : BasePausedGameView(model)
     {}
 

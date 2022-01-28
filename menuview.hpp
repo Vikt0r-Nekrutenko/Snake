@@ -18,32 +18,32 @@ private:
 #include "smv/basemenuview.hpp"
 #include "random.hpp"
 
-class MenuView1 : public stf::smv::BaseMenuView
+class MenuView : public stf::smv::BaseMenuView
 {
 public:
-    MenuView1(stf::smv::BaseModel *model, const stf::Vec2d& wndSize)
+    MenuView(stf::smv::BaseModel *model, const stf::Vec2d& wndSize)
         : BaseMenuView(model),
           m_bgrnd("bgrnd.spr")
     {
         m_controls.push_back(new stf::smv::Box({10, 3},
                                                wndSize / 2 - 5 - stf::Vec2d(0, 0),
                                                "Start",
-                                               (stf::smv::TMouseEventHandler)&MenuView1::onStartBtnClick));
+                                               (stf::smv::TMouseEventHandler)&MenuView::onStartBtnClick));
 
         m_controls.push_back(new stf::smv::Box({10, 3},
                                                wndSize / 2 - 5 + stf::Vec2d(0, 3),
                                                "Normal",
-                                               (stf::smv::TMouseEventHandler)&MenuView1::onNormalBtnClick));
+                                               (stf::smv::TMouseEventHandler)&MenuView::onNormalBtnClick));
 
         m_controls.push_back(new stf::smv::Box({10, 3},
                                                wndSize / 2 - 5 + stf::Vec2d(0, 6),
                                                "Survival",
-                                               (stf::smv::TMouseEventHandler)&MenuView1::onSurvivalBtnClick));
+                                               (stf::smv::TMouseEventHandler)&MenuView::onSurvivalBtnClick));
 
         m_controls.push_back(new stf::smv::Box({10, 3},
                                                wndSize / 2 - 5 + stf::Vec2d(0, 9),
                                                "Exit",
-                                               (stf::smv::TMouseEventHandler)&MenuView1::onExitBtnClick));
+                                               (stf::smv::TMouseEventHandler)&MenuView::onExitBtnClick));
     }
 
     void show(stf::Renderer &renderer) override

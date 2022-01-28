@@ -16,10 +16,10 @@ private:
 #include "smv/baseendview.hpp"
 #include "model.hpp"
 
-class EndView1 : public stf::smv::BaseEndView
+class EndView : public stf::smv::BaseEndView
 {
 public:
-    EndView1(stf::smv::BaseModel *model)
+    EndView(stf::smv::BaseModel *model)
         : BaseEndView(model)
     {}
 

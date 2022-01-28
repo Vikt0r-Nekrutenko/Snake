@@ -10,11 +10,7 @@ using namespace stf;
 
 class Game : public Window
 {
-    GameModel model;
-    GameView  game;
-    MenuView menu;
-    EndView  end;
-    View* current;
+    GameModel model = GameModel(renderer.Size);
 
     PausedGameView1 paused = PausedGameView1(&model);
     MenuView1 menu1 = MenuView1(&model, renderer.Size);
@@ -22,18 +18,16 @@ class Game : public Window
     EndView1 end1 = EndView1(&model);
     stf::smv::BaseView *current1 = &menu1;
     bool  gameIsContinue = true;
+
 public:
-    Game() : Window(), model(renderer.Size), game(&model), menu(&model), end(&model), current(&menu) {}
+
+    Game() : Window() {}
 
     bool onUpdate(const float dt) override
     {
         current1->update(dt);
         current1->show(renderer);
-//        if(current == &game) {
-//            if(model.onUpdate(dt) == Signal::end) {
-//                current = &end;
-//            }
-//        }
+
         return gameIsContinue;
     }
 
@@ -53,14 +47,6 @@ public:
 
     void keyEvents(const int key) override
     {
-        switch (current->keyEvents(key)) {
-        case Signal::normal:
-        case Signal::survival:
-        case Signal::start: current = &game;        break;
-        case Signal::pause: current = &menu;        break;
-        case Signal::end:   gameIsContinue = false; break;
-        case Signal::none:                          break;
-        }
         current1 = viewSwitcher(current1->keyEventsHandler(key));
     }
 

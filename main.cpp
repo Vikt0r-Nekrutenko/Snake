@@ -17,9 +17,10 @@ class Game : public Window
     View* current;
 
     PausedGameView1 paused = PausedGameView1(&model);
+    MenuView1 menu1 = MenuView1(&model, renderer.Size);
     GameView1 game1 = GameView1(&model);
     EndView1 end1 = EndView1(&model);
-    stf::smv::BaseView *current1 = &game1;
+    stf::smv::BaseView *current1 = &menu1;
     bool  gameIsContinue = true;
 public:
     Game() : Window(), model(renderer.Size), game(&model), menu(&model), end(&model), current(&menu) {}
@@ -41,10 +42,12 @@ public:
         switch (state) {
         case stf::smv::ModelBaseState::start:   return &game1;
         case stf::smv::ModelBaseState::end:     return &end1;
-//        case stf::smv::ModelBaseState::menu:    return &menu;
+        case stf::smv::ModelBaseState::menu:    return &menu1;
         case stf::smv::ModelBaseState::pause:   return &paused;
-        case stf::smv::ModelBaseState::exit:    return current1;
         case stf::smv::ModelBaseState::none:    return current1;
+        case stf::smv::ModelBaseState::exit:
+            gameIsContinue = false;
+            return current1;
         }
     }
 
@@ -61,7 +64,10 @@ public:
         current1 = viewSwitcher(current1->keyEventsHandler(key));
     }
 
-    void mouseEvents(const MouseRecord &mr) override {}
+    void mouseEvents(const MouseRecord &mr) override
+    {
+        current1 = viewSwitcher(current1->mouseEventsHandler(mr));
+    }
 };
 
 int main()

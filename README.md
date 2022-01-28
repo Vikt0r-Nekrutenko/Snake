@@ -15,5 +15,6 @@ w - move up<br>
 d - move left<br>
 a - move right<br>
 s - move down<br>
-Space - pause/choose menu item<br>
+p - pause<br>
+x - exit to menu<br>
 q - force exit<br>

@@ -20,7 +20,7 @@ GameModel::~GameModel()
     m_hunterModels.clear();
 }
 
-Signal GameModel::onUpdate(const float dt)
+stf::smv::ModelBaseState GameModel::update(const float dt)
 {
     for(size_t s = 0; s < m_hunterModels.size() - 1; ++s) {
         for (size_t s1 = s+1; s1 < m_hunterModels.size(); ++s1) {
@@ -42,24 +42,9 @@ Signal GameModel::onUpdate(const float dt)
     }
     m_foodModel.onUpdate();
 
-
-    return dynamic_cast<Player*>(m_hunterModels.at(0))->lifes() != 0 ? Signal::none : Signal::end;
-}
-
-Signal GameModel::keyEvents(const int key)
-{
-    static_cast<Player *>(m_hunterModels.at(0))->keyEvents(key);
-
-    if(key == ' ') {
-        return Signal::pause;
-    }
-
-    return Signal::none;
-}
-
-stf::smv::ModelBaseState GameModel::update(const float dt)
-{
-    return onUpdate(dt) == Signal::none ? stf::smv::ModelBaseState::none : stf::smv::ModelBaseState::end;
+    return dynamic_cast<Player*>(m_hunterModels.at(0))->lifes() != 0 ?
+                stf::smv::ModelBaseState::none :
+                stf::smv::ModelBaseState::end;
 }
 
 stf::smv::ModelBaseState GameModel::keyEventsHandler(const int key)

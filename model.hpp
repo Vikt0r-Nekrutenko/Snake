@@ -31,9 +31,6 @@ public:
     GameModel(const stf::Vec2d& mapSize, uint8_t snakes = 0u, uint8_t mouses = 5u);
     ~GameModel() override;
 
-    Signal onUpdate(const float dt);
-    Signal keyEvents(const int key);
-
     stf::smv::ModelBaseState update(const float dt) override;
     stf::smv::ModelBaseState keyEventsHandler(const int key) override;
 

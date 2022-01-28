@@ -22,7 +22,8 @@ class MenuView1 : public stf::smv::BaseMenuView
 {
 public:
     MenuView1(stf::smv::BaseModel *model, const stf::Vec2d& wndSize)
-        : BaseMenuView(model)
+        : BaseMenuView(model),
+          m_bgrnd("bgrnd.spr")
     {
         m_controls.push_back(new stf::smv::Box({10, 3},
                                                wndSize / 2 - 5 - stf::Vec2d(0, 0),
@@ -47,6 +48,7 @@ public:
 
     void show(stf::Renderer &renderer) override
     {
+        m_bgrnd.show(renderer, renderer.Size / 2 - m_bgrnd.Size() / 2 - stf::Vec2d(0, 9));
         stf::smv::BaseView::show(renderer);
     }
 
@@ -72,6 +74,9 @@ public:
     {
         return stf::smv::ModelBaseState::exit;
     }
+
+private:
+    stf::Sprite     m_bgrnd;
 };
 
 #endif // MENUVIEW_HPP
